@@ -16,7 +16,11 @@ namespace XHS.Spider.ViewModels
         private ICommand _navigateCommand;
 
         private ICommand _openWindowCommand;
-
+        public DashboardViewModel(INavigationService navigationService, IWindowService windowService)
+        {
+            _navigationService = navigationService;
+            _windowService = windowService;
+        }
         public ICommand NavigateCommand => _navigateCommand ??= new RelayCommand<string>(OnNavigate);
 
         public ICommand OpenWindowCommand => _openWindowCommand ??= new RelayCommand<string>(OnOpenWindow);
