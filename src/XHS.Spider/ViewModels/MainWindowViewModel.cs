@@ -38,7 +38,7 @@ namespace XHS.Spider.ViewModels
             {
                 new NavigationItem()
                 {
-                    Content = "Home",
+                    Content = "首页",
                     PageTag = "dashboard",
                     Icon = SymbolRegular.Home24,
                     PageType = typeof(Views.Pages.DashboardPage)
@@ -56,7 +56,7 @@ namespace XHS.Spider.ViewModels
             {
                 new NavigationItem()
                 {
-                    Content = "Settings",
+                    Content = "设置",
                     PageTag = "settings",
                     Icon = SymbolRegular.Settings24,
                     PageType = typeof(Views.Pages.SettingsPage)
