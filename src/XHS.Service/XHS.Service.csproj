@@ -6,4 +6,8 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\XHS.IService\XHS.IService.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -7,19 +7,123 @@
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     Title="DashboardPage"
     d:DataContext="{d:DesignInstance local:DashboardPage, IsDesignTimeCreatable=False}"
-    d:DesignHeight="450"
+    d:DesignHeight="750"
     d:DesignWidth="800"
+    Scrollable="True"
     d:Background="{DynamicResource ApplicationBackgroundBrush}"
     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     mc:Ignorable="d">
 
-    <Grid Margin="56,0" VerticalAlignment="Top">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
 
-        <ui:Button Grid.Column="0" Command="{Binding ViewModel.CounterIncrementCommand, Mode=OneWay}" Content="Click me!" Icon="Fluent24" />
-        <TextBlock Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center" Text="{Binding ViewModel.Counter, Mode=OneWay}" />
+        <Border
+            Grid.Row="0"
+            Height="500"
+            CornerRadius="8,0,0,0">
+            <Border.Background>
+                <ImageBrush
+                    ImageSource="../../Resources/desktop.jpg"
+                    RenderOptions.BitmapScalingMode="HighQuality"
+                    Stretch="UniformToFill" />
+            </Border.Background>
+            <Border CornerRadius="8,0,0,0">
+                <Border.Background>
+                    <RadialGradientBrush>
+                        <GradientStop Offset="0" Color="#1F000000" />
+                        <GradientStop Offset="1" Color="#4F000000" />
+                    </RadialGradientBrush>
+                </Border.Background>
+                <Grid>
+                    <StackPanel
+                        Margin="64"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Background="Transparent">
+                        <TextBlock
+                            FontSize="18"
+                            Foreground="#B7FFFFFF"
+                            Text="小红书数据采集工具" />
+                        <TextBlock
+                            FontSize="28"
+                            FontWeight="Bold"
+                            Foreground="#FFFFFF"
+                            Text="XHS.Spider" />
+                        <TextBlock
+                            FontSize="18"
+                            Foreground="#B7FFFFFF"
+                            Text="专业、省心、方便、快捷" />
+                        <ui:Button
+                            Height="36"
+                            Margin="0,6,0,0"
+                            Padding="30,6"
+                            HorizontalAlignment="Left"
+                            Appearance="Transparent"
+                            Command="{Binding ViewModel.NavigateCommand}"
+                            CommandParameter="navigate_to_controls"
+                            Content="QQ：392706283"
+                            Foreground="{DynamicResource TextFillColorLightPrimaryBrush}" />
+                    </StackPanel>
+                    <TextBlock
+                        Margin="12"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        FontSize="10"
+                        Foreground="#57FFFFFF"
+                        Text="Created by xisuo67" />
+                </Grid>
+            </Border>
+        </Border>
+
+        <Grid Grid.Row="1" Margin="12,18,12,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <ui:CardAction
+                Grid.Row="0"
+                Grid.Column="0"
+                Margin="0,0,4,0"
+                Command="{Binding ViewModel.NavigateCommand}"
+                CommandParameter="navigate_to_settingCookie"
+                Icon="CollectionsAdd24"
+                IsChevronVisible="True">
+                <StackPanel>
+                    <TextBlock
+                        Margin="0"
+                        FontSize="13"
+                        FontWeight="Medium"
+                        Text="Cookie" />
+                    <TextBlock
+                        FontSize="12"
+                        Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                        Text="设置小红书Cookie" />
+                </StackPanel>
+            </ui:CardAction>
+        </Grid>
+
+        <Grid Grid.Row="2" Margin="12">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <ui:Hyperlink
+                Grid.Row="0"
+                Margin="0,0,0,4"
+                Content="Source code and help on GitHub"
+                Icon="Link48"
+                NavigateUri="https://github.com/xisuo67/XHS-Spider" />
+        </Grid>
     </Grid>
 </ui:UiPage>

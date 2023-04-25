@@ -24,16 +24,20 @@
     <None Remove="Assets\applicationIcon-1024.png" />
     <None Remove="Assets\applicationIcon-256.png" />
     <None Remove="Assets\xiaohongshu.png" />
+    <None Remove="Resources\desktop.jpg" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\XHS.Common\XHS.Common.csproj" />
+    <ProjectReference Include="..\XHS.IService\XHS.IService.csproj" />
+    <ProjectReference Include="..\XHS.Service\XHS.Service.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Assets\applicationIcon-1024.png" />
     <Resource Include="Assets\applicationIcon-256.png" />
     <Resource Include="Assets\xiaohongshu.png" />
+    <Resource Include="Resources\desktop.jpg" />
   </ItemGroup>
 
 </Project>

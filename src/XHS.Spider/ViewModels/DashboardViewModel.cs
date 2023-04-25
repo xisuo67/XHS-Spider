@@ -1,14 +1,25 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Windows.Input;
 using Wpf.Ui.Common.Interfaces;
+using Wpf.Ui.Mvvm.Contracts;
+using XHS.IService;
 
 namespace XHS.Spider.ViewModels
 {
     public partial class DashboardViewModel : ObservableObject, INavigationAware
     {
-        [ObservableProperty]
-        private int _counter = 0;
+        private readonly INavigationService _navigationService;
 
+        private readonly IWindowService _windowService;
+
+        private ICommand _navigateCommand;
+
+        private ICommand _openWindowCommand;
+
+        public ICommand NavigateCommand => _navigateCommand ??= new RelayCommand<string>(OnNavigate);
+
+        public ICommand OpenWindowCommand => _openWindowCommand ??= new RelayCommand<string>(OnOpenWindow);
         public void OnNavigatedTo()
         {
         }
@@ -16,11 +27,40 @@ namespace XHS.Spider.ViewModels
         public void OnNavigatedFrom()
         {
         }
-
-        [RelayCommand]
-        private void OnCounterIncrement()
+        private void OnNavigate(string parameter)
         {
-            Counter++;
+            switch (parameter)
+            {
+                case "navigate_to_settingCookie":
+                    _navigationService.Navigate(typeof(Views.Pages.DataPage));
+                    return;
+            }
+        }
+
+        private void OnOpenWindow(string parameter)
+        {
+            switch (parameter)
+            {
+                case "open_window_store":
+                    //_windowService.Show<Views.Windows.StoreWindow>();
+                    return;
+
+                case "open_window_manager":
+                    //_windowService.Show<Views.Windows.TaskManagerWindow>();
+                    return;
+
+                case "open_window_editor":
+                    //_windowService.Show<Views.Windows.EditorWindow>();
+                    return;
+
+                case "open_window_settings":
+                    //_windowService.Show<Views.Windows.SettingsWindow>();
+                    return;
+
+                case "open_window_experimental":
+                    //_windowService.Show<Views.Windows.ExperimentalWindow>();
+                    return;
+            }
         }
     }
 }
