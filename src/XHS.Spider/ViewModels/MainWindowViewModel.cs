@@ -43,13 +43,13 @@ namespace XHS.Spider.ViewModels
                     Icon = SymbolRegular.Home24,
                     PageType = typeof(Views.Pages.DashboardPage)
                 },
-                new NavigationItem()
-                {
-                    Content = "Data",
-                    PageTag = "data",
-                    Icon = SymbolRegular.DataHistogram24,
-                    PageType = typeof(Views.Pages.DataPage)
-                }
+                //new NavigationItem()
+                //{
+                //    Content = "Data",
+                //    PageTag = "data",
+                //    Icon = SymbolRegular.DataHistogram24,
+                //    PageType = typeof(Views.Pages.DataPage)
+                //}
             };
 
             NavigationFooter = new ObservableCollection<INavigationControl>
