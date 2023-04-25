@@ -124,6 +124,12 @@
                 Content="Source code and help on GitHub"
                 Icon="Link48"
                 NavigateUri="https://github.com/xisuo67/XHS-Spider" />
+            <ui:Hyperlink
+                Grid.Row="1"
+                Margin="0,0,0,4"
+                Content="问题反馈"
+                Icon="Link48"
+                NavigateUri="https://github.com/xisuo67/XHS-Spider/issues" />
         </Grid>
     </Grid>
 </ui:UiPage>
