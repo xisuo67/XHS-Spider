@@ -45,25 +45,7 @@ namespace XHS.Spider.ViewModels
         {
             switch (parameter)
             {
-                case "open_window_store":
-                    //_windowService.Show<Views.Windows.StoreWindow>();
-                    return;
-
-                case "open_window_manager":
-                    //_windowService.Show<Views.Windows.TaskManagerWindow>();
-                    return;
-
-                case "open_window_editor":
-                    //_windowService.Show<Views.Windows.EditorWindow>();
-                    return;
-
-                case "open_window_settings":
-                    //_windowService.Show<Views.Windows.SettingsWindow>();
-                    return;
-
-                case "open_window_experimental":
-                    //_windowService.Show<Views.Windows.ExperimentalWindow>();
-                    return;
+               
             }
         }
     }
