@@ -110,11 +110,13 @@ namespace XHS.Common.Http
                 ////直接C#函数调用
                 var rValue = engine.Script.sign(url, string.IsNullOrEmpty(postData) ? null : postData);
                 var dic = rValue as IDictionary<string, object>;
-                foreach (var item in dic)
+                if (dic!=null)
                 {
-                    _client.DefaultRequestHeaders.Add(item.Key, item.Value.ToString());
+                    foreach (var item in dic)
+                    {
+                        _client.DefaultRequestHeaders.Add(item.Key, item.Value.ToString());
+                    }
                 }
-
             }
         }
     }
