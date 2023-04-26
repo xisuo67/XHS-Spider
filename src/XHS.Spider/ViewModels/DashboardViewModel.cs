@@ -36,7 +36,7 @@ namespace XHS.Spider.ViewModels
             switch (parameter)
             {
                 case "navigate_to_settingCookie":
-                    _navigationService.Navigate(typeof(Views.Pages.DataPage));
+                    _navigationService.Navigate(typeof(Views.Pages.SettingCookie));
                     return;
             }
         }
