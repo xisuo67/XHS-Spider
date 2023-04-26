@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace XHS.Models.SettingCookie
+{
+    public class CookieModel
+    {
+        /// <summary>
+        /// 主键
+        /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
+        /// Cookie值
+        /// </summary>
+        public string Cookie { get; set; }
+    }
+}

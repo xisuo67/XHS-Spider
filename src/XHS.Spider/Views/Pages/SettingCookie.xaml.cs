@@ -12,16 +12,21 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Wpf.Ui.Common.Interfaces;
+using Wpf.Ui.Mvvm.Interfaces;
+using XHS.Spider.ViewModels;
 
 namespace XHS.Spider.Views.Pages
 {
     /// <summary>
     /// SettingCookie.xaml 的交互逻辑
     /// </summary>
-    public partial class SettingCookie : Page
+    public partial class SettingCookie : INavigableView<SettingCookieViewModel>
     {
-        public SettingCookie()
+        public SettingCookieViewModel ViewModel { get; }
+        public SettingCookie(SettingCookieViewModel viewModel)
         {
+            ViewModel = viewModel;
             InitializeComponent();
         }
     }
