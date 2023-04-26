@@ -18,33 +18,57 @@
     <ui:UiPage.Resources>
         <helpers:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
     </ui:UiPage.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
+        </Grid.RowDefinitions>
 
-    <StackPanel Margin="56,0">
+        <StackPanel Margin="26,0" Grid.Row="0">
         <TextBlock
             FontSize="20"
             FontWeight="Medium"
             Text="个性化设置" />
         <TextBlock Margin="0,12,0,0" Text="主题" />
-        <RadioButton
+            <Grid Grid.Row="1" Margin="0,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <RadioButton
+            Grid.Row="0"
+            Grid.Column="0"
             Margin="0,12,0,0"
             Command="{Binding ViewModel.ChangeThemeCommand, Mode=OneWay}"
             CommandParameter="theme_light"
             Content="浅色"
             GroupName="themeSelect"
             IsChecked="{Binding ViewModel.CurrentTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Light, Mode=OneWay}" />
-        <RadioButton
+                <RadioButton
+            Grid.Row="0"
+            Grid.Column="1"
             Margin="0,8,0,0"
             Command="{Binding ViewModel.ChangeThemeCommand, Mode=OneWay}"
             CommandParameter="theme_dark"
             Content="深色"
             GroupName="themeSelect"
             IsChecked="{Binding ViewModel.CurrentTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Dark, Mode=OneWay}" />
+            </Grid>
+        </StackPanel>
 
         <TextBlock
-            Margin="0,24,0,0"
+            Margin="16,0"
+            Grid.Row="1"
             FontSize="20"
             FontWeight="Medium"
             Text="About XHS.Spider" />
-        <TextBlock Margin="0,12,0,0" Text="{Binding ViewModel.AppVersion, Mode=OneWay}" />
-    </StackPanel>
+        <TextBlock  Grid.Row="1" Margin="16,32,0,0" Text="{Binding ViewModel.AppVersion, Mode=OneWay}" />
+    </Grid>
+  
 </ui:UiPage>

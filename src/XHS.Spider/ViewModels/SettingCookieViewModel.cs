@@ -37,6 +37,10 @@ namespace XHS.Spider.ViewModels
                     Id=1,
                     Cookie="11111111111",
                 },
+                new CookieModel{
+                    Id=2,
+                    Cookie="2222222222222222222222222",
+                }
             };
         }
     }
