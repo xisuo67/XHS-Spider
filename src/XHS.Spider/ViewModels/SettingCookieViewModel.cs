@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Wpf.Ui.Common.Interfaces;
+using XHS.Common.Global;
 using XHS.Models.SettingCookie;
 
 namespace XHS.Spider.ViewModels
@@ -31,17 +32,7 @@ namespace XHS.Spider.ViewModels
                 InitializeData();
         }
         private void InitializeData() {
-            DataGridItemCollection = new List<CookieModel>
-            {
-                new CookieModel{
-                    Id=1,
-                    Cookie="11111111111",
-                },
-                new CookieModel{
-                    Id=2,
-                    Cookie="2222222222222222222222222",
-                }
-            };
+            DataGridItemCollection = GlobalCaChe.Cookies.ToArray();
         }
     }
 }

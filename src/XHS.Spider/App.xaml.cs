@@ -55,6 +55,7 @@ namespace XHS.Spider
                 services.AddScoped<Views.Pages.SettingsPage>();
                 services.AddScoped<ViewModels.SettingsViewModel>();
 
+                services.AddTransient<Views.Windows.CookieEdit>();
                 AddDataService(services);
                 services.Configure<AppConfig>(context.Configuration.GetSection(nameof(AppConfig)));
             }).Build();

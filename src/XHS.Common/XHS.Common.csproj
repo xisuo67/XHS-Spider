@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0-windows</TargetFramework>
@@ -12,6 +12,10 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.ClearScript.V8" Version="7.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\XHS.Models\XHS.Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>
