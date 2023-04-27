@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using Wpf.Ui.Controls;
 using Wpf.Ui.Controls.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
+using XHS.Common.Global;
 using XHS.Models.SettingCookie;
 
 namespace XHS.Spider.Views.Windows
@@ -33,6 +34,9 @@ namespace XHS.Spider.Views.Windows
             if (cookie!=null)
             {
                 _cookieModel=cookie;
+                
+                this.txtCookie.Text = cookie.Cookie;
+                this.txtCookie.Focus();
             }
         }
 
@@ -68,7 +72,20 @@ namespace XHS.Spider.Views.Windows
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
+            var cookie= txtCookie.Text.Trim();
+            if (_cookieModel != null) {
+                _cookieModel.Cookie = cookie;
+            }
+            else
+            {
+                _cookieModel = new CookieModel()
+                {
+                    Id = Guid.NewGuid(),
+                    Cookie = cookie
+                };
+                GlobalCaChe.Cookies.Add(_cookieModel);
+            }
+            this.Close();
         }
     }
 }

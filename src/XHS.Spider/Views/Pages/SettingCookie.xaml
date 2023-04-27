@@ -33,8 +33,8 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                <ui:Button Appearance="Caution" Content="编辑" Padding="6"/>
-                                <ui:Button Appearance="Danger" Content="删除" Padding="6"/>
+                                <ui:Button Appearance="Caution" Content="编辑" Padding="6" Click="CookieEdit_Click"/>
+                                <ui:Button Appearance="Danger" Content="删除" Padding="6" Click="CookieDelete_Click"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

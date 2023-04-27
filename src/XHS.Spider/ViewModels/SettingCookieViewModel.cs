@@ -16,7 +16,6 @@ namespace XHS.Spider.ViewModels
     public partial class SettingCookieViewModel : ObservableObject, INavigationAware
     {
         private IEnumerable<CookieModel> _dataGridItemCollection = new CookieModel[] { };
-        private bool _dataInitialized = false;
         public IEnumerable<CookieModel> DataGridItemCollection
         {
             get => _dataGridItemCollection;
@@ -28,10 +27,9 @@ namespace XHS.Spider.ViewModels
 
         public void OnNavigatedTo()
         {
-            if (!_dataInitialized)
                 InitializeData();
         }
-        private void InitializeData() {
+        public void InitializeData() {
             DataGridItemCollection = GlobalCaChe.Cookies.ToArray();
         }
     }

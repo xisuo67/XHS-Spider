@@ -11,7 +11,7 @@ namespace XHS.Models.SettingCookie
         /// <summary>
         /// 主键
         /// </summary>
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         /// <summary>
         /// Cookie值
