@@ -46,6 +46,13 @@ namespace XHS.Spider.ViewModels
                 },
                 new NavigationItem()
                 {
+                    Content = "搜索",
+                    PageTag = "search",
+                    Icon = SymbolRegular.Search12,
+                    PageType = typeof(Views.Pages.Search)
+                },
+                new NavigationItem()
+                {
                     Content = "Cookie",
                     PageTag = "cookie",
                     Icon = SymbolRegular.DataHistogram24,
