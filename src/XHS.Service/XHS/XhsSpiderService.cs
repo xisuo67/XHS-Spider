@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using XHS.Common.Http;
 using XHS.IService.XHS;
-using XHS.Models.XHS.ApiOutputModel;
+using XHS.Models.XHS.ApiOutputModel.UserPosted;
 using XHS.Models.XHS.InputModel;
 
 namespace XHS.Service.XHS

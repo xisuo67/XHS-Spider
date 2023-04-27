@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XHS.Models.XHS.ApiOutputModel
+namespace XHS.Models.XHS.ApiOutputModel.UserPosted
 {
     //"user": {
     //"nick_name": "线下不知名小雪",

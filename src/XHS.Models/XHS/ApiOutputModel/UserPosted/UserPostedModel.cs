@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XHS.Models.XHS.ApiOutputModel
+namespace XHS.Models.XHS.ApiOutputModel.UserPosted
 {
     /// <summary>
     /// 用户笔记
