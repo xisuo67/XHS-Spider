@@ -22,13 +22,19 @@
         <DataGrid HorizontalContentAlignment="Center"  Grid.Row="1" x:Name="dgrdView" ItemsSource="{Binding ViewModel.DataGridItemCollection}" AutoGenerateColumns="False">
             <DataGrid.RowStyle>
                 <Style TargetType="{x:Type DataGridRow}">
-                    <Setter Property="Height" Value="60" />
+                    <Setter Property="Height" Value="80" />
                 </Style>
             </DataGrid.RowStyle>
 
             <DataGrid.Columns>
                 <DataGridTextColumn Width="*" IsReadOnly="False" Binding="{Binding Id}" Header="Id" Visibility="Hidden"/>
-                <DataGridTextColumn Width="*" IsReadOnly="False" Binding="{Binding Cookie}" Header="Cookie值"/>
+                <DataGridTemplateColumn Header="Cookie值" Width="1*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock TextWrapping="Wrap" Text="{Binding Cookie}" ToolTip="{Binding Cookie}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTemplateColumn Width="220" Header="操作">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

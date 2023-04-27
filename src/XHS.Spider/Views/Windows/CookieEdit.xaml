@@ -20,7 +20,7 @@
                 Grid.Row="0"
                 Grid.Column="0"
                 Margin="0,0,4,0">
-            <ui:TextBox MinLines="20" Name="txtCookie"   
+            <ui:TextBox MinLines="10" Name="txtCookie"   
                         TextWrapping="Wrap"
                         AcceptsReturn="True"
                         VerticalScrollBarVisibility="Visible" 
