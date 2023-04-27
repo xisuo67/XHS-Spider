@@ -9,11 +9,11 @@ namespace XHS.Models.XHS.ApiOutputModel.NodeDetail
 {
     public class NodeItem
     {
-        [JsonProperty("")]
-        public string id { get; set; }
-        [JsonProperty("")]
-        public string model_type { get; set; }
-        [JsonProperty("")]
-        public NoteCardModel note_card { get; set; }
+        [JsonProperty("id")]
+        public string Id { get; set; }
+        [JsonProperty("model_type")]
+        public string ModelType { get; set; }
+        [JsonProperty("note_card")]
+        public NoteCardModel NoteCard { get; set; }
     }
 }

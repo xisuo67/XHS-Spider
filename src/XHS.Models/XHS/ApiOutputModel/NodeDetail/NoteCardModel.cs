@@ -24,14 +24,14 @@ namespace XHS.Models.XHS.ApiOutputModel.NodeDetail
 
         [JsonProperty("interact_info")]
         public InteractInfoModel InteractInfo { get; set; }
-
-        public List<ImageListModel> image_list { get; set; }
-
-        public List<TagListModel> tag_list { get; set; }
-
-        public string note_id { get; set; }
-
-        public string type { get; set; }
+        [JsonProperty("image_list")]
+        public List<ImageListModel> ImageList { get; set; }
+        [JsonProperty("tag_list")]
+        public List<TagListModel> TagList { get; set; }
+        [JsonProperty("note_id")]
+        public string NoteId { get; set; }
+        [JsonProperty("type")]
+        public string Type { get; set; }
 
          //"at_user_list": [],
          //           "share_info": {

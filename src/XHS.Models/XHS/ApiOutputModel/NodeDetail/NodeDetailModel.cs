@@ -9,9 +9,11 @@ namespace XHS.Models.XHS.ApiOutputModel.NodeDetail
 {
     public class NodeDetailModel: XHSBaseApiModel<NodeDetailModel>
     {
-        [JsonProperty("")]
-        public string cursor_score { get; set; }
-
-
+        [JsonProperty("cursor_score")]
+        public string CursorScore { get; set; }
+        [JsonProperty("items")]
+        public NodeItem Items { get; set; }
+        [JsonProperty("current_time")]
+        public long CurrentTime { get; set; }
     }
 }

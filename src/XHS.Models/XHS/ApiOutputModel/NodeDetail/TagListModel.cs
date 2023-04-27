@@ -10,10 +10,10 @@ namespace XHS.Models.XHS.ApiOutputModel.NodeDetail
     public class TagListModel
     {
         [JsonProperty("id")]
-        public string id { get; set; }
+        public string Id { get; set; }
         [JsonProperty("name")]
-        public string name { get; set; }
+        public string Name { get; set; }
         [JsonProperty("type")]
-        public string type { get; set; }
+        public string Type { get; set; }
     }
 }
