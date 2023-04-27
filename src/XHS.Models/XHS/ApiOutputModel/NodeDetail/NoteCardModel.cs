@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XHS.Models.XHS.ApiOutputModel.Common;
 using XHS.Models.XHS.ApiOutputModel.UserPosted;
 
 namespace XHS.Models.XHS.ApiOutputModel.NodeDetail
@@ -22,11 +23,11 @@ namespace XHS.Models.XHS.ApiOutputModel.NodeDetail
         public NodeUser User { get; set; }
 
         [JsonProperty("interact_info")]
-        public NodeInteractInfo InteractInfo { get; set; }
+        public InteractInfoModel InteractInfo { get; set; }
 
-        public ImageListModel image_list { get; set; }
+        public List<ImageListModel> image_list { get; set; }
 
-        public TagListModel tag_list { get; set; }
+        public List<TagListModel> tag_list { get; set; }
 
         public string note_id { get; set; }
 
