@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\XHS.Common\XHS.Common.csproj" />
     <ProjectReference Include="..\XHS.IService\XHS.IService.csproj" />
+    <ProjectReference Include="..\XHS.Models\XHS.Models.csproj" />
   </ItemGroup>
 
 </Project>

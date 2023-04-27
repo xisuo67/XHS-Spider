@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XHS.Models.XHS;
+using XHS.Models.XHS.InputModel;
 
 namespace XHS.IService.XHS
 {
@@ -11,5 +13,11 @@ namespace XHS.IService.XHS
     /// </summary>
     public  interface IXhsSpiderService
     {
+        /// <summary>
+        ///分页查询用户所有笔记接口 /api/sns/web/v1/user_posted
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        UserPostedModel UserPosted(UserPostedInputModel model);
     }
 }
