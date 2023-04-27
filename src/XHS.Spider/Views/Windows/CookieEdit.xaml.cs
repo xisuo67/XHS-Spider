@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using Wpf.Ui.Controls;
 using Wpf.Ui.Controls.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
+using XHS.Models.SettingCookie;
 
 namespace XHS.Spider.Views.Windows
 {
@@ -22,10 +23,17 @@ namespace XHS.Spider.Views.Windows
     /// </summary>
     public partial class CookieEdit : UiWindow, INavigationWindow
     {
+        private CookieModel _cookieModel;
         public CookieEdit()
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;// 窗体居中
             InitializeComponent();
+        }
+        public CookieEdit(CookieModel cookie=null):this() {
+            if (cookie!=null)
+            {
+                _cookieModel=cookie;
+            }
         }
 
         public void CloseWindow()
