@@ -4,6 +4,7 @@ using System.Windows.Input;
 using Wpf.Ui.Common.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
 using XHS.IService;
+using XHS.Spider.Views.Windows;
 
 namespace XHS.Spider.ViewModels
 {
@@ -45,7 +46,9 @@ namespace XHS.Spider.ViewModels
         {
             switch (parameter)
             {
-               
+                case "open_window_CookieEdit":
+                    _windowService.Show<CookieEdit>();
+                    return;
             }
         }
     }
