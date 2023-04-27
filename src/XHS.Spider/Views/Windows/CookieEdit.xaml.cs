@@ -24,6 +24,7 @@ namespace XHS.Spider.Views.Windows
     {
         public CookieEdit()
         {
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;// 窗体居中
             InitializeComponent();
         }
 
@@ -55,6 +56,11 @@ namespace XHS.Spider.Views.Windows
         public void ShowWindow()
         {
             throw new NotImplementedException();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
