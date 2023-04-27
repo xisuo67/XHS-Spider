@@ -20,7 +20,7 @@
                 Grid.Row="0"
                 Grid.Column="0"
                 Margin="0,0,4,0">
-            <ui:TextBox MinLines="10" AcceptsReturn="True" PlaceholderText="请输入网页中Cookie值" />
+            <ui:TextBox MinLines="10" AcceptsReturn="True" PlaceholderText="请输入网页中Cookie值" VerticalAlignment="Center" />
         </StackPanel>
         <ui:Button Grid.Row="1"  HorizontalAlignment="Right" Margin="2,2,2,2"
                         VerticalAlignment="Bottom" Appearance="Info" Content="确定" Click="Button_Click"/>
