@@ -6,6 +6,8 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.ClearScript.V8;
+using XHS.Common.Global;
+using System.Windows.Documents;
 
 namespace XHS.Common.Http
 {
@@ -100,7 +102,13 @@ namespace XHS.Common.Http
             _client.DefaultRequestHeaders.Clear();
             _client.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36");
             //TODO:cookie通过手动设置
-            _client.DefaultRequestHeaders.Add("cookie", "");
+            var cookies = GlobalCaChe.Cookies;
+            if (cookies.Count>0)
+            {
+                var random = new Random().Next(cookies.Count);
+                string cookie = cookies[random]?.Cookie;
+                _client.DefaultRequestHeaders.Add("cookie", cookie);
+            }
             using (var engine = new V8ScriptEngine())
             {
                 engine.DocumentSettings.AccessFlags = Microsoft.ClearScript.DocumentAccessFlags.EnableFileLoading;
