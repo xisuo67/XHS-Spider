@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XHS.Models.XHS
+namespace XHS.Models.XHS.ApiOutputModel
 {
     //"user": {
-        //"nick_name": "线下不知名小雪",
-        //"avatar": "https://sns-avatar-qc.xhscdn.com/avatar/6428b94d888bee6dcaff03d9.jpg",
-        //"user_id": "5ad6209c4eacab0c13a61dd4",
-        //"nickname": "线下不知名小雪"
+    //"nick_name": "线下不知名小雪",
+    //"avatar": "https://sns-avatar-qc.xhscdn.com/avatar/6428b94d888bee6dcaff03d9.jpg",
+    //"user_id": "5ad6209c4eacab0c13a61dd4",
+    //"nickname": "线下不知名小雪"
     //            },
 
     /// <summary>

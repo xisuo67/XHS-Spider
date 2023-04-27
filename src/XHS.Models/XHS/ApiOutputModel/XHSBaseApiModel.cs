@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace XHS.Models.XHS
+namespace XHS.Models.XHS.ApiOutputModel
 {
     /// <summary>
     /// 小红书接口返回基础类

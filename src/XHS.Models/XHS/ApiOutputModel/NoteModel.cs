@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XHS.Models.XHS
+namespace XHS.Models.XHS.ApiOutputModel
 {
     /// <summary>
     /// 笔记信息

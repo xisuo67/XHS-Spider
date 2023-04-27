@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XHS.Models.XHS
+namespace XHS.Models.XHS.ApiOutputModel
 {
     /// <summary>
     /// 用户笔记
     /// </summary>
-    public class UserPostedModel: XHSBaseApiModel<UserPostedModel>
+    public class UserPostedModel : XHSBaseApiModel<UserPostedModel>
     {
         [JsonProperty("has_more")]
         public bool HasMore { get; set; }
