@@ -1,14 +1,235 @@
-﻿<Page x:Class="XHS.Spider.Views.Pages.UserProfilePage"
+﻿<ui:UiPage  
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" 
+      x:Class="XHS.Spider.Views.Pages.UserProfilePage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:XHS.Spider.Views.Pages"
+      xmlns:viewmodels="clr-namespace:XHS.Spider.ViewModels"
+      d:DataContext="{d:DesignInstance local:UserProfilePage,
+                                     IsDesignTimeCreatable=False}"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
+      d:Background="{DynamicResource ApplicationBackgroundBrush}"
+        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       Title="UserProfilePage">
 
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="150" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <!--搜索-->
+        <Grid Grid.Row="0">
+            <ui:TextBox 
+            Icon="Search12" 
+            PlaceholderText="请输入博主主页"
+            Text="{Binding Path=ViewModel.InputText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+            IconPlacement="Right" Margin="110,0,110,0">
+                <TextBox.InputBindings>
+                    <KeyBinding Key="Enter" Command="{Binding ViewModel.InputCommand}" />
+                </TextBox.InputBindings>
+            </ui:TextBox>
+        </Grid>
+        <!--个人信息-->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Border
+                    Grid.Column="0"
+                    Width="120"
+                    Height="120"
+                        HorizontalAlignment="Center"
+                    CornerRadius="20" >
+                <Image Name="imgDynamic" Source="pack://application:,,,/Assets/test.jpg" ></Image>
+            </Border>
+            <StackPanel
+                       VerticalAlignment="Top"
+                        Height="139" Width="268" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0,265,0">
+                <TextBlock
+                            Margin="0,5,0,0"
+                            HorizontalAlignment="Center"
+                            FontWeight="Bold"
+                            FontSize="14"
+                            Text="线下不知名小雪" />
+                <StackPanel Margin="0,4,10,0" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock
+                      HorizontalAlignment="left"
+                        Foreground="#FF999999"
+                            FontSize="10"
+                            Text="小红书号：">
+
+                    </TextBlock>
+                    <TextBlock
+                      HorizontalAlignment="left"
+                         Foreground="#FF999999"
+                            FontSize="10"
+                            Text="270010588">
+
+                    </TextBlock>
+                    <TextBlock
+                        Margin="10,0,0,0"
+                         Foreground="#FF999999"
+                            FontSize="10"
+                            Text="IP属地：" />
+                    <TextBlock
+                         Foreground="#FF999999"
+                            FontSize="10"
+                            Text="江苏" />
+                </StackPanel>
+                <TextBlock
+                     Margin="0,8,0,0"
+                    HorizontalAlignment="Center"
+                        FontSize="12"
+                        Text="梦想是30岁前变成富婆hhh" />
+                <StackPanel Margin="0,8,10,0" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock
+                      HorizontalAlignment="left"
+                        Foreground="#FF999999"
+                            FontSize="10"
+                            Text="女">
+
+                    </TextBlock>
+                    <TextBlock
+                         Margin="10,0,0,0"
+                      HorizontalAlignment="left"
+                        Foreground="#FF999999"
+                            FontSize="10"
+                            Text="摩羯座">
+
+                    </TextBlock>
+                    <TextBlock
+                        Margin="10,0,0,0"
+                         Foreground="#FF999999"
+                            FontSize="10"
+                            Text="中国" />
+                    <TextBlock
+                        Margin="10,0,0,0"
+                         Foreground="#FF999999"
+                            FontSize="10"
+                            Text="时尚博主" />
+                </StackPanel>
+
+                <StackPanel Margin="0,8,10,0" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                        <TextBlock
+                             FontWeight="Bold"
+                      HorizontalAlignment="Center"
+                            FontSize="12"
+                            Text="67">
+                        </TextBlock>
+                        <TextBlock
+                         Margin="0,2,0,0"
+                      HorizontalAlignment="left"
+                        Foreground="#FF999999"
+                            FontSize="14"
+                            Text="关注">
+
+                        </TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="22,0,0,0">
+                        <TextBlock
+                             FontWeight="Bold"
+                      HorizontalAlignment="Center"
+                            FontSize="12"
+                            Text="4674">
+                        </TextBlock>
+                        <TextBlock
+                         Margin="0,2,0,0"
+                      HorizontalAlignment="left"
+                        Foreground="#FF999999"
+                            FontSize="14"
+                            Text="粉丝">
+
+                        </TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="22,0,0,0">
+                        <TextBlock
+                             FontWeight="Bold"
+                      HorizontalAlignment="Center"
+                            FontSize="12"
+                            Text="1万">
+                        </TextBlock>
+                        <TextBlock
+                         Margin="0,2,0,0"
+                      HorizontalAlignment="left"
+                        Foreground="#FF999999"
+                            FontSize="14"
+                            Text="获赞与收藏">
+                        </TextBlock>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+
+        </Grid>
+        <!--导航栏、笔记-->
+        <Grid Grid.Row="2" Margin="0,0,0,-23">
+            <TabControl>
+                <TabItem IsSelected="True">
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <ui:SymbolIcon Margin="0,0,6,0" Symbol="NotepadEdit16" />
+                            <TextBlock Text="笔记" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"  />
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal" Grid.Row="0" Cursor="">
+                            <ui:Button Content="下载全部" Appearance="Info" />
+                        </StackPanel>
+                        <ui:DataGrid HorizontalContentAlignment="Center"  Grid.Row="1" Name="dgrdView" Margin="0,8,0,0"  AutoGenerateColumns="False">
+                            <DataGrid.RowStyle>
+                                <Style TargetType="DataGridRow">
+                                    <Setter Property="Height" Value="60" />
+                                </Style>
+                            </DataGrid.RowStyle>
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Width="*" IsReadOnly="True" Header="标题"/>
+                                <DataGridTextColumn Width="*" IsReadOnly="True" Header="点赞数量"/>
+                            </DataGrid.Columns>
+                        </ui:DataGrid>
+                    </Grid>
+                </TabItem>
+
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <ui:SymbolIcon Margin="0,0,6,0" Symbol="Star12" />
+                            <TextBlock Text="收藏" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"  />
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal" Grid.Row="0" Cursor="">
+                            <ui:Button Content="下载全部" Appearance="Info" />
+                        </StackPanel>
+                        <ui:DataGrid HorizontalContentAlignment="Center"  Grid.Row="1" Name="startDgrdView" Margin="0,8,0,0"  AutoGenerateColumns="False">
+                            <DataGrid.RowStyle>
+                                <Style TargetType="DataGridRow">
+                                    <Setter Property="Height" Value="60" />
+                                </Style>
+                            </DataGrid.RowStyle>
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Width="*" IsReadOnly="True" Header="标题"/>
+                                <DataGridTextColumn Width="*" IsReadOnly="True" Header="点赞数量"/>
+                            </DataGrid.Columns>
+                        </ui:DataGrid>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </Grid>
     </Grid>
-</Page>
+</ui:UiPage>

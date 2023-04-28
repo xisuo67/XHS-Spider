@@ -53,6 +53,13 @@ namespace XHS.Spider.ViewModels
                 },
                 new NavigationItem()
                 {
+                    Content = "用户笔记",
+                    PageTag = "userNode",
+                    Icon = SymbolRegular.NotepadEdit16,
+                    PageType = typeof(Views.Pages.UserProfilePage)
+                },
+                new NavigationItem()
+                {
                     Content = "Cookie",
                     PageTag = "cookie",
                     Icon = SymbolRegular.DataHistogram24,
