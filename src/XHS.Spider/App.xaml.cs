@@ -8,6 +8,8 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Threading;
+using Wpf.Ui.Controls.Interfaces;
+using Wpf.Ui.Controls.Navigation;
 using Wpf.Ui.Mvvm.Contracts;
 using Wpf.Ui.Mvvm.Services;
 using XHS.IService.DI;
@@ -43,7 +45,6 @@ namespace XHS.Spider
 
                 // Service containing navigation, same as INavigationWindow... but without window
                 services.AddSingleton<INavigationService, NavigationService>();
-
                 // Main window with navigation
                 services.AddScoped<INavigationWindow, Views.Windows.MainWindow>();
                 services.AddScoped<ViewModels.MainWindowViewModel>();
