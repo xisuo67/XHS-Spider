@@ -52,6 +52,7 @@ namespace XHS.Spider
                 services.AddScoped<ViewModels.DashboardViewModel>();
                 services.AddScoped<Views.Pages.SettingCookie>();
                 services.AddScoped<Views.Pages.Search>();
+                services.AddScoped<ViewModels.SearchViewModel>();
                 services.AddScoped<ViewModels.SettingCookieViewModel>();
                 services.AddScoped<Views.Pages.SettingsPage>();
                 services.AddScoped<ViewModels.SettingsViewModel>();

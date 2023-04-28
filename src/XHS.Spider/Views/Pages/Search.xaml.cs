@@ -12,17 +12,25 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Wpf.Ui.Common.Interfaces;
 using Wpf.Ui.Controls;
+using XHS.Spider.ViewModels;
 
 namespace XHS.Spider.Views.Pages
 {
     /// <summary>
     /// Search.xaml 的交互逻辑
     /// </summary>
-    public partial class Search : UiPage
+    public partial class Search : INavigableView<ViewModels.SearchViewModel>
     {
-        public Search()
+        public ViewModels.SearchViewModel ViewModel
         {
+            get;
+        }
+
+        public Search(ViewModels.SearchViewModel viewModel)
+        {
+            ViewModel = viewModel;
             InitializeComponent();
         }
     }

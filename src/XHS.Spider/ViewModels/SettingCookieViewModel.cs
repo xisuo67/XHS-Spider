@@ -27,9 +27,10 @@ namespace XHS.Spider.ViewModels
 
         public void OnNavigatedTo()
         {
-                InitializeData();
+            InitializeData();
         }
-        public void InitializeData() {
+        public void InitializeData()
+        {
             DataGridItemCollection = GlobalCaChe.Cookies.ToArray();
         }
     }
