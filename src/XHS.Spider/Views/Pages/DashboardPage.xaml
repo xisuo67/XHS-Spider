@@ -115,6 +115,25 @@
                 Grid.Column="1"
                 Margin="4,0,4,0"
                 Command="{Binding ViewModel.NavigateCommand}"
+                CommandParameter="navigate_to_search"
+                Icon="Search12">
+                <StackPanel>
+                    <TextBlock
+                        Margin="0"
+                        FontSize="13"
+                        FontWeight="Medium"
+                        Text="Search" />
+                    <TextBlock
+                        FontSize="12"
+                        Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                        Text="搜索小红书" />
+                </StackPanel>
+            </ui:CardAction>
+            <ui:CardAction
+                Grid.Row="0"
+                Grid.Column="2"
+                Margin="4,0,4,0"
+                Command="{Binding ViewModel.NavigateCommand}"
                 CommandParameter="navigate_to_settingCookie"
                 Icon="Fluent24">
                 <StackPanel>
