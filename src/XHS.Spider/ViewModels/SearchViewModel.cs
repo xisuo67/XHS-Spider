@@ -1,12 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Wpf.Ui.Common.Interfaces;
+using XHS.IService.XHS;
 
 namespace XHS.Spider.ViewModels
 {
@@ -15,6 +11,10 @@ namespace XHS.Spider.ViewModels
     /// </summary>
     public partial class SearchViewModel : ObservableObject, INavigationAware
     {
+        private readonly ISearchService _searchService;
+        public SearchViewModel(ISearchService searchService) {
+            _searchService= searchService;
+        }
         private string inputText;
         public string InputText
         {
@@ -34,6 +34,7 @@ namespace XHS.Spider.ViewModels
         private void ExecuteInput()
         {
             //TODO:
+            _searchService.SearchInput(InputText);
         }
 
         public void OnNavigatedFrom()

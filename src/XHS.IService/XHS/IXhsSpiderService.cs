@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XHS.IService.DI;
 using XHS.Models.XHS.ApiOutputModel.NodeDetail;
 using XHS.Models.XHS.ApiOutputModel.OtherInfo;
 using XHS.Models.XHS.ApiOutputModel.UserPosted;
@@ -13,7 +14,7 @@ namespace XHS.IService.XHS
     /// <summary>
     /// 小红书接口
     /// </summary>
-    public  interface IXhsSpiderService
+    public interface IXhsSpiderService: ISingletonDependency
     {
         /// <summary>
         ///分页查询用户所有笔记接口 /api/sns/web/v1/user_posted
