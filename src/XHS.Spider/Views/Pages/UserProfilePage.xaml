@@ -42,14 +42,13 @@
             </Grid.ColumnDefinitions>
             <Border
                     Grid.Column="0"
-                    Width="140"
-                    Height="140"
-                        HorizontalAlignment="Center"
-                    CornerRadius="70" >
+                    Width="120"
+                    Height="120"
+                        HorizontalAlignment="Right"
+                    CornerRadius="60" >
                 <Border.Background>
                     <ImageBrush x:Name="imgDynamic" ImageSource="pack://application:,,,/Assets/test.jpg"/>
                 </Border.Background>
-               
             </Border>
             <StackPanel
                        VerticalAlignment="Top"
