@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
@@ -11,7 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.ClearScript.Core" Version="7.4.1" />
     <PackageReference Include="Microsoft.ClearScript.V8" Version="7.4.1" />
+    <PackageReference Include="Microsoft.ClearScript.V8.ICUData" Version="7.4.1" />
+    <PackageReference Include="Microsoft.ClearScript.V8.Native.win-x64" Version="7.4.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
   <ItemGroup>
