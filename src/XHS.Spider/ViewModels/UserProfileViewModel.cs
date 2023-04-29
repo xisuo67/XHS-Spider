@@ -23,10 +23,12 @@ namespace XHS.Spider.ViewModels
             get => inputText;
             set => SetProperty(ref inputText, value);
         }
+        private readonly ISnackbarService _snackbarService;
         private readonly IXhsSpiderService _xhsSpiderService;
         private readonly INavigationService _navigationService;
-        public UserProfileViewModel(INavigationService navigationService, IXhsSpiderService xhsSpiderService)
+        public UserProfileViewModel(INavigationService navigationService, ISnackbarService snackbarService, IXhsSpiderService xhsSpiderService)
         {
+            _snackbarService = snackbarService;
             _xhsSpiderService = xhsSpiderService;
         }
 
@@ -53,7 +55,15 @@ namespace XHS.Spider.ViewModels
                     }
                     else
                     {
-                        var userinfo= _xhsSpiderService.GetOtherInfo(id);
+                        var apiResult= _xhsSpiderService.GetOtherInfo(id);
+                        if (apiResult != null && apiResult.Success)
+                        {
+
+                        }
+                        else
+                        {
+
+                        }
                     }
                 }
             }

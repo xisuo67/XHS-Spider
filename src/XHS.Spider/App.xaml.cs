@@ -43,6 +43,11 @@ namespace XHS.Spider
                 // TaskBar manipulation
                 services.AddSingleton<ITaskBarService, TaskBarService>();
 
+                // Snackbar service
+                services.AddSingleton<ISnackbarService, SnackbarService>();
+
+                // Dialog service
+                services.AddSingleton<IDialogService, DialogService>();
                 // Service containing navigation, same as INavigationWindow... but without window
                 services.AddSingleton<INavigationService, NavigationService>();
                 // Main window with navigation
