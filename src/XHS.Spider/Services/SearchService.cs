@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Wpf.Ui.Controls.Interfaces;
+using XHS.Spider.ViewModels;
 
 namespace XHS.Spider.Services
 {
@@ -14,15 +16,22 @@ namespace XHS.Spider.Services
         /// </summary>
         /// <param name="input"></param>
         /// <exception cref="NotImplementedException"></exception>
-        public static void SearchInput(string input, INavigation navigation)
+        public static void SearchInput(string input, INavigation navigation, IServiceProvider serviceProvider, IPageServiceNew pageServiceNew)
         {
+           
             if (input.Contains("user/profile"))
             {
+                SetJumpParam(input, serviceProvider,pageServiceNew);
                 //测试跳转
-                navigation.Navigate(typeof(Views.Pages.UserProfilePage), "test");
+                navigation.Navigate(typeof(Views.Pages.UserProfilePage));
             }
         }
-
+        private static void SetJumpParam(string input, IServiceProvider serviceProvider, IPageServiceNew pageServiceNew)
+        {
+            pageServiceNew.Scope = serviceProvider.CreateScope();
+            var dc = pageServiceNew.Scope.ServiceProvider.GetRequiredService<UserProfileViewModel>();
+            dc.InputText = input;
+        }
         /// <summary>
         /// 从url中获取id
         /// </summary>

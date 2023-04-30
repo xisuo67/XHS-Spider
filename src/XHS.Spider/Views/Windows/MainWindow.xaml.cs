@@ -7,6 +7,7 @@ using Wpf.Ui.Controls.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
 using Wpf.Ui.Mvvm.Services;
 using Wpf.Ui.TaskBar;
+using XHS.Spider.Services;
 
 namespace XHS.Spider.Views.Windows
 {
@@ -22,7 +23,7 @@ namespace XHS.Spider.Views.Windows
             get;
         }
 
-        public MainWindow(ViewModels.MainWindowViewModel viewModel, IPageService pageService, ITaskBarService taskBarService, INavigationService navigationService)
+        public MainWindow(ViewModels.MainWindowViewModel viewModel, IPageServiceNew pageService, ITaskBarService taskBarService, INavigationService navigationService)
         {
             _taskBarService = taskBarService;
             ViewModel = viewModel;

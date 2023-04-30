@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,8 +27,11 @@ namespace XHS.Spider.ViewModels
         private readonly ISnackbarService _snackbarService;
         private readonly IXhsSpiderService _xhsSpiderService;
         private readonly INavigationService _navigationService;
-        public UserProfileViewModel(INavigationService navigationService, ISnackbarService snackbarService, IXhsSpiderService xhsSpiderService)
+        private readonly IServiceProvider _serviceProvider;
+        private readonly IPageServiceNew _pageServiceNew;
+        public UserProfileViewModel(IServiceProvider serviceProvider, IPageServiceNew pageServiceNew, ISnackbarService snackbarService, IXhsSpiderService xhsSpiderService)
         {
+  
             _snackbarService = snackbarService;
             _xhsSpiderService = xhsSpiderService;
         }

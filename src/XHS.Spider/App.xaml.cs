@@ -37,6 +37,7 @@ namespace XHS.Spider
                 // App Host
                 services.AddHostedService<ApplicationHostService>();
                 // Page resolver service
+                //services.AddSingleton<IPageService, PageService>();
                 services.AddSingleton<IPageServiceNew, PageService>();
                 // Theme manipulation
                 services.AddSingleton<IThemeService, ThemeService>();
