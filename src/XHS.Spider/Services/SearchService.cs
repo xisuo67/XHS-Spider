@@ -22,7 +22,6 @@ namespace XHS.Spider.Services
             if (input.Contains("user/profile"))
             {
                 SetJumpParam(input, serviceProvider,pageServiceNew);
-                //测试跳转
                 navigation.Navigate(typeof(Views.Pages.UserProfilePage));
             }
         }
