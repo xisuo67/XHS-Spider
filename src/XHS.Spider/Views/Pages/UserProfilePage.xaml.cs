@@ -14,6 +14,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Wpf.Ui.Common.Interfaces;
 using Wpf.Ui.Mvvm.Interfaces;
+using Wpf.Ui.TaskBar;
+using XHS.Spider.Helpers;
 
 namespace XHS.Spider.Views.Pages
 {

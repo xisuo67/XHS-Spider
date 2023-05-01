@@ -118,6 +118,16 @@ namespace XHS.Spider
         }
 
         /// <summary>
+        /// 异步修改绑定到UI的属性
+        /// </summary>
+        /// <param name="callback"></param>
+        public static void PropertyChangeAsync(Action callback)
+        {
+            if (Current == null) { return; }
+
+            Current.Dispatcher.Invoke(callback);
+        }
+        /// <summary>
         /// 程序集是否匹配
         /// </summary>
         public static bool Match(string assemblyName)

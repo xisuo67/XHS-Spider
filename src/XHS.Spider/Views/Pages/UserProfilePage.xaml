@@ -47,7 +47,7 @@
                         HorizontalAlignment="Right"
                     CornerRadius="60" >
                 <Border.Background>
-                    <ImageBrush x:Name="imgDynamic" ImageSource="pack://application:,,,/Assets/test.jpg"/>
+                    <ImageBrush ImageSource="{Binding ViewModel.HeadImage}"/>
                 </Border.Background>
             </Border>
             <StackPanel
@@ -58,7 +58,7 @@
                             HorizontalAlignment="Center"
                             FontWeight="Bold"
                             FontSize="14"
-                            Text="线下不知名小雪" />
+                            Text="{Binding ViewModel.UserInfo.BasicInfo.NickName}" />
                 <StackPanel Margin="0,4,10,0" Orientation="Horizontal" HorizontalAlignment="Center">
                     <TextBlock
                       HorizontalAlignment="left"
@@ -71,7 +71,7 @@
                       HorizontalAlignment="left"
                          Foreground="#FF999999"
                             FontSize="10"
-                            Text="270010588">
+                            Text="{Binding ViewModel.UserInfo.BasicInfo.RedId}">
 
                     </TextBlock>
                     <TextBlock
@@ -82,39 +82,47 @@
                     <TextBlock
                          Foreground="#FF999999"
                             FontSize="10"
-                            Text="江苏" />
+                            Text="{Binding ViewModel.UserInfo.BasicInfo.IpLocation}" />
                 </StackPanel>
                 <TextBlock
                      Margin="0,8,0,0"
                     HorizontalAlignment="Center"
                         FontSize="12"
-                        Text="梦想是30岁前变成富婆hhh" />
+                        Text="{Binding ViewModel.UserInfo.BasicInfo.Desc}" />
                 <StackPanel Margin="0,8,10,0" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <TextBlock
+                    <Border
+                    Width="10"
+                    Height="10"
+                    HorizontalAlignment="left">
+                        <Border.Background>
+                            <ImageBrush ImageSource="{Binding ViewModel.SexImage}"/>
+                        </Border.Background>
+                    </Border>
+                    <!--<TextBlock
                       HorizontalAlignment="left"
                         Foreground="#FF999999"
                             FontSize="10"
                             Text="女">
 
-                    </TextBlock>
+                    </TextBlock>-->
                     <TextBlock
                          Margin="10,0,0,0"
                       HorizontalAlignment="left"
                         Foreground="#FF999999"
                             FontSize="10"
-                            Text="摩羯座">
+                            Text="{Binding ViewModel.Info.Name}">
 
                     </TextBlock>
                     <TextBlock
                         Margin="10,0,0,0"
                          Foreground="#FF999999"
                             FontSize="10"
-                            Text="中国" />
+                            Text="{Binding ViewModel.Location.Name}" />
                     <TextBlock
                         Margin="10,0,0,0"
                          Foreground="#FF999999"
                             FontSize="10"
-                            Text="时尚博主" />
+                            Text="{Binding ViewModel.Profession.Name}" />
                 </StackPanel>
 
                 <StackPanel Margin="0,8,10,0" Orientation="Horizontal" HorizontalAlignment="Center">
@@ -123,14 +131,14 @@
                              FontWeight="Bold"
                       HorizontalAlignment="Center"
                             FontSize="12"
-                            Text="67">
+                            Text="{Binding ViewModel.Follows.Count}">
                         </TextBlock>
                         <TextBlock
                          Margin="0,2,0,0"
                       HorizontalAlignment="left"
                         Foreground="#FF999999"
                             FontSize="14"
-                            Text="关注">
+                            Text="{Binding ViewModel.Follows.Name}">
 
                         </TextBlock>
                     </StackPanel>
@@ -139,14 +147,14 @@
                              FontWeight="Bold"
                       HorizontalAlignment="Center"
                             FontSize="12"
-                            Text="4674">
+                            Text="{Binding ViewModel.Fans.Count}">
                         </TextBlock>
                         <TextBlock
                          Margin="0,2,0,0"
                       HorizontalAlignment="left"
                         Foreground="#FF999999"
                             FontSize="14"
-                            Text="粉丝">
+                            Text="{Binding ViewModel.Fans.Name}">
 
                         </TextBlock>
                     </StackPanel>
@@ -155,14 +163,14 @@
                              FontWeight="Bold"
                       HorizontalAlignment="Center"
                             FontSize="12"
-                            Text="1万">
+                            Text="{Binding ViewModel.Interaction.Count}">
                         </TextBlock>
                         <TextBlock
                          Margin="0,2,0,0"
                       HorizontalAlignment="left"
                         Foreground="#FF999999"
                             FontSize="14"
-                            Text="获赞与收藏">
+                            Text="{Binding ViewModel.Interaction.Name}">
                         </TextBlock>
                     </StackPanel>
                 </StackPanel>
