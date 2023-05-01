@@ -30,6 +30,7 @@ namespace XHS.Spider.Services
             pageServiceNew.Scope = serviceProvider.CreateScope();
             var dc = pageServiceNew.Scope.ServiceProvider.GetRequiredService<UserProfileViewModel>();
             dc.InputText = input;
+            dc.ExecuteInitData();
         }
         /// <summary>
         /// 从url中获取id

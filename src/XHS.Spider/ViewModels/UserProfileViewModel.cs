@@ -96,10 +96,6 @@ namespace XHS.Spider.ViewModels
         {
             _snackbarService = snackbarService;
             _xhsSpiderService = xhsSpiderService;
-            if (!string.IsNullOrEmpty(this.InputText))
-            {
-                ExecuteInput();
-            }
         }
 
 
@@ -107,7 +103,7 @@ namespace XHS.Spider.ViewModels
         private ICommand inputCommand;
         public ICommand InputCommand
         {
-            get => inputCommand ?? (inputCommand = new Wpf.Ui.Common.RelayCommand(ExecuteInput));
+            get => inputCommand ?? (inputCommand = new Wpf.Ui.Common.RelayCommand(ExecuteInitData));
             set => inputCommand = value;
         }
         #endregion
@@ -115,7 +111,7 @@ namespace XHS.Spider.ViewModels
         /// <summary>
         /// 处理输入事件
         /// </summary>
-        private void ExecuteInput()
+        public void ExecuteInitData()
         {
             if (!string.IsNullOrEmpty(InputText))
             {
