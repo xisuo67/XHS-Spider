@@ -91,8 +91,8 @@
                         Text="{Binding ViewModel.UserInfo.BasicInfo.Desc}" />
                 <StackPanel Margin="0,8,10,0" Orientation="Horizontal" HorizontalAlignment="Center">
                     <Border
-                    Width="10"
-                    Height="10"
+                    Width="15"
+                    Height="15"
                     HorizontalAlignment="left">
                         <Border.Background>
                             <ImageBrush ImageSource="{Binding ViewModel.SexImage}"/>
