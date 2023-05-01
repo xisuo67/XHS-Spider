@@ -20,7 +20,5 @@ namespace XHS.Models.XHS.ApiOutputModel.UserPosted
 
         [JsonProperty("notes")]
         public List<NoteModel> Notes { get; set; }
-
-
     }
 }
