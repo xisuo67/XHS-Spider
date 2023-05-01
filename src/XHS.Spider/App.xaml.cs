@@ -49,6 +49,11 @@ namespace XHS.Spider
 
                 // Dialog service
                 services.AddSingleton<IDialogService, DialogService>();
+
+                // Tray icon
+                services.AddSingleton<INotifyIconService, CustomNotifyIconService>();
+                // Dialog service
+                services.AddSingleton<IDialogService, DialogService>();
                 // Service containing navigation, same as INavigationWindow... but without window
                 services.AddSingleton<INavigationService, NavigationService>();
                 // Main window with navigation

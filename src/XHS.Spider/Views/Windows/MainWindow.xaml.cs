@@ -23,7 +23,7 @@ namespace XHS.Spider.Views.Windows
             get;
         }
 
-        public MainWindow(ViewModels.MainWindowViewModel viewModel, IPageServiceNew pageService, ITaskBarService taskBarService, INavigationService navigationService)
+        public MainWindow(ViewModels.MainWindowViewModel viewModel, IPageServiceNew pageService, ITaskBarService taskBarService, INavigationService navigationService, ISnackbarService snackbarService)
         {
             _taskBarService = taskBarService;
             ViewModel = viewModel;
@@ -33,6 +33,8 @@ namespace XHS.Spider.Views.Windows
             SetPageService(pageService);
 
             navigationService.SetNavigationControl(RootNavigation);
+
+            snackbarService.SetSnackbarControl(RootSnackbar);
             Loaded += (_, _) => InvokeSplashScreen();
         }
         private void InvokeSplashScreen()

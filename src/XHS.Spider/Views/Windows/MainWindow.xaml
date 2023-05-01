@@ -66,6 +66,16 @@
                         VerticalAlignment="Top"
                         FontSize="24"
                         Navigation="{Binding ElementName=RootNavigation}" />
+                    <ui:Snackbar
+                        x:Name="RootSnackbar"
+                        Title=""
+                        Grid.Row="1"
+                        MaxWidth="600"
+                        Appearance="Secondary"
+                        CloseButtonEnabled="True"
+                        Icon="PuzzlePiece24"
+                        Message=""
+                        Timeout="5000" />
                     <!--<Border
                     Width="40"
                     Height="40"

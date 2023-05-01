@@ -8,6 +8,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Wpf.Ui.Common;
 using Wpf.Ui.Common.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
 using XHS.IService.XHS;
@@ -26,12 +27,8 @@ namespace XHS.Spider.ViewModels
         }
         private readonly ISnackbarService _snackbarService;
         private readonly IXhsSpiderService _xhsSpiderService;
-        private readonly INavigationService _navigationService;
-        private readonly IServiceProvider _serviceProvider;
-        private readonly IPageServiceNew _pageServiceNew;
-        public UserProfileViewModel(IServiceProvider serviceProvider, IPageServiceNew pageServiceNew, ISnackbarService snackbarService, IXhsSpiderService xhsSpiderService)
+        public UserProfileViewModel(ISnackbarService snackbarService, IXhsSpiderService xhsSpiderService)
         {
-  
             _snackbarService = snackbarService;
             _xhsSpiderService = xhsSpiderService;
         }
@@ -41,7 +38,7 @@ namespace XHS.Spider.ViewModels
         private ICommand inputCommand;
         public ICommand InputCommand
         {
-            get => inputCommand ?? (inputCommand = new RelayCommand(ExecuteInput));
+            get => inputCommand ?? (inputCommand = new Wpf.Ui.Common.RelayCommand(ExecuteInput));
             set => inputCommand = value;
         }
         /// <summary>
@@ -66,9 +63,13 @@ namespace XHS.Spider.ViewModels
                         }
                         else
                         {
-
+                            _snackbarService.Show("异常", apiResult?.Msg, SymbolRegular.ErrorCircle12, ControlAppearance.Danger);
                         }
                     }
+                }
+                else
+                {
+                    _snackbarService.Show("提示", "当前Url不符合所属模块搜索要求", SymbolRegular.ErrorCircle12, ControlAppearance.Danger);
                 }
             }
             //TODO:
