@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace XHS.Models.XHS.ApiOutputModel.NodeDetail
 {
-    public class NodeDetailModel: XHSBaseApiModel<NodeDetailModel>
+    public class NodeDetailModel
     {
         [JsonProperty("cursor_score")]
         public string CursorScore { get; set; }

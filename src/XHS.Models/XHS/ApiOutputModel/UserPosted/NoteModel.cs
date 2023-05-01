@@ -20,5 +20,14 @@ namespace XHS.Models.XHS.ApiOutputModel.UserPosted
 
         [JsonProperty("user")]
         public NodeUser User { get; set; }
+
+        [JsonProperty("interact_info")]
+        public NodeInteractInfo interact_info { get; set; }
+
+        [JsonProperty("cover")]
+        public NodeCover cover { get; set; }
+
+        [JsonProperty("note_id")]
+        public string NoteId { get; set; }
     }
 }

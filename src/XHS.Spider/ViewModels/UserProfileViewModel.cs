@@ -59,7 +59,7 @@ namespace XHS.Spider.ViewModels
                         var apiResult= _xhsSpiderService.GetOtherInfo(id);
                         if (apiResult != null && apiResult.Success)
                         {
-
+                            var nodes= _xhsSpiderService.GetAllUserNode(id);
                         }
                         else
                         {

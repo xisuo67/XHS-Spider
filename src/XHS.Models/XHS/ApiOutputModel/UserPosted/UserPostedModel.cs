@@ -10,7 +10,7 @@ namespace XHS.Models.XHS.ApiOutputModel.UserPosted
     /// <summary>
     /// 用户笔记
     /// </summary>
-    public class UserPostedModel : XHSBaseApiModel<UserPostedModel>
+    public class UserPostedModel
     {
         [JsonProperty("has_more")]
         public bool HasMore { get; set; }
@@ -21,13 +21,6 @@ namespace XHS.Models.XHS.ApiOutputModel.UserPosted
         [JsonProperty("notes")]
         public List<NoteModel> Notes { get; set; }
 
-        [JsonProperty("interact_info")]
-        public NodeInteractInfo interact_info { get; set; }
 
-        [JsonProperty("cover")]
-        public NodeCover cover { get; set; }
-
-        [JsonProperty("note_id")]
-        public string NoteId { get; set; }
     }
 }

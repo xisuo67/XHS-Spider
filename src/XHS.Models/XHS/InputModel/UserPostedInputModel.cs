@@ -11,7 +11,7 @@ namespace XHS.Models.XHS.InputModel
         /// <summary>
         /// 数量
         /// </summary>
-        public int num { get; set; }
+        public int num { get; set; } = 30;
 
         public string cursor { get; set; } = "";
 

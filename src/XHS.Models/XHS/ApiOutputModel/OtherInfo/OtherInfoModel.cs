@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace XHS.Models.XHS.ApiOutputModel.OtherInfo
 {
-    public class OtherInfoModel: XHSBaseApiModel<OtherInfoModel>
+    public class OtherInfoModel
     {
         [JsonProperty("basic_info")]
         public BasicInfo BasicInfo { get; set; }
