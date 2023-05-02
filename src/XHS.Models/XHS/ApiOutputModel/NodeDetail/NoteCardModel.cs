@@ -32,6 +32,8 @@ namespace XHS.Models.XHS.ApiOutputModel.NodeDetail
         public string NoteId { get; set; }
         [JsonProperty("type")]
         public string Type { get; set; }
+        [JsonProperty("video")]
+        public Video Video { get; set; }
 
     }
 }
