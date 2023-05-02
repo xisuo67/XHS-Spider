@@ -4,6 +4,7 @@ using Microsoft.ClearScript;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Policy;
 using System.Text;
@@ -124,7 +125,40 @@ namespace XHS.Spider.ViewModels
 
         public void DownLoadAllNodes() {
             var nodes = this.Nodes;
-
+            //循环笔记数据
+            foreach (var item in nodes)
+            {
+                var resultData= _xhsSpiderService.GetNodeDetail(item.NoteId);
+                if (resultData != null && resultData.Success)
+                {
+                    var nodeDetail= resultData.Data.Items;
+                    foreach (var detailItem in nodeDetail)
+                    {
+                        var nodeCard = detailItem.NoteCard;
+                        switch (nodeCard.Type)
+                        {
+                            case "normal":
+                                
+                                break;
+                            case "video":
+                                var videoUrl = string.Format(BaseVideoUrl,nodeCard);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+        public void ExecuteDownLoad(string url, string fileName)
+        {
+            string dirPath = AppDomain.CurrentDomain.BaseDirectory + "DownLoad\\"; ;
+            string savePath=dirPath + fileName;
+            string path = Path.GetDirectoryName(savePath);
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
         }
         /// <summary>
         /// 处理输入事件

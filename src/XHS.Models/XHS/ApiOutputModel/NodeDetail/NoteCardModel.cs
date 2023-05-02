@@ -33,10 +33,5 @@ namespace XHS.Models.XHS.ApiOutputModel.NodeDetail
         [JsonProperty("type")]
         public string Type { get; set; }
 
-         //"at_user_list": [],
-         //           "share_info": {
-         //               "un_share": false
-         //           }
-         //这俩参数不要了
     }
 }

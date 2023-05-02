@@ -12,7 +12,7 @@ namespace XHS.Models.XHS.ApiOutputModel.NodeDetail
         [JsonProperty("cursor_score")]
         public string CursorScore { get; set; }
         [JsonProperty("items")]
-        public NodeItem Items { get; set; }
+        public List<NodeItem> Items { get; set; }
         [JsonProperty("current_time")]
         public long CurrentTime { get; set; }
     }
