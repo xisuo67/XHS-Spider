@@ -34,9 +34,9 @@ namespace XHS.Spider.ViewModels
         private readonly ISnackbarService _snackbarService;
         private readonly IXhsSpiderService _xhsSpiderService;
 
-        private List<NoteModel> _nodes=new List<NoteModel>();
+        private IEnumerable<NoteModel> _nodes=new NoteModel[] { };
 
-        public List<NoteModel> Nodes { get => _nodes; set => SetProperty(ref _nodes, value); }
+        public IEnumerable<NoteModel> Nodes { get => _nodes; set => SetProperty(ref _nodes, value); }
         private BitmapImage _headImage = new BitmapImage();
 
         public BitmapImage HeadImage {
@@ -172,7 +172,7 @@ namespace XHS.Spider.ViewModels
                             {
                                 node.LikedCount = node.interact_info?.LikedCount;
                             }
-                            Nodes = nodes;
+                            Nodes = nodes.ToArray();
                         }
                         else
                         {

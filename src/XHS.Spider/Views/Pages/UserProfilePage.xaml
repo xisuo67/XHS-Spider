@@ -12,7 +12,8 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
-        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+      Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+      Scrollable="True"
       Title="UserProfilePage">
 
     <Grid>
@@ -98,13 +99,6 @@
                             <ImageBrush ImageSource="{Binding ViewModel.SexImage}"/>
                         </Border.Background>
                     </Border>
-                    <!--<TextBlock
-                      HorizontalAlignment="left"
-                        Foreground="#FF999999"
-                            FontSize="10"
-                            Text="女">
-
-                    </TextBlock>-->
                     <TextBlock
                          Margin="10,0,0,0"
                       HorizontalAlignment="left"
@@ -195,7 +189,8 @@
                         <StackPanel Orientation="Horizontal" Grid.Row="0" Cursor="">
                             <ui:Button Content="全部下载" Appearance="Info" Icon="ArrowDownload16"/>
                         </StackPanel>
-                        <ui:DataGrid HorizontalContentAlignment="Center"  Grid.Row="1" Name="dgrdView" Margin="0,8,0,0" ItemsSource="{Binding ViewModel.Nodes}"  AutoGenerateColumns="False">
+                        <ui:DataGrid HorizontalContentAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Visible"
+ Grid.Row="1" Name="dgrdView" Margin="0,8,0,0" ItemsSource="{Binding ViewModel.Nodes}"  AutoGenerateColumns="False">
                             <DataGrid.RowStyle>
                                 <Style TargetType="DataGridRow">
                                     <Setter Property="Height" Value="60" />
