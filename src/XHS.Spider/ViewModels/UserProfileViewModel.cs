@@ -15,6 +15,7 @@ using Wpf.Ui.Common.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
 using XHS.IService.XHS;
 using XHS.Models.XHS.ApiOutputModel.OtherInfo;
+using XHS.Models.XHS.ApiOutputModel.UserPosted;
 using XHS.Spider.Helpers;
 using XHS.Spider.Services;
 
@@ -33,6 +34,9 @@ namespace XHS.Spider.ViewModels
         private readonly ISnackbarService _snackbarService;
         private readonly IXhsSpiderService _xhsSpiderService;
 
+        private List<NoteModel> _nodes=new List<NoteModel>();
+
+        public List<NoteModel> Nodes { get => _nodes; set => SetProperty(ref _nodes, value); }
         private BitmapImage _headImage = new BitmapImage();
 
         public BitmapImage HeadImage {
@@ -164,7 +168,11 @@ namespace XHS.Spider.ViewModels
                             }));
                            
                             var nodes = _xhsSpiderService.GetAllUserNode(id);
-
+                            foreach (var node in nodes)
+                            {
+                                node.LikedCount = node.interact_info?.LikedCount;
+                            }
+                            Nodes = nodes;
                         }
                         else
                         {

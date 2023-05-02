@@ -12,8 +12,28 @@ namespace XHS.Models.XHS.ApiOutputModel.UserPosted
     /// </summary>
     public class NoteModel
     {
+        private string type = string.Empty;
         [JsonProperty("type")]
-        public string Type { get; set; }
+
+        public string Type
+        {
+            get => type;
+            set
+            {
+                type = value;
+                switch (type)
+                {
+                    case "normal":
+                        NodeType = "笔记";
+                        break;
+                    case "video":
+                        NodeType = "视频";
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
 
         [JsonProperty("display_title")]
         public string DisplayTitle { get; set; }
@@ -29,5 +49,9 @@ namespace XHS.Models.XHS.ApiOutputModel.UserPosted
 
         [JsonProperty("note_id")]
         public string NoteId { get; set; }
+
+        public string LikedCount { get; set; }
+
+        public string NodeType { get; set; }
     }
 }

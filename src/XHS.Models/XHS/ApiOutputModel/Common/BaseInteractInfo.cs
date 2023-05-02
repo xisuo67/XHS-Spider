@@ -13,5 +13,7 @@ namespace XHS.Models.XHS.ApiOutputModel.Common
         public bool Liked { get; set; }
         [JsonProperty("liked_count")]
         public string LikedCount { get; set; }
+        [JsonProperty("sticky")]
+        public bool Sticky { get; set; }
     }
 }

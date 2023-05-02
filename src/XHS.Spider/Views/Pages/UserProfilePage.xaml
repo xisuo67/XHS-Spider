@@ -18,7 +18,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
-            <RowDefinition Height="150" />
+            <RowDefinition Height="160" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <!--搜索-->
@@ -51,8 +51,8 @@
                 </Border.Background>
             </Border>
             <StackPanel
-                       VerticalAlignment="Top"
-                        Height="139" Width="268" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0,265,0">
+                       VerticalAlignment="Center"
+                        Height="160" Width="268" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0,265,0">
                 <TextBlock
                             Margin="0,5,0,0"
                             HorizontalAlignment="Center"
@@ -195,7 +195,7 @@
                         <StackPanel Orientation="Horizontal" Grid.Row="0" Cursor="">
                             <ui:Button Content="全部下载" Appearance="Info" Icon="ArrowDownload16"/>
                         </StackPanel>
-                        <ui:DataGrid HorizontalContentAlignment="Center"  Grid.Row="1" Name="dgrdView" Margin="0,8,0,0"  AutoGenerateColumns="False">
+                        <ui:DataGrid HorizontalContentAlignment="Center"  Grid.Row="1" Name="dgrdView" Margin="0,8,0,0" ItemsSource="{Binding ViewModel.Nodes}"  AutoGenerateColumns="False">
                             <DataGrid.RowStyle>
                                 <Style TargetType="DataGridRow">
                                     <Setter Property="Height" Value="60" />
@@ -203,9 +203,9 @@
                             </DataGrid.RowStyle>
 
                             <DataGrid.Columns>
-                                <DataGridTextColumn Width="*" IsReadOnly="True" Header="标题"/>
-                                <DataGridTextColumn Width="*" IsReadOnly="True" Header="类型"/>
-                                <DataGridTextColumn Width="*" IsReadOnly="True" Header="点赞数量"/>
+                                <DataGridTextColumn Width="*" IsReadOnly="True" Binding="{Binding DisplayTitle}" Header="标题"/>
+                                <DataGridTextColumn Width="*" IsReadOnly="True" Binding="{Binding NodeType}" Header="类型"/>
+                                <DataGridTextColumn Width="*" IsReadOnly="True" Binding="{Binding LikedCount}" Header="点赞数量"/>
                             </DataGrid.Columns>
                         </ui:DataGrid>
                     </Grid>
