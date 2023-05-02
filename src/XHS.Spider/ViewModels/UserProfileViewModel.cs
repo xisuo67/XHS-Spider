@@ -1,8 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Downloader;
 using Microsoft.ClearScript;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,6 +17,7 @@ using System.Windows.Media.Imaging;
 using Wpf.Ui.Common;
 using Wpf.Ui.Common.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
+using XHS.Common.Utils;
 using XHS.IService.XHS;
 using XHS.Models.XHS.ApiOutputModel.OtherInfo;
 using XHS.Models.XHS.ApiOutputModel.UserPosted;
@@ -29,6 +32,7 @@ namespace XHS.Spider.ViewModels
         public static readonly string BaseUrl = "https://www.xiaohongshu.com/user/profile/";
         public static readonly string BaseVideoUrl = "http://sns-video-bd.xhscdn.com/{0}";
         public static readonly string BaseImageUrl = "https://sns-img-bd.xhscdn.com/{0}?imageView2/format/png";
+        private static ConcurrentDictionary<string, string> _downLoadDic = new ConcurrentDictionary<string, string>();
         private string inputText;
         public string InputText
         {
@@ -138,10 +142,18 @@ namespace XHS.Spider.ViewModels
                         switch (nodeCard.Type)
                         {
                             case "normal":
-                                
+                                for (int i = 0; i < nodeCard.ImageList.Count; i++)
+                                {
+                                    var imageUrl = string.Format(BaseImageUrl, nodeCard.ImageList[i].TraceId);
+                                    var fpath = $"{Format.FormatFileName(detailItem.NoteCard.Title)}{i}.png";
+                                    _downLoadDic.TryAdd(imageUrl, fpath);
+                                }
+                               
                                 break;
                             case "video":
-                                var videoUrl = string.Format(BaseVideoUrl,nodeCard);
+                                var videoUrl = string.Format(BaseVideoUrl,nodeCard.Video.Consumer.OriginVideoKey);
+                                var filePath = $"{Format.FormatFileName(detailItem.NoteCard.Title)}.mov";
+                                _downLoadDic.TryAdd(videoUrl, filePath);
                                 break;
                             default:
                                 break;
@@ -150,16 +162,36 @@ namespace XHS.Spider.ViewModels
                 }
             }
         }
-        public void ExecuteDownLoad(string url, string fileName)
+        public async void ExecuteDownLoad(string url,string dirName, string fileName)
         {
-            string dirPath = AppDomain.CurrentDomain.BaseDirectory + "DownLoad\\"; ;
+            dirName = Format.FormatFileName(dirName);
+            string dirPath = AppDomain.CurrentDomain.BaseDirectory + "DownLoad\\"+ dirName;
             string savePath=dirPath + fileName;
             string path = Path.GetDirectoryName(savePath);
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
             }
+            var downloadOpt = new DownloadConfiguration()
+            {
+                ChunkCount = 8, // file parts to download, default value is 1
+                ParallelDownload = true // download parts of file as parallel or not. Default value is false
+            };
+            var downloader = new DownloadService(downloadOpt);
+            downloader.DownloadStarted += Downloader_DownloadStarted;
+            downloader.DownloadFileCompleted += Downloader_DownloadFileCompleted;
+            string file = @"Your_Path\fileName.zip";
+            await downloader.DownloadFileTaskAsync(url, file);
         }
+
+        private void Downloader_DownloadFileCompleted(object? sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+        }
+
+        private void Downloader_DownloadStarted(object? sender, DownloadStartedEventArgs e)
+        {
+        }
+
         /// <summary>
         /// 处理输入事件
         /// </summary>
