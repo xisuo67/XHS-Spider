@@ -187,7 +187,7 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <StackPanel Orientation="Horizontal" Grid.Row="0" Cursor="">
-                            <ui:Button Content="全部下载" Appearance="Info" Icon="ArrowDownload16"/>
+                            <ui:Button Content="全部下载" Appearance="Info" Icon="ArrowDownload16"    Command="{Binding ViewModel.DownLoadAll}"/>
                         </StackPanel>
                         <ui:DataGrid 
                             HorizontalContentAlignment="Center" 

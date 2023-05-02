@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.ClearScript;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,8 @@ namespace XHS.Spider.ViewModels
     {
         #region 变量
         public static readonly string BaseUrl = "https://www.xiaohongshu.com/user/profile/";
+        public static readonly string BaseVideoUrl = "http://sns-video-bd.xhscdn.com/{0}";
+        public static readonly string BaseImageUrl = "https://sns-img-bd.xhscdn.com/{0}?imageView2/format/png";
         private string inputText;
         public string InputText
         {
@@ -110,8 +113,19 @@ namespace XHS.Spider.ViewModels
             get => inputCommand ?? (inputCommand = new Wpf.Ui.Common.RelayCommand(ExecuteInitData));
             set => inputCommand = value;
         }
+
+        private ICommand downLoadAll;
+
+        public ICommand DownLoadAll {
+            get => downLoadAll ?? (downLoadAll = new CommunityToolkit.Mvvm.Input.RelayCommand(DownLoadAllNodes));
+            set => downLoadAll = value;
+        }
         #endregion
 
+        public void DownLoadAllNodes() {
+            var nodes = this.Nodes;
+
+        }
         /// <summary>
         /// 处理输入事件
         /// </summary>
