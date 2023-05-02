@@ -193,7 +193,7 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <StackPanel Orientation="Horizontal" Grid.Row="0" Cursor="">
-                            <ui:Button Content="下载全部" Appearance="Info" />
+                            <ui:Button Content="全部下载" Appearance="Info" Icon="ArrowDownload16"/>
                         </StackPanel>
                         <ui:DataGrid HorizontalContentAlignment="Center"  Grid.Row="1" Name="dgrdView" Margin="0,8,0,0"  AutoGenerateColumns="False">
                             <DataGrid.RowStyle>
@@ -204,6 +204,7 @@
 
                             <DataGrid.Columns>
                                 <DataGridTextColumn Width="*" IsReadOnly="True" Header="标题"/>
+                                <DataGridTextColumn Width="*" IsReadOnly="True" Header="类型"/>
                                 <DataGridTextColumn Width="*" IsReadOnly="True" Header="点赞数量"/>
                             </DataGrid.Columns>
                         </ui:DataGrid>
