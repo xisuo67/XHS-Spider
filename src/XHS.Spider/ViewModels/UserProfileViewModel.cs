@@ -140,20 +140,21 @@ namespace XHS.Spider.ViewModels
                     foreach (var detailItem in nodeDetail)
                     {
                         var nodeCard = detailItem.NoteCard;
+                        var title = Format.FormatFileName(detailItem.NoteCard.Title);
                         switch (nodeCard.Type)
                         {
                             case "normal":
                                 for (int i = 0; i < nodeCard.ImageList.Count; i++)
                                 {
                                     var imageUrl = string.Format(BaseImageUrl, nodeCard.ImageList[i].TraceId);
-                                    var fpath = $"{Format.FormatFileName(detailItem.NoteCard.Title)}{i}.png";
+                                    var fpath = $"{title}\\{title}{i}.png";
                                     _downLoadDic.TryAdd(imageUrl, fpath);
                                 }
                                
                                 break;
                             case "video":
                                 var videoUrl = string.Format(BaseVideoUrl,nodeCard.Video.Consumer.OriginVideoKey);
-                                var filePath = $"{Format.FormatFileName(detailItem.NoteCard.Title)}.mov";
+                                var filePath = $"{title}\\{title}.mov";
                                 _downLoadDic.TryAdd(videoUrl, filePath);
                                 break;
                             default:
@@ -162,17 +163,13 @@ namespace XHS.Spider.ViewModels
                     }
                 }
             }
+            string dirName = Format.FormatFileName(UserInfo.BasicInfo.NickName);
+            _snackbarService.Show("提示", "开始下载所有笔记", SymbolRegular.Checkmark12, ControlAppearance.Success);
+            ExecuteDownLoad(dirName);
         }
-        public async void ExecuteDownLoad(string url,string dirName, string fileName)
+        public async void ExecuteDownLoad(string dirName)
         {
-            dirName = Format.FormatFileName(dirName);
-            string dirPath = AppDomain.CurrentDomain.BaseDirectory + "DownLoad\\"+ dirName;
-            string savePath=dirPath + fileName;
-            string path = Path.GetDirectoryName(savePath);
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
+            string dirPath = AppDomain.CurrentDomain.BaseDirectory + "DownLoad\\" + dirName;
             var downloadOpt = new DownloadConfiguration()
             {
                 ChunkCount = 8, // file parts to download, default value is 1
@@ -181,16 +178,24 @@ namespace XHS.Spider.ViewModels
             var downloader = new DownloadService(downloadOpt);
             downloader.DownloadStarted += Downloader_DownloadStarted;
             downloader.DownloadFileCompleted += Downloader_DownloadFileCompleted;
-            //string file = @"Your_Path\fileName.zip";
-            //await downloader.DownloadFileTaskAsync(url, file);
+            foreach (var item in _downLoadDic)
+            {
+                string savePath = $"{dirPath}\\{item.Value}";
+                string path = Path.GetDirectoryName(savePath);
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+                await downloader.DownloadFileTaskAsync(item.Key, savePath);
+            }
         }
-
         private void Downloader_DownloadFileCompleted(object? sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
         }
 
         private void Downloader_DownloadStarted(object? sender, DownloadStartedEventArgs e)
         {
+
         }
 
         /// <summary>
