@@ -129,6 +129,7 @@ namespace XHS.Spider.ViewModels
 
         public void DownLoadAllNodes() {
             var nodes = this.Nodes;
+            _downLoadDic.Clear();
             //循环笔记数据
             foreach (var item in nodes)
             {
@@ -180,8 +181,8 @@ namespace XHS.Spider.ViewModels
             var downloader = new DownloadService(downloadOpt);
             downloader.DownloadStarted += Downloader_DownloadStarted;
             downloader.DownloadFileCompleted += Downloader_DownloadFileCompleted;
-            string file = @"Your_Path\fileName.zip";
-            await downloader.DownloadFileTaskAsync(url, file);
+            //string file = @"Your_Path\fileName.zip";
+            //await downloader.DownloadFileTaskAsync(url, file);
         }
 
         private void Downloader_DownloadFileCompleted(object? sender, System.ComponentModel.AsyncCompletedEventArgs e)
