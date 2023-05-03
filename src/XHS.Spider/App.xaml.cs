@@ -13,6 +13,8 @@ using Wpf.Ui.Controls.Navigation;
 using Wpf.Ui.Mvvm.Contracts;
 using Wpf.Ui.Mvvm.Services;
 using XHS.IService.DI;
+using XHS.Service.Log;
+using XHS.Spider.Helpers;
 using XHS.Spider.Models;
 using XHS.Spider.Services;
 
@@ -157,7 +159,6 @@ namespace XHS.Spider
         {
             await _host.StartAsync();
         }
-
         /// <summary>
         /// Occurs when the application is closing.
         /// </summary>

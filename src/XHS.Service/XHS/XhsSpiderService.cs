@@ -11,6 +11,7 @@ using XHS.Models.XHS.ApiOutputModel.NodeDetail;
 using XHS.Models.XHS.ApiOutputModel.OtherInfo;
 using XHS.Models.XHS.ApiOutputModel.UserPosted;
 using XHS.Models.XHS.InputModel;
+using XHS.Service.Log;
 using static Microsoft.ClearScript.V8.V8CpuProfile;
 
 namespace XHS.Service.XHS
@@ -20,7 +21,7 @@ namespace XHS.Service.XHS
     /// </summary>
     public class XhsSpiderService : IXhsSpiderService
     {
-
+        private static readonly ILogger Logger = LoggerService.Get(typeof(XhsSpiderService));
         /// <summary>
         /// 获取笔记详情
         /// </summary>
@@ -33,6 +34,7 @@ namespace XHS.Service.XHS
             try
             {
                 string url = $"/api/sns/web/v1/feed?source_note_id={nodeid}";
+                Logger.Info($"调用接口：{url}");
                 var result = HttpClientHelper.DoPost(url);
                 if (!string.IsNullOrEmpty(result))
                 {
@@ -41,6 +43,7 @@ namespace XHS.Service.XHS
             }
             catch (Exception ex)
             {
+                Logger.Error("获取笔记详细信息失败",ex);
             }
             return nodeDetailModel;
         }
@@ -56,6 +59,7 @@ namespace XHS.Service.XHS
             try
             {
                 string url = $"/api/sns/web/v1/user/otherinfo?target_user_id={targetUserId}";
+                Logger.Info($"调用接口：{url}");
                 var result = HttpClientHelper.DoGet(url);
                 if (!string.IsNullOrEmpty(result))
                 {
@@ -64,6 +68,7 @@ namespace XHS.Service.XHS
             }
             catch (Exception ex)
             {
+                Logger.Error("获取个人信息等失败", ex);
             }
             return model;
         }
@@ -82,6 +87,7 @@ namespace XHS.Service.XHS
                 try
                 {
                     string url = $"/api/sns/web/v1/user_posted?num={model.num}&cursor={model.cursor}&user_id={model.user_id}";
+                    Logger.Info($"调用接口：{url}");
                     var result = HttpClientHelper.DoGet(url);
                     if (!string.IsNullOrEmpty(result))
                     {
@@ -99,6 +105,7 @@ namespace XHS.Service.XHS
                 }
                 catch (Exception ex)
                 {
+                    Logger.Error("分页查询用户所有笔记接口失败", ex);
                 }
             }
         }
