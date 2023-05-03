@@ -9,11 +9,11 @@ using XHS.Service.Log;
 
 namespace XHS.Spider.Helpers
 {
-    public class UpdateChecker
+    public class UpdateCheckerServer 
     {
-        private static readonly ILogger Logger = LoggerService.Get(typeof(UpdateChecker));
+        private static readonly ILogger Logger = LoggerService.Get(typeof(UpdateCheckerServer));
         private const string Owner = @"xisuo67";
-        private const string Repo = @"Daily-Newspaper-Tools";
+        private const string Repo = @"XHS.Spider";
 
         public string LatestVersionNumber;
         public string LatestVersionUrl;
@@ -22,10 +22,10 @@ namespace XHS.Spider.Helpers
 
         public event EventHandler NewVersionFound;
         public event EventHandler NewVersionFoundFailed;
-
-        public const string Name = @"Daily-Newspaper";
-        public const string Copyright = @"Copyright © 2022-present xisuo67";
-        public const string Version = @"1.0.1";
+        public event EventHandler NewVersionNotFound;
+        public const string Name = @"XHS.Spider";
+        public const string Copyright = @"Copyright © 2023-present xisuo67";
+        public const string Version = @"1.0.0";
 
         public const string FullVersion = Version +
 #if SelfContained
@@ -38,7 +38,7 @@ namespace XHS.Spider.Helpers
 #if DEBUG
         @" Debug";
 
-        public UpdateChecker()
+        public UpdateCheckerServer()
         {
         }
 #else
@@ -63,6 +63,13 @@ namespace XHS.Spider.Helpers
                 {
                     LatestVersionUrl = updater.LatestVersionUrl;
                     NewVersionFound?.Invoke(this, EventArgs.Empty);
+                }
+                else
+                {
+                    if (notifyNoFound)
+                    {
+                        NewVersionNotFound?.Invoke(this, EventArgs.Empty);
+                    }
                 }
             }
             catch (Exception e)

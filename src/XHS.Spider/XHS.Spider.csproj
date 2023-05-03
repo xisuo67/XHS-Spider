@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <PackageReference Include="Downloader" Version="3.0.4" />
+    <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
     <PackageReference Include="HMBSbige.UpdateChecker" Version="6.0.1" />
     <PackageReference Include="WPF-UI" Version="2.0.3" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
@@ -43,6 +44,10 @@
     <Resource Include="Assets\test.jpg" />
     <Resource Include="Assets\xiaohongshu.png" />
     <Resource Include="Resources\desktop.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\ResourceDictionary\" />
   </ItemGroup>
 
 </Project>
