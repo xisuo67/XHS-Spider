@@ -33,6 +33,14 @@ namespace XHS.Spider.Views.Pages
         {
             ViewModel = viewModel;
             InitializeComponent();
+            App.PropertyChangeAsync(new Action(() =>
+            {
+                headImage.ImageSource = ViewModel.HeadImage;
+                if (!string.IsNullOrEmpty(viewModel.Info?.Icon))
+                {
+                    sexImage.ImageSource = viewModel.SexImage;
+                }
+            }));
         }
     }
 }

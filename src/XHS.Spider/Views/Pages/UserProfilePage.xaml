@@ -48,7 +48,7 @@
                         HorizontalAlignment="Right"
                     CornerRadius="60" >
                 <Border.Background>
-                    <ImageBrush ImageSource="{Binding ViewModel.HeadImage}"/>
+                    <ImageBrush x:Name="headImage"/>
                 </Border.Background>
             </Border>
             <StackPanel
@@ -96,7 +96,7 @@
                     Height="15"
                     HorizontalAlignment="left">
                         <Border.Background>
-                            <ImageBrush ImageSource="{Binding ViewModel.SexImage}"/>
+                            <ImageBrush x:Name="sexImage"/>
                         </Border.Background>
                     </Border>
                     <TextBlock
