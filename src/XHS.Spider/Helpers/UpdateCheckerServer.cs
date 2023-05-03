@@ -9,7 +9,7 @@ using XHS.Service.Log;
 
 namespace XHS.Spider.Helpers
 {
-    public class UpdateCheckerServer 
+    public class UpdateCheckerServer
     {
         private static readonly ILogger Logger = LoggerService.Get(typeof(UpdateCheckerServer));
         private const string Owner = @"xisuo67";
@@ -25,9 +25,15 @@ namespace XHS.Spider.Helpers
         public event EventHandler NewVersionNotFound;
         public const string Name = @"XHS.Spider";
         public const string Copyright = @"Copyright © 2023-present xisuo67";
-        public const string Version = @"1.0.0";
 
-        public const string FullVersion = Version +
+        private static string version = string.Empty;
+        public static string Version
+        {
+            get => version;
+            set => version = value;
+        }
+
+        public static string FullVersion = Version +
 #if SelfContained
 #if Is64Bit
             @" x64" +
@@ -40,11 +46,16 @@ namespace XHS.Spider.Helpers
 
         public UpdateCheckerServer()
         {
+            version = GetAssemblyVersion();
         }
 #else
         @"";
 #endif
 
+        private string GetAssemblyVersion()
+        {
+            return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? @"1.0.0.0";
+        }
         public async void Check(bool notifyNoFound)
         {
             try
