@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -13,6 +14,7 @@ using Wpf.Ui.Controls.Navigation;
 using Wpf.Ui.Mvvm.Contracts;
 using Wpf.Ui.Mvvm.Services;
 using XHS.IService.DI;
+using XHS.Models.DownLoad;
 using XHS.Service.Log;
 using XHS.Spider.Helpers;
 using XHS.Spider.Models;
@@ -25,6 +27,7 @@ namespace XHS.Spider
     /// </summary>
     public partial class App
     {
+        public static ObservableCollection<DownloadItem> DownloadList { get; set; }
         public static string MatchAssemblies = "^XHS.Service|^XHS.IService";
         // The.NET Generic Host provides dependency injection, configuration, logging, and other services.
         // https://docs.microsoft.com/dotnet/core/extensions/generic-host
@@ -36,6 +39,8 @@ namespace XHS.Spider
             .ConfigureAppConfiguration(c => { c.SetBasePath(Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location)); })
             .ConfigureServices((context, services) =>
             {
+                //初始化数据
+                DownloadList = new ObservableCollection<DownloadItem>();
                 // App Host
                 services.AddHostedService<ApplicationHostService>();
                 // Page resolver service
@@ -75,6 +80,9 @@ namespace XHS.Spider
 
                 services.AddTransient<Views.Windows.CookieEdit>();
                 AddDataService(services);
+                //启动下载服务
+                BaseDownloadService baseDownloadService = new BaseDownloadService(DownloadList);
+                baseDownloadService.Start();
                 services.Configure<AppConfig>(context.Configuration.GetSection(nameof(AppConfig)));
             }).Build();
 

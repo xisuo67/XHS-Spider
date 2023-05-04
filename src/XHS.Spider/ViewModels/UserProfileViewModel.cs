@@ -14,11 +14,13 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 using Wpf.Ui.Common;
 using Wpf.Ui.Common.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
 using XHS.Common.Utils;
 using XHS.IService.XHS;
+using XHS.Models.DownLoad;
 using XHS.Models.XHS.ApiOutputModel.OtherInfo;
 using XHS.Models.XHS.ApiOutputModel.UserPosted;
 using XHS.Spider.Helpers;
@@ -42,43 +44,49 @@ namespace XHS.Spider.ViewModels
         private readonly ISnackbarService _snackbarService;
         private readonly IXhsSpiderService _xhsSpiderService;
 
-        private IEnumerable<NoteModel> _nodes=new NoteModel[] { };
+        private IEnumerable<NoteModel> _nodes = new NoteModel[] { };
 
         public IEnumerable<NoteModel> Nodes { get => _nodes; set => SetProperty(ref _nodes, value); }
         private BitmapImage _headImage = new BitmapImage();
 
-        public BitmapImage HeadImage {
-            get=> _headImage;
-            set=>SetProperty(ref _headImage, value);
+        public BitmapImage HeadImage
+        {
+            get => _headImage;
+            set => SetProperty(ref _headImage, value);
         }
-        private BitmapImage _sexImage =new BitmapImage();
-        public BitmapImage SexImage {
+        private BitmapImage _sexImage = new BitmapImage();
+        public BitmapImage SexImage
+        {
             get => _sexImage;
-            set=>SetProperty(ref _sexImage, value);
+            set => SetProperty(ref _sexImage, value);
         }
 
         private Tag info = new Tag();
-        public Tag Info { 
-            get=> info;
+        public Tag Info
+        {
+            get => info;
             set => SetProperty(ref info, value);
         }
 
-        private Tag location=new Tag();
-        public Tag Location { 
-            get=> location;
-            set=>SetProperty(ref location, value);
+        private Tag location = new Tag();
+        public Tag Location
+        {
+            get => location;
+            set => SetProperty(ref location, value);
         }
-        private Tag profession=new Tag();
+        private Tag profession = new Tag();
 
-        public Tag Profession { 
-            get=> profession; set => SetProperty(ref profession, value);
+        public Tag Profession
+        {
+            get => profession; set => SetProperty(ref profession, value);
         }
         /// <summary>
         /// 关注
         /// </summary>
-        private Interaction follows=new Interaction();
+        private Interaction follows = new Interaction();
 
-        public Interaction Follows {
+        public Interaction Follows
+        {
             get => follows; set => SetProperty(ref follows, value);
         }
 
@@ -87,15 +95,17 @@ namespace XHS.Spider.ViewModels
         /// </summary>
         private Interaction fans = new Interaction();
 
-        public Interaction Fans { 
-            get=> fans; set => SetProperty(ref fans, value);
+        public Interaction Fans
+        {
+            get => fans; set => SetProperty(ref fans, value);
         }
         /// <summary>
         /// 获赞与收藏
         /// </summary>
         private Interaction interaction = new Interaction();
 
-        public Interaction Interaction {
+        public Interaction Interaction
+        {
             get => interaction; set => SetProperty(ref interaction, value);
         }
         private OtherInfoModel _userInfo = new OtherInfoModel();
@@ -121,22 +131,27 @@ namespace XHS.Spider.ViewModels
 
         private ICommand downLoadAll;
 
-        public ICommand DownLoadAll {
+        public ICommand DownLoadAll
+        {
             get => downLoadAll ?? (downLoadAll = new CommunityToolkit.Mvvm.Input.RelayCommand(DownLoadAllNodes));
             set => downLoadAll = value;
         }
         #endregion
 
-        public void DownLoadAllNodes() {
+        public void DownLoadAllNodes()
+        {
             var nodes = this.Nodes;
             _downLoadDic.Clear();
+            string dirName = Format.FormatFileName(UserInfo.BasicInfo.NickName);
+            string dirPath = $"{AppDomain.CurrentDomain.BaseDirectory}DownLoad\\{dirName}";
+            List<DownloadItem> downloadItems = new List<DownloadItem>();
             //循环笔记数据
             foreach (var item in nodes)
             {
-                var resultData= _xhsSpiderService.GetNodeDetail(item.NoteId);
+                var resultData = _xhsSpiderService.GetNodeDetail(item.NoteId);
                 if (resultData != null && resultData.Success)
                 {
-                    var nodeDetail= resultData.Data.Items;
+                    var nodeDetail = resultData.Data.Items;
                     foreach (var detailItem in nodeDetail)
                     {
                         var nodeCard = detailItem.NoteCard;
@@ -147,15 +162,26 @@ namespace XHS.Spider.ViewModels
                                 for (int i = 0; i < nodeCard.ImageList.Count; i++)
                                 {
                                     var imageUrl = string.Format(BaseImageUrl, nodeCard.ImageList[i].TraceId);
-                                    var fpath = $"{title}\\{title}{i}.png";
-                                    _downLoadDic.TryAdd(imageUrl, fpath);
+                                    var fpath = $"{dirPath}\\{title}\\{title}{i}.png";
+                                    DownloadItem downloadImageItem = new DownloadItem() { 
+                                        Url= imageUrl,
+                                        FileName = fpath,
+                                        Status= DownloadStatus.None
+                                    };
+                                    downloadItems.Add(downloadImageItem);
                                 }
-                               
+
                                 break;
                             case "video":
-                                var videoUrl = string.Format(BaseVideoUrl,nodeCard.Video.Consumer.OriginVideoKey);
-                                var filePath = $"{title}\\{title}.mov";
-                                _downLoadDic.TryAdd(videoUrl, filePath);
+                                var videoUrl = string.Format(BaseVideoUrl, nodeCard.Video.Consumer.OriginVideoKey);
+                                var filePath = $"{dirPath}\\{title}\\{title}.mov";
+                                DownloadItem downloadItem = new DownloadItem()
+                                {
+                                    Url = videoUrl,
+                                    FileName = filePath,
+                                    Status = DownloadStatus.None
+                                };
+                                downloadItems.Add(downloadItem);
                                 break;
                             default:
                                 break;
@@ -163,32 +189,33 @@ namespace XHS.Spider.ViewModels
                     }
                 }
             }
-            string dirName = Format.FormatFileName(UserInfo.BasicInfo.NickName);
+            App.DownloadList.AddRange(downloadItems);
+
             _snackbarService.Show("提示", "开始下载所有笔记", SymbolRegular.Checkmark12, ControlAppearance.Success);
-            ExecuteDownLoad(dirName);
+            //ExecuteDownLoad(dirName);
         }
-        public async void ExecuteDownLoad(string dirName)
-        {
-            string dirPath = AppDomain.CurrentDomain.BaseDirectory + "DownLoad\\" + dirName;
-            var downloadOpt = new DownloadConfiguration()
-            {
-                ChunkCount = 8, // file parts to download, default value is 1
-                ParallelDownload = true // download parts of file as parallel or not. Default value is false
-            };
-            var downloader = new DownloadService(downloadOpt);
-            downloader.DownloadStarted += Downloader_DownloadStarted;
-            downloader.DownloadFileCompleted += Downloader_DownloadFileCompleted;
-            foreach (var item in _downLoadDic)
-            {
-                string savePath = $"{dirPath}\\{item.Value}";
-                string path = Path.GetDirectoryName(savePath);
-                if (!Directory.Exists(path))
-                {
-                    Directory.CreateDirectory(path);
-                }
-                await downloader.DownloadFileTaskAsync(item.Key, savePath);
-            }
-        }
+        //public async void ExecuteDownLoad(string dirName)
+        //{
+        //    string dirPath = AppDomain.CurrentDomain.BaseDirectory + "DownLoad\\" + dirName;
+        //    var downloadOpt = new DownloadConfiguration()
+        //    {
+        //        ChunkCount = 8, // file parts to download, default value is 1
+        //        ParallelDownload = true // download parts of file as parallel or not. Default value is false
+        //    };
+        //    var downloader = new DownloadService(downloadOpt);
+        //    downloader.DownloadStarted += Downloader_DownloadStarted;
+        //    downloader.DownloadFileCompleted += Downloader_DownloadFileCompleted;
+        //    foreach (var item in _downLoadDic)
+        //    {
+        //        string savePath = $"{dirPath}\\{item.Value}";
+        //        string path = Path.GetDirectoryName(savePath);
+        //        if (!Directory.Exists(path))
+        //        {
+        //            Directory.CreateDirectory(path);
+        //        }
+        //        await downloader.DownloadFileTaskAsync(item.Key, savePath);
+        //    }
+        //}
         private void Downloader_DownloadFileCompleted(object? sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
         }
@@ -207,19 +234,20 @@ namespace XHS.Spider.ViewModels
             {
                 if (InputText.Contains("user/profile/"))
                 {
-                   var id= SearchService.GetId(inputText,BaseUrl);
-                    if (string.IsNullOrEmpty(id)) {
+                    var id = SearchService.GetId(inputText, BaseUrl);
+                    if (string.IsNullOrEmpty(id))
+                    {
                         return;
                     }
                     else
                     {
-                        var apiResult= _xhsSpiderService.GetOtherInfo(id);
+                        var apiResult = _xhsSpiderService.GetOtherInfo(id);
                         if (apiResult != null && apiResult.Success)
                         {
                             UserInfo = apiResult.Data;
-                            var info= UserInfo.Tags.FirstOrDefault(e=>e.TagType== "info");
-                            if(info!=null)
-                                Info= info;
+                            var info = UserInfo.Tags.FirstOrDefault(e => e.TagType == "info");
+                            if (info != null)
+                                Info = info;
                             var location = UserInfo.Tags.FirstOrDefault(e => e.TagType == "location");
                             if (location != null)
                                 Location = location;
@@ -227,14 +255,14 @@ namespace XHS.Spider.ViewModels
                             if (profession != null)
                                 Profession = profession;
                             var follows = UserInfo.Interactions.FirstOrDefault(e => e.Type == "follows");
-                            if(follows!=null)
+                            if (follows != null)
                                 Follows = follows;
                             var fans = UserInfo.Interactions.FirstOrDefault(e => e.Type == "fans");
                             if (fans != null)
                                 Fans = fans;
                             var interaction = UserInfo.Interactions.FirstOrDefault(e => e.Type == "interaction");
                             if (interaction != null)
-                                Interaction =interaction;
+                                Interaction = interaction;
 
                             var baseInfo = UserInfo.BasicInfo;
                             if (baseInfo != null && !string.IsNullOrEmpty(baseInfo.Imageb))
