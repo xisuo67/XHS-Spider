@@ -103,6 +103,7 @@ namespace XHS.Spider.Views.Windows
             Task.Run(async () =>
             {
                 //TODO:这里预留程序启动初始化数据
+                await Task.Delay(2000);
                 updateChecker.Check(true);
                 await Dispatcher.InvokeAsync(() =>
                 {

@@ -11,6 +11,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\ResourceDictionary\**" />
+    <EmbeddedResource Remove="Views\ResourceDictionary\**" />
+    <None Remove="Views\ResourceDictionary\**" />
+    <Page Remove="Views\ResourceDictionary\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="applicationIcon.ico" />
   </ItemGroup>
 
@@ -45,10 +52,6 @@
     <Resource Include="Assets\XHS-biaoji.png" />
     <Resource Include="Assets\xiaohongshu.png" />
     <Resource Include="Resources\desktop.jpg" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\ResourceDictionary\" />
   </ItemGroup>
 
 </Project>
