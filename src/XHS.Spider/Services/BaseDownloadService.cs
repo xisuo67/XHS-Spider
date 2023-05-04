@@ -22,6 +22,7 @@ namespace XHS.Spider.Services
         protected ObservableCollection<DownloadItem> _downloadList;
         private DownloadService CurrentDownloadService;
         private DownloadConfiguration CurrentDownloadConfiguration;
+        protected List<Task> downloadingTasks = new List<Task>();
         public BaseDownloadService(ObservableCollection<DownloadItem> downloadList) { 
             this._downloadList = downloadList;
         }
@@ -36,6 +37,11 @@ namespace XHS.Spider.Services
         public async Task DoWork() { 
             while (true)
             {
+                if (downloadingTasks.Count>0)
+                {
+                    downloadingTasks.RemoveAll((m) => m.IsCompleted);
+                }
+
                 if (_downloadList.Count>0)
                 {
                     try
@@ -55,7 +61,7 @@ namespace XHS.Spider.Services
                 await Task.Delay(500);
             }
         }
-        private  async Task<DownloadService> DownloadFile(DownloadItem downloadItem)
+        private async Task<DownloadService> DownloadFile(DownloadItem downloadItem)
         {
             CurrentDownloadConfiguration = GetDownloadConfiguration();
             CurrentDownloadService = CreateDownloadService(CurrentDownloadConfiguration);
@@ -76,10 +82,10 @@ namespace XHS.Spider.Services
             return new DownloadConfiguration
             {
                 BufferBlockSize = 10240,    // usually, hosts support max to 8000 bytes, default values is 8000
-                ChunkCount = 8,             // file parts to download, default value is 1
+                ChunkCount = 4,             // file parts to download, default value is 1
                 MaximumBytesPerSecond = 1024 * 1024 * 10, // download speed limited to 10MB/s, default values is zero or unlimited
                 MaxTryAgainOnFailover = 3,  // the maximum number of times to fail
-                ParallelDownload = true,    // download parts of file as parallel or not. Default value is false
+                ParallelDownload = false,    // download parts of file as parallel or not. Default value is false
                 ParallelCount = 4,          // number of parallel downloads. The default value is the same as the chunk count
                 Timeout = 3000,             // timeout (millisecond) per stream block reader, default value is 1000
                 ClearPackageOnCompletionWithFailure = true, // Clear package and downloaded data when download completed with failure, default value is false
