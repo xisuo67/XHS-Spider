@@ -27,6 +27,7 @@
     <None Remove="Assets\applicationIcon-1024.png" />
     <None Remove="Assets\applicationIcon-256.png" />
     <None Remove="Assets\test.jpg" />
+    <None Remove="Assets\XHS-biaoji.png" />
     <None Remove="Assets\xiaohongshu.png" />
     <None Remove="Resources\desktop.jpg" />
   </ItemGroup>
@@ -41,7 +42,7 @@
   <ItemGroup>
     <Resource Include="Assets\applicationIcon-1024.png" />
     <Resource Include="Assets\applicationIcon-256.png" />
-    <Resource Include="Assets\test.jpg" />
+    <Resource Include="Assets\XHS-biaoji.png" />
     <Resource Include="Assets\xiaohongshu.png" />
     <Resource Include="Resources\desktop.jpg" />
   </ItemGroup>
