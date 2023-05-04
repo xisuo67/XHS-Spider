@@ -82,11 +82,11 @@ namespace XHS.Spider.Services
             return new DownloadConfiguration
             {
                 BufferBlockSize = 10240,    // usually, hosts support max to 8000 bytes, default values is 8000
-                ChunkCount = 4,             // file parts to download, default value is 1
+                ChunkCount = 12,             // file parts to download, default value is 1
                 MaximumBytesPerSecond = 1024 * 1024 * 10, // download speed limited to 10MB/s, default values is zero or unlimited
                 MaxTryAgainOnFailover = 3,  // the maximum number of times to fail
                 ParallelDownload = false,    // download parts of file as parallel or not. Default value is false
-                ParallelCount = 4,          // number of parallel downloads. The default value is the same as the chunk count
+                ParallelCount = 12,          // number of parallel downloads. The default value is the same as the chunk count
                 Timeout = 3000,             // timeout (millisecond) per stream block reader, default value is 1000
                 ClearPackageOnCompletionWithFailure = true, // Clear package and downloaded data when download completed with failure, default value is false
                 MinimumSizeOfChunking = 1024, // minimum size of chunking to download a file in multiple parts, default value is 512        
