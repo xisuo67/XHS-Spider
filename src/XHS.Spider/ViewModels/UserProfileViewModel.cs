@@ -192,37 +192,6 @@ namespace XHS.Spider.ViewModels
             App.DownloadList.AddRange(downloadItems);
 
             _snackbarService.Show("提示", "开始下载所有笔记", SymbolRegular.Checkmark12, ControlAppearance.Success);
-            //ExecuteDownLoad(dirName);
-        }
-        //public async void ExecuteDownLoad(string dirName)
-        //{
-        //    string dirPath = AppDomain.CurrentDomain.BaseDirectory + "DownLoad\\" + dirName;
-        //    var downloadOpt = new DownloadConfiguration()
-        //    {
-        //        ChunkCount = 8, // file parts to download, default value is 1
-        //        ParallelDownload = true // download parts of file as parallel or not. Default value is false
-        //    };
-        //    var downloader = new DownloadService(downloadOpt);
-        //    downloader.DownloadStarted += Downloader_DownloadStarted;
-        //    downloader.DownloadFileCompleted += Downloader_DownloadFileCompleted;
-        //    foreach (var item in _downLoadDic)
-        //    {
-        //        string savePath = $"{dirPath}\\{item.Value}";
-        //        string path = Path.GetDirectoryName(savePath);
-        //        if (!Directory.Exists(path))
-        //        {
-        //            Directory.CreateDirectory(path);
-        //        }
-        //        await downloader.DownloadFileTaskAsync(item.Key, savePath);
-        //    }
-        //}
-        private void Downloader_DownloadFileCompleted(object? sender, System.ComponentModel.AsyncCompletedEventArgs e)
-        {
-        }
-
-        private void Downloader_DownloadStarted(object? sender, DownloadStartedEventArgs e)
-        {
-
         }
 
         /// <summary>
