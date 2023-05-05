@@ -238,20 +238,23 @@ namespace XHS.Spider.ViewModels
                             var interaction = UserInfo.Interactions.FirstOrDefault(e => e.Type == "interaction");
                             if (interaction != null)
                                 Interaction = interaction;
-
-                            var baseInfo = UserInfo.BasicInfo;
-                            if (baseInfo != null && !string.IsNullOrEmpty(baseInfo.Imageb))
+                            App.PropertyChangeAsync(new Action(() =>
                             {
-                                //TODO:处理url？号后参数
-                                var imageUrl = baseInfo.Imageb.Split('?')[0];
-                                var headImage = FileHelper.UrlToBitmapImage(imageUrl);
-                                HeadImage = headImage;
-                            }
-                            if (!string.IsNullOrEmpty(info?.Icon))
-                            {
-                                var sex = FileHelper.UrlToBitmapImage(info.Icon);
-                                SexImage = sex;
-                            }
+                                var baseInfo = UserInfo.BasicInfo;
+                                if (baseInfo != null && !string.IsNullOrEmpty(baseInfo.Imageb))
+                                {
+                                    //TODO:处理url？号后参数
+                                    var imageUrl = baseInfo.Imageb.Split('?')[0];
+                                    var headImage = FileHelper.UrlToBitmapImage(imageUrl);
+                                    HeadImage = headImage;
+                                }
+                                if (!string.IsNullOrEmpty(info?.Icon))
+                                {
+                                    var sex = FileHelper.UrlToBitmapImage(info.Icon);
+                                    SexImage = sex;
+                                }
+                            }));
+                            
                             var nodes = _xhsSpiderService.GetAllUserNode(id);
                             foreach (var node in nodes)
                             {
