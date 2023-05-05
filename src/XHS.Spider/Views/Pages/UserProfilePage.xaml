@@ -28,7 +28,7 @@
             Icon="Search12" 
             PlaceholderText="请输入博主主页"
             Text="{Binding Path=ViewModel.InputText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-            IconPlacement="Right" Margin="110,0,110,0">
+            IconPlacement="Right" Margin="110,6,110,0" VerticalAlignment="Top">
                 <TextBox.InputBindings>
                     <KeyBinding Key="Enter" Command="{Binding ViewModel.InputCommand}" />
                 </TextBox.InputBindings>
@@ -41,55 +41,61 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Border
-                    Grid.Column="0"
+            <StackPanel  Grid.Column="0" HorizontalAlignment="Stretch">
+                <Border
+                    HorizontalAlignment="Right"
                     Width="120"
                     Height="120"
-                        HorizontalAlignment="Right"
                     CornerRadius="60" >
-                <Border.Background>
-                    <ImageBrush x:Name="headImage" ImageSource="{Binding ViewModel.HeadImage}"/>
-                </Border.Background>
-            </Border>
+                    <Border.Background>
+                        <ImageBrush x:Name="headImage" ImageSource="{Binding ViewModel.HeadImage}"/>
+                    </Border.Background>
+ 
+                </Border>
+                <TextBlock
+                    HorizontalAlignment="Right"
+                    Margin="0,8,20,0"
+                    FontWeight="Bold"
+                    FontSize="14"
+                    Text="{Binding ViewModel.UserInfo.BasicInfo.NickName}" />
+            </StackPanel>
+
             <StackPanel
                        VerticalAlignment="Center"
-                        Height="160" Width="268" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0,265,0">
-                <TextBlock
-                            Margin="0,5,0,0"
-                            HorizontalAlignment="Center"
-                            FontWeight="Bold"
-                            FontSize="14"
-                            Text="{Binding ViewModel.UserInfo.BasicInfo.NickName}" />
-                <StackPanel Margin="0,4,10,0" Orientation="Horizontal" HorizontalAlignment="Center">
+                        Height="160" Grid.Column="1" Margin="5,0,91,0">
+                <StackPanel Margin="0,2,10,0" Orientation="Horizontal" HorizontalAlignment="Center">
                     <TextBlock
                       HorizontalAlignment="left"
                         Foreground="#FF999999"
-                            FontSize="10"
+                            FontSize="11"
                             Text="小红书号：">
 
                     </TextBlock>
                     <TextBlock
                       HorizontalAlignment="left"
                          Foreground="#FF999999"
-                            FontSize="10"
+                            FontSize="11"
                             Text="{Binding ViewModel.UserInfo.BasicInfo.RedId}">
 
                     </TextBlock>
                     <TextBlock
                         Margin="10,0,0,0"
                          Foreground="#FF999999"
-                            FontSize="10"
+                            FontSize="11"
                             Text="IP属地：" />
                     <TextBlock
                          Foreground="#FF999999"
-                            FontSize="10"
+                            FontSize="11"
                             Text="{Binding ViewModel.UserInfo.BasicInfo.IpLocation}" />
                 </StackPanel>
-                <TextBlock
-                     Margin="0,8,0,0"
-                    HorizontalAlignment="Center"
+                <StackPanel  Margin="0,4,0,0" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock
+                        Margin="10,4,0,0"
+                        HorizontalAlignment="Center"
                         FontSize="12"
                         Text="{Binding ViewModel.UserInfo.BasicInfo.Desc}" />
+                </StackPanel>
+
                 <StackPanel Margin="0,8,10,0" Orientation="Horizontal" HorizontalAlignment="Center">
                     <Border
                     Width="15"

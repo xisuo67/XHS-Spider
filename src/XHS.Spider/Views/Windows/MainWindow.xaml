@@ -135,7 +135,6 @@
             <ui:TitleBar.Tray>
                 <ui:NotifyIcon
                     FocusOnLeftClick="True"
-                    Icon="pack://application:,,,/Assets/applicationIcon-256.png"
                     MenuOnRightClick="True"
                     TooltipText="WeChatCustomerService">
                     <ui:NotifyIcon.Menu>
