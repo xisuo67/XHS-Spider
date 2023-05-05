@@ -8,7 +8,7 @@
 <div align="center">
 
 XHS.Spider是一款颜值超高的小红书数据采集工具
-
+</div>
 <table>
     <tr>
         <td><img height="300px" width="500px" src="http://yfloves.cn/source/XHS1.png"/></td>
