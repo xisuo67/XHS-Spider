@@ -41,9 +41,8 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <StackPanel  Grid.Column="0" HorizontalAlignment="Stretch">
+            <StackPanel  Grid.Column="0" HorizontalAlignment="Right">
                 <Border
-                    HorizontalAlignment="Right"
                     Width="120"
                     Height="120"
                     CornerRadius="60" >
@@ -53,8 +52,8 @@
  
                 </Border>
                 <TextBlock
-                    HorizontalAlignment="Right"
-                    Margin="0,8,20,0"
+                    HorizontalAlignment="Center"
+                    Margin="0,10,0,0"
                     FontWeight="Bold"
                     FontSize="14"
                     Text="{Binding ViewModel.UserInfo.BasicInfo.NickName}" />
