@@ -1,4 +1,5 @@
 ﻿using Downloader;
+using Hardcodet.Wpf.TaskbarNotification;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,19 +12,25 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
+using UpdateChecker.Interfaces;
+using XHS.Common.Utils;
 using XHS.Models.DownLoad;
 using XHS.Models.XHS.ApiOutputModel.OtherInfo;
+using XHS.Spider.Helpers;
 
 namespace XHS.Spider.Services
 {
     public class BaseDownloadService
     {
+        private string CurrentFolderPath;
+        private  TaskbarIcon _notifyIcon;
         protected Task workTask;
         protected ObservableCollection<DownloadItem> _downloadList;
         private DownloadService CurrentDownloadService;
         private DownloadConfiguration CurrentDownloadConfiguration;
-        protected List<Task> downloadingTasks = new List<Task>();
-        public BaseDownloadService(ObservableCollection<DownloadItem> downloadList) { 
+        public BaseDownloadService(ObservableCollection<DownloadItem> downloadList)
+        {
             this._downloadList = downloadList;
         }
 
@@ -32,23 +39,24 @@ namespace XHS.Spider.Services
         /// </summary>
         public void Start()
         {
+            _notifyIcon = new TaskbarIcon();
+            _notifyIcon.TrayBalloonTipClicked += notifyIcon_TrayBalloonTipClicked;
             workTask = Task.Run(DoWork);
         }
-        public async Task DoWork() { 
+        public async Task DoWork()
+        {
             while (true)
             {
-                if (downloadingTasks.Count>0)
-                {
-                    downloadingTasks.RemoveAll((m) => m.IsCompleted);
-                }
-
-                if (_downloadList.Count>0)
+                var downLoadList = _downloadList.Where(e => e.Status == DownloadStatus.None).ToList();
+                if (downLoadList.Count > 0)
                 {
                     try
                     {
-                        for (int i = 0; i < _downloadList.Count; i++)
+                        for (int i = 0; i < downLoadList.Count; i++)
                         {
-                            await DownloadFile(_downloadList[i]).ConfigureAwait(false);
+                            var downloadItem = downLoadList[i];
+                            downloadItem.Status = DownloadStatus.Running;
+                            await DownloadFile(downloadItem).ConfigureAwait(false);
                         }
                     }
                     catch (Exception ex)
@@ -77,20 +85,15 @@ namespace XHS.Spider.Services
 
             return CurrentDownloadService;
         }
-        private  DownloadConfiguration GetDownloadConfiguration()
+        private DownloadConfiguration GetDownloadConfiguration()
         {
             return new DownloadConfiguration
             {
-                BufferBlockSize = 10240,    // usually, hosts support max to 8000 bytes, default values is 8000
-                ChunkCount = 12,             // file parts to download, default value is 1
-                MaximumBytesPerSecond = 1024 * 1024 * 10, // download speed limited to 10MB/s, default values is zero or unlimited
-                MaxTryAgainOnFailover = 3,  // the maximum number of times to fail
-                ParallelDownload = false,    // download parts of file as parallel or not. Default value is false
-                ParallelCount = 12,          // number of parallel downloads. The default value is the same as the chunk count
-                Timeout = 3000,             // timeout (millisecond) per stream block reader, default value is 1000
-                ClearPackageOnCompletionWithFailure = true, // Clear package and downloaded data when download completed with failure, default value is false
-                MinimumSizeOfChunking = 1024, // minimum size of chunking to download a file in multiple parts, default value is 512        
-                ReserveStorageSpaceBeforeStartingDownload = true, // Before starting the download, reserve the storage space of the file as file size, default value is false
+                BufferBlockSize = 10240, // 通常，主机最大支持8000字节，默认值为8000。
+                ChunkCount = 1, // 要下载的文件分片数量，默认值为1
+                MaxTryAgainOnFailover = 3, // 失败的最大次数
+                ParallelDownload = true, // 下载文件是否为并行的。默认值为false
+                Timeout = 1000, // 每个 stream reader  的超时（毫秒），默认值是1000
             };
         }
         private DownloadService CreateDownloadService(DownloadConfiguration config)
@@ -102,8 +105,16 @@ namespace XHS.Spider.Services
 
             return downloadService;
         }
-        private void OnDownloadFileCompleted(object sender, AsyncCompletedEventArgs e) {
-           
+        private void notifyIcon_TrayBalloonTipClicked(object sender, RoutedEventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(CurrentFolderPath))
+            {
+                Utils.OpenURL(CurrentFolderPath);
+            }
+        }
+        private void OnDownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
+        {
+
             if (e.Cancelled)
             {
                 //异步操作已取消
@@ -111,7 +122,7 @@ namespace XHS.Spider.Services
             else if (e.Error != null)
             {
                 //异常
-                
+
             }
             else
             {
@@ -122,6 +133,16 @@ namespace XHS.Spider.Services
                     var entity = _downloadList.FirstOrDefault(x => x.FileName == downLoadInfo.FileName);
                     if (entity != null)
                     {
+                        //TODO:搜索文件夹路径文件，判断是否与文件数量一致;
+                        System.IO.DirectoryInfo dirInfo = new System.IO.DirectoryInfo(entity.FolderPath);
+                        int fileCount = Utils.GetFilesCount(dirInfo);
+                        if (fileCount == entity.FileCount)
+                        {
+                            CurrentFolderPath=entity.FolderPath;
+                            _notifyIcon.ShowBalloonTip($"下载完成", $"【{entity.Title}】\n点击查看下载文件", BalloonIcon.Info);
+                        }
+                         
+                        entity.Status = DownloadStatus.Completed;
                         //加入到下载完成list中，并从下载中list去除
                         _downloadList.Remove(entity);
                     }

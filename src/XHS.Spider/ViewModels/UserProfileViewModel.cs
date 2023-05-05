@@ -166,7 +166,10 @@ namespace XHS.Spider.ViewModels
                                     DownloadItem downloadImageItem = new DownloadItem() { 
                                         Url= imageUrl,
                                         FileName = fpath,
-                                        Status= DownloadStatus.None
+                                        Title= title,
+                                        FolderPath= $"{dirPath}\\{title}",
+                                        Status = DownloadStatus.None,
+                                        FileCount=nodeCard.ImageList.Count,
                                     };
                                     downloadItems.Add(downloadImageItem);
                                 }
@@ -179,7 +182,10 @@ namespace XHS.Spider.ViewModels
                                 {
                                     Url = videoUrl,
                                     FileName = filePath,
-                                    Status = DownloadStatus.None
+                                    Title = title,
+                                    FolderPath= $"{dirPath}\\{title}",
+                                    Status = DownloadStatus.None,
+                                    FileCount=1,
                                 };
                                 downloadItems.Add(downloadItem);
                                 break;
