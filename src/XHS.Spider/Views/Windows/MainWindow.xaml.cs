@@ -40,8 +40,6 @@ namespace XHS.Spider.Views.Windows
             updateChecker = new UpdateCheckerServer();
             updateChecker.NewVersionFound += updateChecker_NewVersionFound;
             updateChecker.NewVersionNotFound += updateChecker_NewVersionNotFound;
-            //updateChecker.NewVersionFoundFailed += UpdateChecker_NewVersionFoundFailed;
-
             #endregion
 
 
