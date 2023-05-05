@@ -45,6 +45,7 @@ namespace XHS.Spider.ViewModels
                 var navigation = _navigationService.GetNavigationControl();
                 //TODO:
                 SearchService.SearchInput(InputText, navigation, _serviceProvider, _pageServiceNew);
+                this.InputText = string.Empty;
             }
         }
 
