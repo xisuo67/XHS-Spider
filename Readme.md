@@ -1,4 +1,4 @@
-﻿﻿<p align="center">
+<p align="center">
   <a href="https://github.com/xisuo67/XHS-Spider">
       <img src="https://ci.xiaohongshu.com/49fd555a-b46b-49fd-b5a5-053fb4a536dc">
   </a>
