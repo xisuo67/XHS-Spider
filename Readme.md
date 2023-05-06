@@ -1,4 +1,4 @@
-﻿<p align="center">
+﻿﻿<p align="center">
   <a href="https://github.com/xisuo67/XHS-Spider">
       <img src="https://ci.xiaohongshu.com/49fd555a-b46b-49fd-b5a5-053fb4a536dc">
   </a>
@@ -52,6 +52,14 @@ XHS.Spider是一款颜值超高的小红书数据采集工具
 
 [更新日志](CHANGELOG.md)
 
+## 发布
+
+`dotnet build --configuration Release -p:Version=x.x.x.x`
+
+```
+其中x为版本号
+```
+
 ## 开发路线
 
 查看[开发路线](https://github.com/users/xisuo67/projects/5)来了解我的开发计划。
@@ -59,5 +67,15 @@ XHS.Spider是一款颜值超高的小红书数据采集工具
 ## 如何贡献
 
 - 通过 [Issue](https://github.com/xisuo67/XHS-Spider/issues) 报告:bug:或进行咨询。
+
+- bug反馈：
+
+  - 请查询Issue中是否存在相同问题
+  - 附带使用环境及相应链接
+
+- 功能需求反馈：
+
+  - 定期收集合理需求
+  - 由于个人精力有限，不定期更新，勿催
 
   
