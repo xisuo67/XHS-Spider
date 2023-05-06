@@ -67,15 +67,25 @@ XHS.Spider是一款颜值超高的小红书数据采集工具
 ## 如何贡献
 
 - 通过 [Issue](https://github.com/xisuo67/XHS-Spider/issues) 报告:bug:或进行咨询。
-
 - bug反馈：
 
   - 请查询Issue中是否存在相同问题
   - 附带使用环境及相应链接
-
 - 功能需求反馈：
 
   - 定期收集合理需求
   - 由于个人精力有限，不定期更新，勿催
 
-  
+
+
+
+## 赞助
+
+如果这个项目对您有很大帮助，并且您希望支持该项目的开发和维护，请随时扫描一下二维码进行捐赠。非常感谢您的捐款，谢谢！
+
+<table>
+    <tr>
+        <td><img height="700px" width="500px" src="http://yfloves.cn/source/alipay.jpg"/></td>
+        <td><img  height="700px" width="500px" src="http://yfloves.cn/source/wechatpay.jpg"/></td>
+</table>
+
