@@ -49,6 +49,7 @@ XHS.Spider是一款颜值超高的小红书数据采集工具
        <img alt="GitHub all releases" src="https://img.shields.io/github/downloads/xisuo67/XHS-Spider/total">
     </a>
 </p>
+
 [更新日志](CHANGELOG.md)
 
 ## 发布
