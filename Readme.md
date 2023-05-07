@@ -85,3 +85,16 @@ XHS.Spider是一款颜值超高的小红书数据采集工具
 
 <img src="http://yfloves.cn/source/alipay435x450.png" alt="Alipay.png" style="zoom:60%;" /><img src="http://yfloves.cn/source/wechatpay435x450.png" alt="WeChat.png" style="zoom:60%;" />
 
+
+
+### 捐赠人列表
+
+```
+真心感谢每一位捐赠人对这个项目的支持
+```
+
+
+
+| Name 名称 | Amount 价值 | Date 时间 |
+| --------- | ----------- | --------- |
+| **骥      | 10          | 2023-5-7  |
