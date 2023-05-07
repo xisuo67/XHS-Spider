@@ -139,7 +139,7 @@ namespace XHS.Spider.Services
                         if (fileCount == entity.FileCount)
                         {
                             CurrentFolderPath=entity.FolderPath;
-                            _notifyIcon.ShowBalloonTip($"下载完成", $"【{entity.Title}】\n点击查看下载文件", BalloonIcon.Info);
+                            _notifyIcon.ShowBalloonTip("下载完成", $"【{entity.Title}】\n点击查看下载文件", BalloonIcon.Info);
                         }
                          
                         entity.Status = DownloadStatus.Completed;
