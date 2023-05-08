@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using System.Windows.Input;
 using Wpf.Ui.Common.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
+using XHS.Common.Utils;
 using XHS.IService;
 using XHS.Spider.Views.Windows;
 
@@ -41,6 +42,10 @@ namespace XHS.Spider.ViewModels
                     return;
                 case "navigate_to_search":
                     _navigationService.Navigate(typeof(Views.Pages.Search));
+                    return;
+                case "navigate_to_QQ":
+                    string qqUrl = "https://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=Kdj_m0z41zV0IrR5rSD1DPfv80KcEw_d&authKey=TCEQAhosZjagfkCcfNJyrkCXWFkwiSEJNJgNZTYXBADYOy6THzjN4GrOdxOndjII&noverify=0&group_code=521302423";
+                    Utils.OpenURL(qqUrl);
                     return;
             }
         }

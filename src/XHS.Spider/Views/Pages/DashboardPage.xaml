@@ -64,8 +64,8 @@
                             HorizontalAlignment="Left"
                             Appearance="Transparent"
                             Command="{Binding ViewModel.NavigateCommand}"
-                            CommandParameter="navigate_to_controls"
-                            Content="QQ：392706283"
+                            CommandParameter="navigate_to_QQ"
+                            Content="QQ群：521302423"
                             Foreground="{DynamicResource TextFillColorLightPrimaryBrush}" />
                     </StackPanel>
                     <TextBlock
