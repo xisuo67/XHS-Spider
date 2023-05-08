@@ -13,16 +13,23 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Wpf.Ui.Common.Interfaces;
+using Wpf.Ui.Mvvm.Interfaces;
+using XHS.Spider.ViewModels;
 
 namespace XHS.Spider.Views.Pages
 {
     /// <summary>
     /// HomeExplorePage.xaml 的交互逻辑
     /// </summary>
-    public partial class HomeExplorePage : INavigableView<ViewModels.SearchViewModel>
+    public partial class HomeExplorePage : INavigableView<ViewModels.HomeExploreViewModel>
     {
-        public HomeExplorePage()
+        public ViewModels.HomeExploreViewModel ViewModel
         {
+            get;
+        }
+        public HomeExplorePage(HomeExploreViewModel viewModel)
+        {
+            ViewModel = viewModel;
             InitializeComponent();
         }
     }
