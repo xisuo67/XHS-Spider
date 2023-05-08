@@ -76,14 +76,16 @@ XHS.Spider是一款颜值超高的小红书数据采集工具
   - 定期收集合理需求
   - 由于维护多个开源项目个人精力有限，不定期更新，勿催
 
+## 交流
 
+- QQ群：521302423
 
 
 ## 赞助
 
 如果这个项目对您有很大帮助，并且您希望支持该项目的开发和维护，请随时扫描一下二维码进行捐赠。非常感谢您的捐款，谢谢！
 
-<img src="http://yfloves.cn/source/alipay435x450.png" alt="Alipay.png" style="zoom:60%;" /><img src="http://yfloves.cn/source/wechatpay435x450.png" alt="WeChat.png" style="zoom:60%;" />
+<img src="http://yfloves.cn/source/alipay435x450.png" alt="Alipay.png" style="zoom:40%;" /><img src="http://yfloves.cn/source/wechatpay435x450.png" alt="WeChat.png" style="zoom:40%;" />
 
 
 
