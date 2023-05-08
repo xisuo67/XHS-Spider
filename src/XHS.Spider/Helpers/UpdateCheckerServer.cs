@@ -13,7 +13,7 @@ namespace XHS.Spider.Helpers
     {
         private static readonly ILogger Logger = LoggerService.Get(typeof(UpdateCheckerServer));
         private const string Owner = @"xisuo67";
-        private const string Repo = @"XHS.Spider";
+        private const string Repo = @"XHS-Spider";
 
         public string LatestVersionNumber;
         public string LatestVersionUrl;
@@ -23,15 +23,10 @@ namespace XHS.Spider.Helpers
         public event EventHandler NewVersionFound;
         public event EventHandler NewVersionFoundFailed;
         public event EventHandler NewVersionNotFound;
-        public const string Name = @"XHS.Spider";
+        public const string Name = @"XHS-Spider";
         public const string Copyright = @"Copyright © 2023-present xisuo67";
 
-        private static string version = string.Empty;
-        public static string Version
-        {
-            get => version;
-            set => version = value;
-        }
+        public const string Version = @"1.0.0.1";
 
         public static string FullVersion = Version +
 #if SelfContained
@@ -46,16 +41,10 @@ namespace XHS.Spider.Helpers
 
         public UpdateCheckerServer()
         {
-            version = GetAssemblyVersion();
         }
 #else
         @"";
 #endif
-
-        private string GetAssemblyVersion()
-        {
-            return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? @"1.0.0.0";
-        }
         public async void Check(bool notifyNoFound)
         {
             try
