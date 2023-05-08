@@ -43,17 +43,18 @@ namespace XHS.Spider.Helpers
 #endif
 #if DEBUG
         @" Debug";
+
+#else
+        @" Release";
+#endif
         /// <summary>
         /// 构造函数
         /// </summary>
         public UpdateCheckerServer()
         {
             version = GetAssemblyVersion();
+            Logger.Info($"version:{version}");
         }
-#else
-        @"";
-#endif
-
         private string GetAssemblyVersion()
         {
             return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? @"1.0.0.0";

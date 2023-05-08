@@ -72,7 +72,11 @@ namespace XHS.Service.Log
 
             System.Diagnostics.Debug.Write(message);
             var path = GetFileFullPath($"log/{DateTime.Now:yyyy-MM-dd}", "run.log");
-            File.WriteAllText(path, message);
+            using (var sw = File.AppendText(path))
+            {
+                sw.WriteLine(message);
+                //sw.Write(message);
+            }
         }
 
         /// <summary>
