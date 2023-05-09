@@ -162,7 +162,7 @@ namespace XHS.Spider.ViewModels
                                 for (int i = 0; i < nodeCard.ImageList.Count; i++)
                                 {
                                     var imageUrl = string.Format(BaseImageUrl, nodeCard.ImageList[i].TraceId);
-                                    var fpath = $"{dirPath}\\{title}\\{title}{i}.png";
+                                    var fpath = $"{dirPath}\\{title}\\{title}-{Guid.NewGuid().ToString()}.png";
                                     DownloadItem downloadImageItem = new DownloadItem() { 
                                         Url= imageUrl,
                                         FileName = fpath,
@@ -177,7 +177,7 @@ namespace XHS.Spider.ViewModels
                                 break;
                             case "video":
                                 var videoUrl = string.Format(BaseVideoUrl, nodeCard.Video.Consumer.OriginVideoKey);
-                                var filePath = $"{dirPath}\\{title}\\{title}.mov";
+                                var filePath = $"{dirPath}\\{title}\\{title}-{Guid.NewGuid().ToString()}.mov";
                                 DownloadItem downloadItem = new DownloadItem()
                                 {
                                     Url = videoUrl,
