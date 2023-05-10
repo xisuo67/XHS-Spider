@@ -229,7 +229,7 @@ namespace XHS.Spider.ViewModels
             }
             else
             {
-                _snackbarService.Show("提示", "开始选中笔记", SymbolRegular.Checkmark12, ControlAppearance.Success);
+                _snackbarService.Show("提示", "开始下载选中笔记", SymbolRegular.Checkmark12, ControlAppearance.Success);
             }
         }
         /// <summary>

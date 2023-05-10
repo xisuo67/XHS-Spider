@@ -209,10 +209,10 @@
                             </DataGrid.RowStyle>
 
                             <DataGrid.Columns>
-                                <DataGridCheckBoxColumn Header="选择"  Binding="{Binding IsDownLoad,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                <DataGridCheckBoxColumn  Binding="{Binding IsDownLoad,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="选择">
                                     <DataGridCheckBoxColumn.HeaderTemplate>
                                         <DataTemplate>
-                                            <CheckBox x:Name="ckbSelectedAll" Click="CheckAll_Click" HorizontalAlignment="Center"/>
+                                            <CheckBox x:Name="ckbSelectedAll" Click="CheckAll_Click" HorizontalAlignment="Center"></CheckBox>
                                         </DataTemplate>
                                     </DataGridCheckBoxColumn.HeaderTemplate>
                                 </DataGridCheckBoxColumn>
