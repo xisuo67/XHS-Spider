@@ -41,8 +41,23 @@ namespace XHS.Spider.ViewModels
             get => inputText;
             set => SetProperty(ref inputText, value);
         }
+
+        private string inputSearchText;
+        public string InputSearchText
+        {
+            get => inputSearchText;
+            set => SetProperty(ref inputSearchText, value);
+        }
         private readonly ISnackbarService _snackbarService;
         private readonly IXhsSpiderService _xhsSpiderService;
+
+
+        private IEnumerable<NoteModel> _dataGridItemCollection = new NoteModel[] { };
+        public IEnumerable<NoteModel> DataGridItemCollection
+        {
+            get => _dataGridItemCollection;
+            set => SetProperty(ref _dataGridItemCollection, value);
+        }
 
         private IEnumerable<NoteModel> _nodes = new NoteModel[] { };
 
@@ -307,6 +322,7 @@ namespace XHS.Spider.ViewModels
                                 node.LikedCount = node.interact_info?.LikedCount;
                             }
                             Nodes = nodes.ToArray();
+                            DataGridItemCollection = Nodes;
                         }
                         else
                         {
@@ -324,8 +340,13 @@ namespace XHS.Spider.ViewModels
         /// 搜索笔记
         /// </summary>
         public void ExecuteSearchNode()
-        { 
-        
+        {
+            var searchText = this.InputSearchText;
+            if (!string.IsNullOrEmpty(searchText))
+            {
+                var searchNodes = this.Nodes.Where(e => e.DisplayTitle== searchText);
+                this.DataGridItemCollection= searchNodes;
+            }
         }
         #endregion
 

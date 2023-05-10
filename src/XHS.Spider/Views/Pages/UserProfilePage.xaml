@@ -200,7 +200,7 @@
                                 Grid.Column="0"
                                 Icon="Search12" 
                                 PlaceholderText="请输入关键字查询笔记"
-                                Text="{Binding Path=ViewModel.InputNodeSearchCommand, 
+                                Text="{Binding Path=ViewModel.InputSearchText, 
                                 UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                 IconPlacement="Right">
                                 <TextBox.InputBindings>
@@ -218,7 +218,7 @@
                             ScrollViewer.VerticalScrollBarVisibility="Visible"
                             Grid.Row="1" Name="dgrdView" 
                             Margin="0,8,0,0" 
-                            ItemsSource="{Binding ViewModel.Nodes,Mode=TwoWay}"  
+                            ItemsSource="{Binding ViewModel.DataGridItemCollection,Mode=TwoWay}"  
                             AutoGenerateColumns="False">
                             <DataGrid.RowStyle>
                                 <Style TargetType="DataGridRow">
