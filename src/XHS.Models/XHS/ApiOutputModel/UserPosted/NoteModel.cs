@@ -54,6 +54,6 @@ namespace XHS.Models.XHS.ApiOutputModel.UserPosted
 
         public string NodeType { get; set; }
 
-        public bool IsDownLoad { get; set; } = false;
+        public bool IsDownLoad { get; set; } = true;
     }
 }
