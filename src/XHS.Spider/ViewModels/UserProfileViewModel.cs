@@ -120,7 +120,12 @@ namespace XHS.Spider.ViewModels
             _xhsSpiderService = xhsSpiderService;
         }
 
-
+        private ICommand inputNodeSearchCommand;
+        public ICommand InputNodeSearchCommand
+        {
+            get => inputNodeSearchCommand ?? (inputNodeSearchCommand = new Wpf.Ui.Common.RelayCommand(ExecuteSearchNode));
+            set => inputNodeSearchCommand = value;
+        }
         // 输入确认事件
         private ICommand inputCommand;
         public ICommand InputCommand
@@ -143,19 +148,25 @@ namespace XHS.Spider.ViewModels
             set => downLoadAll = value;
         }
         #endregion
-
+        #region 下载
+        /// <summary>
+        /// 下载选中笔记
+        /// </summary>
         public void DownLoadCheckAll()
         {
             var cheackNodes = this.Nodes.Where(e => e.IsDownLoad == true);
             if (cheackNodes.Count() > 0)
             {
-                DownLoad(cheackNodes,false);
+                DownLoad(cheackNodes, false);
             }
             else
             {
                 _snackbarService.Show("提示", "请选择下载项", SymbolRegular.ErrorCircle12, ControlAppearance.Danger);
             }
         }
+        /// <summary>
+        /// 下载所有笔记
+        /// </summary>
         public void DownLoadAllNodes()
         {
             var nodes = this.Nodes;
@@ -232,6 +243,9 @@ namespace XHS.Spider.ViewModels
                 _snackbarService.Show("提示", "开始下载选中笔记", SymbolRegular.Checkmark12, ControlAppearance.Success);
             }
         }
+        #endregion
+
+        #region 搜索
         /// <summary>
         /// 处理输入事件
         /// </summary>
@@ -306,6 +320,15 @@ namespace XHS.Spider.ViewModels
                 }
             }
         }
+        /// <summary>
+        /// 搜索笔记
+        /// </summary>
+        public void ExecuteSearchNode()
+        { 
+        
+        }
+        #endregion
+
 
         public void OnNavigatedFrom()
         {

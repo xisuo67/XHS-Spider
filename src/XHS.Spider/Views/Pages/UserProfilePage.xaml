@@ -191,10 +191,28 @@
                             <RowDefinition Height="35"  />
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <StackPanel Orientation="Horizontal" Grid.Row="0" Cursor="">
-                            <ui:Button Content="全部下载"  Margin="0,0,4,0" Appearance="Info" Icon="ArrowDownload16" Command="{Binding ViewModel.DownLoadAll}"/>
-                            <ui:Button Content="下载勾选项" Appearance="Info" Icon="ArrowDownload16" Command="{Binding ViewModel.DownLoadCheackAll}"/>
-                        </StackPanel>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="350" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <ui:TextBox 
+                                Grid.Column="0"
+                                Icon="Search12" 
+                                PlaceholderText="请输入关键字查询笔记"
+                                Text="{Binding Path=ViewModel.InputNodeSearchCommand, 
+                                UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                IconPlacement="Right">
+                                <TextBox.InputBindings>
+                                    <KeyBinding Key="Enter" Command="{Binding ViewModel.InputNodeSearchCommand}" />
+                                </TextBox.InputBindings>
+                            </ui:TextBox>
+                            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                <ui:Button  Content="全部下载" Margin="10,0,4,0" Appearance="Info" Icon="ArrowDownload16" Command="{Binding ViewModel.DownLoadAll}" HorizontalAlignment="left"/>
+                                <ui:Button  Content="下载已选项" Appearance="Info" Icon="ArrowDownload16" HorizontalAlignment="left" Command="{Binding ViewModel.DownLoadCheackAll}" />
+                            </StackPanel>
+                            
+                        </Grid>
                         <ui:DataGrid 
                             HorizontalContentAlignment="Center" 
                             ScrollViewer.VerticalScrollBarVisibility="Visible"
