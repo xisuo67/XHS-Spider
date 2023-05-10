@@ -268,6 +268,7 @@ namespace XHS.Spider.ViewModels
         {
             if (!string.IsNullOrEmpty(InputText))
             {
+                
                 if (InputText.Contains("user/profile/"))
                 {
                     var id = SearchService.GetId(inputText, BaseUrl);
@@ -309,10 +310,29 @@ namespace XHS.Spider.ViewModels
                                     var headImage = FileHelper.UrlToBitmapImage(imageUrl);
                                     HeadImage = headImage;
                                 }
+                                var filePath = AppDomain.CurrentDomain.BaseDirectory + "Resources";
                                 if (!string.IsNullOrEmpty(info?.Icon))
                                 {
-                                    var sex = FileHelper.UrlToBitmapImage(info.Icon);
-                                    SexImage = sex;
+                                    BitmapImage sex = null;
+                                    if (info?.Icon.Contains("gender-female-v1.png") == true)
+                                    {
+                                        sex = new BitmapImage(new Uri("pack://application:,,,/Resources/gender-female-v1.png"));
+                                        SexImage = sex;
+                                    }
+                                    else if (info?.Icon.Contains("gender-male-v1.png") == true)
+                                    {
+                                        sex = new BitmapImage(new Uri("pack://application:,,,/Resources/gender-male-v1.png"));
+                                        SexImage = sex;
+                                    }
+                                    else
+                                    {
+                                        sex = FileHelper.UrlToBitmapImage(info.Icon);
+                                        SexImage = sex;
+                                    }
+                                }
+                                else
+                                {
+                                    SexImage = null;
                                 }
                             }));
 

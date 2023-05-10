@@ -39,5 +39,19 @@ namespace XHS.Spider.Helpers
                 return result;
             }
         }
+        public static BitmapImage PathToBitmapImage(string filePath)
+        {
+            try
+            {
+                var path= AppDomain.CurrentDomain.BaseDirectory + filePath;
+                Image image = Image.FromFile(path);
+                Bitmap bitmap = new Bitmap(image);
+                return BitmapToBitmapImage(bitmap);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
     }
 }

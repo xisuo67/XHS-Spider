@@ -37,6 +37,8 @@
     <None Remove="Assets\XHS-biaoji.png" />
     <None Remove="Assets\xiaohongshu.png" />
     <None Remove="Resources\desktop.jpg" />
+    <None Remove="Resources\gender-female-v1.png" />
+    <None Remove="Resources\gender-male-v1.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -51,7 +53,13 @@
     <Resource Include="Assets\applicationIcon-256.png" />
     <Resource Include="Assets\XHS-biaoji.png" />
     <Resource Include="Assets\xiaohongshu.png" />
-    <Resource Include="Resources\desktop.jpg" />
+    <Resource Include="Resources\desktop.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\gender-female-v1.png" />
+    <Resource Include="Resources\gender-male-v1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>
