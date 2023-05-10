@@ -344,8 +344,12 @@ namespace XHS.Spider.ViewModels
             var searchText = this.InputSearchText;
             if (!string.IsNullOrEmpty(searchText))
             {
-                var searchNodes = this.Nodes.Where(e => e.DisplayTitle== searchText);
-                this.DataGridItemCollection= searchNodes;
+                var searchNodes = this.Nodes.Where(e => e.DisplayTitle.Contains(searchText));
+                this.DataGridItemCollection = searchNodes;
+            }
+            else
+            {
+                this.DataGridItemCollection = this.Nodes;
             }
         }
         #endregion
