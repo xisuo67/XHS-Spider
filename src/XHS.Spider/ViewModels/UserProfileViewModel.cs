@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using Downloader;
 using Microsoft.ClearScript;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -34,7 +35,6 @@ namespace XHS.Spider.ViewModels
         public static readonly string BaseUrl = "https://www.xiaohongshu.com/user/profile/";
         public static readonly string BaseVideoUrl = "http://sns-video-bd.xhscdn.com/{0}";
         public static readonly string BaseImageUrl = "https://sns-img-bd.xhscdn.com/{0}?imageView2/format/png";
-        private static ConcurrentDictionary<string, string> _downLoadDic = new ConcurrentDictionary<string, string>();
         private string inputText;
         public string InputText
         {
@@ -146,12 +146,28 @@ namespace XHS.Spider.ViewModels
 
         public void DownLoadCheckAll()
         {
-            var a = this.Nodes.Where(e=>e.IsDownLoad==true).ToList();
+            var cheackNodes = this.Nodes.Where(e => e.IsDownLoad == true);
+            if (cheackNodes.Count() > 0)
+            {
+                DownLoad(cheackNodes,false);
+            }
+            else
+            {
+                _snackbarService.Show("提示", "请选择下载项", SymbolRegular.ErrorCircle12, ControlAppearance.Danger);
+            }
         }
         public void DownLoadAllNodes()
         {
             var nodes = this.Nodes;
-            _downLoadDic.Clear();
+            DownLoad(nodes);
+        }
+        /// <summary>
+        /// 下载笔记
+        /// </summary>
+        /// <param name="nodes"></param>
+        /// <param name="isDownLoadAll"></param>
+        private void DownLoad(IEnumerable<NoteModel> nodes, bool isDownLoadAll = true)
+        {
             string dirName = Format.FormatFileName(UserInfo.BasicInfo.NickName);
             string dirPath = $"{AppDomain.CurrentDomain.BaseDirectory}DownLoad\\{dirName}";
             List<DownloadItem> downloadItems = new List<DownloadItem>();
@@ -173,13 +189,14 @@ namespace XHS.Spider.ViewModels
                                 {
                                     var imageUrl = string.Format(BaseImageUrl, nodeCard.ImageList[i].TraceId);
                                     var fpath = $"{dirPath}\\{title}\\{title}-{Guid.NewGuid().ToString()}.png";
-                                    DownloadItem downloadImageItem = new DownloadItem() { 
-                                        Url= imageUrl,
+                                    DownloadItem downloadImageItem = new DownloadItem()
+                                    {
+                                        Url = imageUrl,
                                         FileName = fpath,
-                                        Title= title,
-                                        FolderPath= $"{dirPath}\\{title}",
+                                        Title = title,
+                                        FolderPath = $"{dirPath}\\{title}",
                                         Status = DownloadStatus.None,
-                                        FileCount=nodeCard.ImageList.Count,
+                                        FileCount = nodeCard.ImageList.Count,
                                     };
                                     downloadItems.Add(downloadImageItem);
                                 }
@@ -193,9 +210,9 @@ namespace XHS.Spider.ViewModels
                                     Url = videoUrl,
                                     FileName = filePath,
                                     Title = title,
-                                    FolderPath= $"{dirPath}\\{title}",
+                                    FolderPath = $"{dirPath}\\{title}",
                                     Status = DownloadStatus.None,
-                                    FileCount=1,
+                                    FileCount = 1,
                                 };
                                 downloadItems.Add(downloadItem);
                                 break;
@@ -206,10 +223,15 @@ namespace XHS.Spider.ViewModels
                 }
             }
             App.DownloadList.AddRange(downloadItems);
-
-            _snackbarService.Show("提示", "开始下载所有笔记", SymbolRegular.Checkmark12, ControlAppearance.Success);
+            if (isDownLoadAll)
+            {
+                _snackbarService.Show("提示", "开始下载所有笔记", SymbolRegular.Checkmark12, ControlAppearance.Success);
+            }
+            else
+            {
+                _snackbarService.Show("提示", "开始选中笔记", SymbolRegular.Checkmark12, ControlAppearance.Success);
+            }
         }
-
         /// <summary>
         /// 处理输入事件
         /// </summary>
@@ -264,7 +286,7 @@ namespace XHS.Spider.ViewModels
                                     SexImage = sex;
                                 }
                             }));
-                            
+
                             var nodes = _xhsSpiderService.GetAllUserNode(id);
                             foreach (var node in nodes)
                             {

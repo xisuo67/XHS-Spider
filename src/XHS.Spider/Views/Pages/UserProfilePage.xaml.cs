@@ -34,5 +34,30 @@ namespace XHS.Spider.Views.Pages
             ViewModel = viewModel;
             InitializeComponent();
         }
+
+        private void CheckAll_Click(object sender, RoutedEventArgs e)
+        {
+            for (int i = 0; i < this.dgrdView.Items.Count; i++)
+            {
+                var cntr = dgrdView.ItemContainerGenerator.ContainerFromIndex(i);
+                DataGridRow ObjROw = (DataGridRow)cntr;
+                if (ObjROw != null)
+                {
+                    FrameworkElement objElement = dgrdView.Columns[0].GetCellContent(ObjROw);
+                    if (objElement != null)
+                    {
+                        System.Windows.Controls.CheckBox objChk = (System.Windows.Controls.CheckBox)objElement;
+                        if (objChk.IsChecked == false)
+                        {
+                            objChk.IsChecked = true;
+                        }
+                        else
+                        {
+                            objChk.IsChecked = false;
+                        }
+                    }
+                }
+            }
+        }
     }
 }

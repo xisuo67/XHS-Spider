@@ -200,7 +200,7 @@
                             ScrollViewer.VerticalScrollBarVisibility="Visible"
                             Grid.Row="1" Name="dgrdView" 
                             Margin="0,8,0,0" 
-                            ItemsSource="{Binding ViewModel.Nodes}"  
+                            ItemsSource="{Binding ViewModel.Nodes,Mode=TwoWay}"  
                             AutoGenerateColumns="False">
                             <DataGrid.RowStyle>
                                 <Style TargetType="DataGridRow">
@@ -209,15 +209,12 @@
                             </DataGrid.RowStyle>
 
                             <DataGrid.Columns>
-                                <DataGridCheckBoxColumn>
+                                <DataGridCheckBoxColumn Header="选择"  Binding="{Binding IsDownLoad,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                     <DataGridCheckBoxColumn.HeaderTemplate>
                                         <DataTemplate>
-                                            <!--<CheckBox Margin="5" x:Name="ckbSelectedAll" Click="CheckAll_Click"/>-->
-                                            <CheckBox Margin="5" HorizontalAlignment="Center"/>
+                                            <CheckBox x:Name="ckbSelectedAll" Click="CheckAll_Click" HorizontalAlignment="Center"/>
                                         </DataTemplate>
                                     </DataGridCheckBoxColumn.HeaderTemplate>
-                                </DataGridCheckBoxColumn>
-                                <DataGridCheckBoxColumn Binding="{Binding IsDownLoad}" Header="是否下载">
                                 </DataGridCheckBoxColumn>
                                 <DataGridTextColumn Width="*" IsReadOnly="True" Binding="{Binding DisplayTitle}" Header="标题"/>
                                 <DataGridTextColumn Width="*" IsReadOnly="True" Binding="{Binding NodeType}" Header="类型"/>
