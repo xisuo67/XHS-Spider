@@ -53,5 +53,7 @@ namespace XHS.Models.XHS.ApiOutputModel.UserPosted
         public string LikedCount { get; set; }
 
         public string NodeType { get; set; }
+
+        public bool IsDownLoad { get; set; } = false;
     }
 }

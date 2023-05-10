@@ -128,7 +128,13 @@ namespace XHS.Spider.ViewModels
             get => inputCommand ?? (inputCommand = new Wpf.Ui.Common.RelayCommand(ExecuteInitData));
             set => inputCommand = value;
         }
+        private ICommand downLoadCheckAll;
 
+        public ICommand DownLoadCheackAll
+        {
+            get => downLoadCheckAll ?? (downLoadCheckAll = new CommunityToolkit.Mvvm.Input.RelayCommand(DownLoadCheckAll));
+            set => downLoadCheckAll = value;
+        }
         private ICommand downLoadAll;
 
         public ICommand DownLoadAll
@@ -138,6 +144,10 @@ namespace XHS.Spider.ViewModels
         }
         #endregion
 
+        public void DownLoadCheckAll()
+        {
+            var a = this.Nodes.Where(e=>e.IsDownLoad==true).ToList();
+        }
         public void DownLoadAllNodes()
         {
             var nodes = this.Nodes;

@@ -188,11 +188,12 @@
                     </TabItem.Header>
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="30"  />
+                            <RowDefinition Height="35"  />
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <StackPanel Orientation="Horizontal" Grid.Row="0" Cursor="">
-                            <ui:Button Content="全部下载" Appearance="Info" Icon="ArrowDownload16"    Command="{Binding ViewModel.DownLoadAll}"/>
+                            <ui:Button Content="全部下载"  Margin="0,0,4,0" Appearance="Info" Icon="ArrowDownload16" Command="{Binding ViewModel.DownLoadAll}"/>
+                            <ui:Button Content="下载勾选项" Appearance="Info" Icon="ArrowDownload16" Command="{Binding ViewModel.DownLoadCheackAll}"/>
                         </StackPanel>
                         <ui:DataGrid 
                             HorizontalContentAlignment="Center" 
@@ -208,6 +209,8 @@
                             </DataGrid.RowStyle>
 
                             <DataGrid.Columns>
+                                <DataGridCheckBoxColumn Binding="{Binding IsDownLoad}" Header="是否下载">
+                                </DataGridCheckBoxColumn>
                                 <DataGridTextColumn Width="*" IsReadOnly="True" Binding="{Binding DisplayTitle}" Header="标题"/>
                                 <DataGridTextColumn Width="*" IsReadOnly="True" Binding="{Binding NodeType}" Header="类型"/>
                                 <DataGridTextColumn Width="*" IsReadOnly="True" Binding="{Binding LikedCount}" Header="点赞数量"/>
