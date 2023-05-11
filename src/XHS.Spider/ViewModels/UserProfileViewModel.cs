@@ -25,6 +25,7 @@ using XHS.IService.XHS;
 using XHS.Models.DownLoad;
 using XHS.Models.XHS.ApiOutputModel.OtherInfo;
 using XHS.Models.XHS.ApiOutputModel.UserPosted;
+using XHS.Service.Log;
 using XHS.Spider.Helpers;
 using XHS.Spider.Services;
 
@@ -32,6 +33,7 @@ namespace XHS.Spider.ViewModels
 {
     public partial class UserProfileViewModel : ObservableObject, INavigationAware
     {
+        private static readonly Service.Log.ILogger Logger = LoggerService.Get(typeof(UserProfileViewModel));
         #region 变量
         public static readonly string BaseUrl = "https://www.xiaohongshu.com/user/profile/";
         public static readonly string BaseVideoUrl = "http://sns-video-bd.xhscdn.com/{0}";
@@ -276,6 +278,7 @@ namespace XHS.Spider.ViewModels
                     var id = SearchService.GetId(inputText, BaseUrl);
                     if (string.IsNullOrEmpty(id))
                     {
+                        Logger.Error($"URL有误：{InputText}");
                         InitNullImage();
                         return;
                     }
@@ -349,9 +352,7 @@ namespace XHS.Spider.ViewModels
                         else
                         {
                             InitNullImage();
-                            var navigation = _navigationService.GetNavigationControl();
                             _snackbarService.Show("异常", apiResult?.Msg, SymbolRegular.ErrorCircle12, ControlAppearance.Danger);
-                            navigation.Navigate(1);
                         }
                     }
                 }
