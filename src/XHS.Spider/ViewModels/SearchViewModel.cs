@@ -89,8 +89,12 @@ namespace XHS.Spider.ViewModels
         /// <param name="e"></param>
         private void OnClipboardUpdated(object sender, EventArgs e)
         {
-          
-           
+
+            var currentTag= _navigationService.GetNavigationControl().Current.PageTag;
+            if (currentTag!= "search")
+            {
+                return;
+            }
             #region 执行第二遍时跳过
             times += 1;
             DispatcherTimer timer = new DispatcherTimer
