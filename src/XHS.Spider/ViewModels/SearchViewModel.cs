@@ -23,7 +23,6 @@ namespace XHS.Spider.ViewModels
     public partial class SearchViewModel : ObservableObject, INavigationAware
     {
         private static readonly ILogger Logger = LoggerService.Get(typeof(SearchViewModel));
-        private ClipboardHooker clipboardHooker;
         private readonly INavigationService _navigationService;
         private readonly IServiceProvider _serviceProvider;
         private readonly IPageServiceNew _pageServiceNew;
@@ -38,6 +37,7 @@ namespace XHS.Spider.ViewModels
             _serviceProvider = serviceProvider;
             _pageServiceNew = pageServiceNew;
             _navigationService = navigationService;
+           
         }
         private string inputText;
         public string InputText
@@ -89,6 +89,12 @@ namespace XHS.Spider.ViewModels
         /// <param name="e"></param>
         private void OnClipboardUpdated(object sender, EventArgs e)
         {
+
+            var currentTag= _navigationService.GetNavigationControl().Current.PageTag;
+            if (currentTag!= "search")
+            {
+                return;
+            }
             #region 执行第二遍时跳过
             times += 1;
             DispatcherTimer timer = new DispatcherTimer
@@ -119,30 +125,33 @@ namespace XHS.Spider.ViewModels
                 IDataObject data = System.Windows.Clipboard.GetDataObject();
                 string[] fs = data.GetFormats();
                 input = data.GetData(fs[0]).ToString();
-                this.InputText = input;
+                if (input.Contains("www.xiaohongshu.com"))
+                {
+                    //TODO:验证input是否url
+                    this.InputText = input;
+                    ExecuteInput();
+                }
+
             }
             catch (Exception exc)
             {
                 Logger.Error("OnClipboardUpdated", exc);
                 return;
             }
-            ExecuteInput();
+           
         }
 
         #endregion
         public void OnNavigatedFrom()
         {
-            if (clipboardHooker != null)
-            {
-                clipboardHooker.ClipboardUpdated -= OnClipboardUpdated;
-                //clipboardHooker.Dispose();
-            }
+            //TODO这里卸载事件后会导致失效，晚点排查一下
+            //GlobalCaChe.clipboardHooker.ClipboardUpdated -= OnClipboardUpdated;
         }
 
         public void OnNavigatedTo()
         {
-            clipboardHooker = new ClipboardHooker(Application.Current.MainWindow);
-            clipboardHooker.ClipboardUpdated += OnClipboardUpdated;
+            GlobalCaChe.clipboardHooker = new ClipboardHooker(Application.Current.MainWindow);
+            GlobalCaChe.clipboardHooker.ClipboardUpdated += OnClipboardUpdated;
         }
     }
 }

@@ -18,12 +18,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Wpf.Ui.Common;
 using Wpf.Ui.Common.Interfaces;
+using Wpf.Ui.Controls.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
 using XHS.Common.Utils;
 using XHS.IService.XHS;
 using XHS.Models.DownLoad;
 using XHS.Models.XHS.ApiOutputModel.OtherInfo;
 using XHS.Models.XHS.ApiOutputModel.UserPosted;
+using XHS.Service.Log;
 using XHS.Spider.Helpers;
 using XHS.Spider.Services;
 
@@ -31,6 +33,7 @@ namespace XHS.Spider.ViewModels
 {
     public partial class UserProfileViewModel : ObservableObject, INavigationAware
     {
+        private static readonly Service.Log.ILogger Logger = LoggerService.Get(typeof(UserProfileViewModel));
         #region 变量
         public static readonly string BaseUrl = "https://www.xiaohongshu.com/user/profile/";
         public static readonly string BaseVideoUrl = "http://sns-video-bd.xhscdn.com/{0}";
@@ -50,7 +53,7 @@ namespace XHS.Spider.ViewModels
         }
         private readonly ISnackbarService _snackbarService;
         private readonly IXhsSpiderService _xhsSpiderService;
-
+        private readonly INavigationService _navigationService;
 
         private IEnumerable<NoteModel> _dataGridItemCollection = new NoteModel[] { };
         public IEnumerable<NoteModel> DataGridItemCollection
@@ -129,8 +132,9 @@ namespace XHS.Spider.ViewModels
             get => _userInfo;
             set => SetProperty(ref _userInfo, value);
         }
-        public UserProfileViewModel(ISnackbarService snackbarService, IXhsSpiderService xhsSpiderService)
+        public UserProfileViewModel(ISnackbarService snackbarService, INavigationService navigationService, IXhsSpiderService xhsSpiderService)
         {
+            _navigationService = navigationService;
             _snackbarService = snackbarService;
             _xhsSpiderService = xhsSpiderService;
         }
@@ -274,6 +278,8 @@ namespace XHS.Spider.ViewModels
                     var id = SearchService.GetId(inputText, BaseUrl);
                     if (string.IsNullOrEmpty(id))
                     {
+                        Logger.Error($"URL有误：{InputText}");
+                        InitNullImage();
                         return;
                     }
                     else
@@ -345,6 +351,7 @@ namespace XHS.Spider.ViewModels
                         }
                         else
                         {
+                            InitNullImage();
                             _snackbarService.Show("异常", apiResult?.Msg, SymbolRegular.ErrorCircle12, ControlAppearance.Danger);
                         }
                     }
@@ -354,6 +361,14 @@ namespace XHS.Spider.ViewModels
                     _snackbarService.Show("提示", "当前Url不符合所属模块搜索要求", SymbolRegular.ErrorCircle12, ControlAppearance.Danger);
                 }
             }
+        }
+        private void InitNullImage()
+        {
+            App.PropertyChangeAsync(new Action(() =>
+            {
+                HeadImage = null;
+                SexImage = null;
+            }));
         }
         /// <summary>
         /// 搜索笔记
