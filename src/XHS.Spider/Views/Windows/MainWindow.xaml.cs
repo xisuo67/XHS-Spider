@@ -3,6 +3,7 @@ using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Navigation;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
@@ -47,7 +48,6 @@ namespace XHS.Spider.Views.Windows
             InitializeComponent();
             SetPageService(pageService);
             navigationService.SetNavigationControl(RootNavigation);
-            
             snackbarService.SetSnackbarControl(RootSnackbar);
             Loaded += (_, _) => InvokeSplashScreen();
         }

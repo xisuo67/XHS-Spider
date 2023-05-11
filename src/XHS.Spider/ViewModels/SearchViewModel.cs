@@ -37,6 +37,7 @@ namespace XHS.Spider.ViewModels
             _serviceProvider = serviceProvider;
             _pageServiceNew = pageServiceNew;
             _navigationService = navigationService;
+           
         }
         private string inputText;
         public string InputText
@@ -88,6 +89,8 @@ namespace XHS.Spider.ViewModels
         /// <param name="e"></param>
         private void OnClipboardUpdated(object sender, EventArgs e)
         {
+          
+           
             #region 执行第二遍时跳过
             times += 1;
             DispatcherTimer timer = new DispatcherTimer
