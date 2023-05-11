@@ -8,6 +8,7 @@ using Wpf.Ui.Controls.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
 using Wpf.Ui.Mvvm.Services;
 using Wpf.Ui.TaskBar;
+using XHS.Common.Global;
 using XHS.Common.Utils;
 using XHS.Spider.Helpers;
 using XHS.Spider.Services;
@@ -45,9 +46,8 @@ namespace XHS.Spider.Views.Windows
 
             InitializeComponent();
             SetPageService(pageService);
-
             navigationService.SetNavigationControl(RootNavigation);
-
+            
             snackbarService.SetSnackbarControl(RootSnackbar);
             Loaded += (_, _) => InvokeSplashScreen();
         }
@@ -101,7 +101,7 @@ namespace XHS.Spider.Views.Windows
             Task.Run(async () =>
             {
                 //TODO:这里预留程序启动初始化数据
-                await Task.Delay(2000);
+                //await Task.Delay(2000);
                 updateChecker.Check(true);
                 await Dispatcher.InvokeAsync(() =>
                 {
@@ -138,13 +138,17 @@ namespace XHS.Spider.Views.Windows
 
         #endregion INavigationWindow methods
 
+        
         /// <summary>
         /// Raises the closed event.
         /// </summary>
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
-
+            if (GlobalCaChe.clipboardHooker != null)
+            {
+                GlobalCaChe.clipboardHooker.Dispose();
+            }
             // Make sure that closing this window will begin the process of closing the application.
             Application.Current.Shutdown();
         }

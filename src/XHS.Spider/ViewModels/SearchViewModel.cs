@@ -23,7 +23,6 @@ namespace XHS.Spider.ViewModels
     public partial class SearchViewModel : ObservableObject, INavigationAware
     {
         private static readonly ILogger Logger = LoggerService.Get(typeof(SearchViewModel));
-        private ClipboardHooker clipboardHooker;
         private readonly INavigationService _navigationService;
         private readonly IServiceProvider _serviceProvider;
         private readonly IPageServiceNew _pageServiceNew;
@@ -132,17 +131,13 @@ namespace XHS.Spider.ViewModels
         #endregion
         public void OnNavigatedFrom()
         {
-            if (clipboardHooker != null)
-            {
-                clipboardHooker.ClipboardUpdated -= OnClipboardUpdated;
-                //clipboardHooker.Dispose();
-            }
+            //GlobalCaChe.clipboardHooker.ClipboardUpdated -= OnClipboardUpdated;
         }
 
         public void OnNavigatedTo()
         {
-            clipboardHooker = new ClipboardHooker(Application.Current.MainWindow);
-            clipboardHooker.ClipboardUpdated += OnClipboardUpdated;
+            GlobalCaChe.clipboardHooker = new ClipboardHooker(Application.Current.MainWindow);
+            GlobalCaChe.clipboardHooker.ClipboardUpdated += OnClipboardUpdated;
         }
     }
 }
