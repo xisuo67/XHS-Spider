@@ -118,19 +118,26 @@ namespace XHS.Spider.ViewModels
                 IDataObject data = System.Windows.Clipboard.GetDataObject();
                 string[] fs = data.GetFormats();
                 input = data.GetData(fs[0]).ToString();
-                this.InputText = input;
+                if (input.Contains("www.xiaohongshu.com"))
+                {
+                    //TODO:验证input是否url
+                    this.InputText = input;
+                    ExecuteInput();
+                }
+
             }
             catch (Exception exc)
             {
                 Logger.Error("OnClipboardUpdated", exc);
                 return;
             }
-            ExecuteInput();
+           
         }
 
         #endregion
         public void OnNavigatedFrom()
         {
+            //TODO这里卸载事件后会导致失效，晚点排查一下
             //GlobalCaChe.clipboardHooker.ClipboardUpdated -= OnClipboardUpdated;
         }
 
