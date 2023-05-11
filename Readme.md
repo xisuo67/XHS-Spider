@@ -30,7 +30,7 @@ XHS.Spider是一款颜值超高的小红书数据采集工具
   - 如何安装运行时，请查看[运行说明](https://github.com/xisuo67/XHS-Spider/wiki/XHS-Spider)相关文档。
   - 如果依然无法独立完成环境的安装，请通过QQ群咨询相关热心群友
 ## 链接
-- 先看文档
+- 先看文档;
 
 - [文档](https://zhuanlan.zhihu.com/p/627192197)
 
