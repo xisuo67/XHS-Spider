@@ -317,18 +317,17 @@ namespace XHS.Spider.ViewModels
                                     if (info?.Icon.Contains("gender-female-v1.png") == true)
                                     {
                                         sex = new BitmapImage(new Uri("pack://application:,,,/Resources/gender-female-v1.png"));
-                                        SexImage = sex;
+                                       
                                     }
                                     else if (info?.Icon.Contains("gender-male-v1.png") == true)
                                     {
                                         sex = new BitmapImage(new Uri("pack://application:,,,/Resources/gender-male-v1.png"));
-                                        SexImage = sex;
                                     }
                                     else
                                     {
                                         sex = FileHelper.UrlToBitmapImage(info.Icon);
-                                        SexImage = sex;
                                     }
+                                    SexImage = sex;
                                 }
                                 else
                                 {
