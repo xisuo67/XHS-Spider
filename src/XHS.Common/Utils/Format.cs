@@ -219,7 +219,16 @@ namespace XHS.Common.Utils
                     break;
                 }
             }
-            return destName.Substring(i, j - i + 1);
+            try
+            {
+                return destName.Substring(i, j - i + 1);
+            }
+            catch (Exception ex)
+            {
+
+                return Guid.NewGuid().ToString();
+            }
+            
         }
 
     }
