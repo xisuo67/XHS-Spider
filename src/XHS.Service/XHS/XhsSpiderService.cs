@@ -94,7 +94,14 @@ namespace XHS.Service.XHS
                         var resultData = JsonConvert.DeserializeObject<XHSBaseApiModel<UserPostedModel>>(result);
                         if (resultData.Success)
                         {
-                            userNodes.AddRange(resultData.Data.Notes);
+                            //TODO:cookie请求多次后，会导致触发反爬机制，导致接口返回has_mode字段明明没有更多条，却返回存在多条记录，然后一直递归查询直到标识为false。所以下面需要过滤重复数据，避免添加辣鸡数据
+                            foreach (var item in resultData.Data.Notes)
+                            {
+                                if (!userNodes.Exists(e=>e.NoteId==item.NoteId))
+                                {
+                                    userNodes.Add(item);
+                                }
+                            }
                             if (resultData.Data.HasMore)
                             {
                                 model.cursor = resultData.Data.Cursor;
