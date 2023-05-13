@@ -144,8 +144,6 @@ namespace XHS.Spider.ViewModels
         #endregion
         public void OnNavigatedFrom()
         {
-            //TODO这里卸载事件后会导致失效，晚点排查一下
-            //GlobalCaChe.clipboardHooker.ClipboardUpdated -= OnClipboardUpdated;
         }
 
         public void OnNavigatedTo()
