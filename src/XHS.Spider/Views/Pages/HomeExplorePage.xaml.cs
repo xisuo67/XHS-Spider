@@ -21,9 +21,9 @@ namespace XHS.Spider.Views.Pages
     /// <summary>
     /// HomeExplorePage.xaml 的交互逻辑
     /// </summary>
-    public partial class HomeExplorePage : INavigableView<ViewModels.HomeExploreViewModel>
+    public partial class HomeExplorePage : INavigableView<HomeExploreViewModel>
     {
-        public ViewModels.HomeExploreViewModel ViewModel
+        public HomeExploreViewModel ViewModel
         {
             get;
         }
