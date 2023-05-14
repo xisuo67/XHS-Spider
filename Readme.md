@@ -39,9 +39,9 @@ XHS.Spider是一款颜值超高的小红书数据采集工具
   - 最后感谢大家支持
 
 ## 链接
-- 先看文档
+- 先看下方文档
 
-- [文档](https://zhuanlan.zhihu.com/p/627192197)
+- [我是文档](https://zhuanlan.zhihu.com/p/627192197)
 
 ## 免责申明
 
