@@ -6,9 +6,24 @@
 <h1 align="center">XHS.Spider颜值超高的数据采集工具</h1>
 
 <div align="center">
+    <p align="center">
+    <a href="https://github.com/xisuo67/XHS-Spider/stargazers" style="text-decoration:none" >
+        <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/xisuo67/XHS-Spider">
+    </a>
+    <a href="https://github.com/xisuo67/XHS-Spider/network" style="text-decoration:none" >
+        <img alt="GitHub forks" src="https://img.shields.io/github/forks/xisuo67/XHS-Spider">
+    </a>
+    <a href="https://github.com/xisuo67/XHS-Spider/issues" style="text-decoration:none">
+        <img alt="GitHub issues" src="https://img.shields.io/github/issues/xisuo67/XHS-Spider">
+    </a>
+    <a href="https://github.com/xisuo67/XHS-Spider/blob/main/LICENSE" style="text-decoration:none" >
+        <img alt="GitHub" src="https://img.shields.io/github/license/xisuo67/XHS-Spider">
+    </a>
+</p>
 
 XHS.Spider是一款颜值超高的小红书数据采集工具
 </div>
+
 <table>
     <tr>
         <td><img height="300px" width="500px" src="http://yfloves.cn/source/XHS1.png"/></td>
@@ -109,6 +124,7 @@ XHS.Spider是一款颜值超高的小红书数据采集工具
 
 
 
-| Name 名称 | Amount 价值 | Date 时间 |
-| --------- | ----------- | --------- |
-| **骥      | 10          | 2023-5-7  |
+| 名称 | 金额 | 时间      |
+| ---- | ---- | --------- |
+| **骥 | 10   | 2023-5-7  |
+| K*y  | 66   | 2023-5-16 |
