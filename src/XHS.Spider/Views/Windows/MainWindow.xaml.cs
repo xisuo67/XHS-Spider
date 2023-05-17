@@ -1,5 +1,7 @@
 ﻿using Hardcodet.Wpf.TaskbarNotification;
 using Microsoft.Web.WebView2.Core;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
@@ -10,10 +12,13 @@ using Wpf.Ui.Controls.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
 using Wpf.Ui.Mvvm.Services;
 using Wpf.Ui.TaskBar;
+using XHS.Common.Events;
 using XHS.Common.Global;
+using XHS.Common.Helpers;
 using XHS.Common.Utils;
 using XHS.Spider.Helpers;
 using XHS.Spider.Services;
+using System.IO;
 
 namespace XHS.Spider.Views.Windows
 {
@@ -22,6 +27,7 @@ namespace XHS.Spider.Views.Windows
     /// </summary>
     public partial class MainWindow : INavigationWindow
     {
+        private ScriptHost scriptHost = null;
         private readonly TaskbarIcon _notifyIcon;
         private ContextMenu _contextMenu;
         private UpdateCheckerServer updateChecker;
@@ -48,6 +54,7 @@ namespace XHS.Spider.Views.Windows
             
             InitializeComponent();
             webView.Source = new Uri("https://www.xiaohongshu.com/explore");
+            InitializeAsync();
             SetPageService(pageService);
             navigationService.SetNavigationControl(RootNavigation);
             snackbarService.SetSnackbarControl(RootSnackbar);
@@ -88,15 +95,28 @@ namespace XHS.Spider.Views.Windows
             }
         }
         #endregion
-
         #region webView
         private async void InitializeAsync()
         {
 
-            GlobalCaChe.webView = this.webView;
+            //webView = this.webView;
             await webView.EnsureCoreWebView2Async(null);
             await webView.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync("window.chrome.webview.postMessage(window.document.URL);");
-            this.webView.NavigationCompleted += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs>(this.webView_NavigationCompleted);
+            WebViewHandler.GetXsXtEventEvent += GetXsXtEventEvent;
+        }
+        private async Task<string> GetXsXtEventEvent(object sender, string e)
+        {
+            string url = e;
+            string jscode = "var url='" + url + "';\r\n" + @"try {
+                                                                sign(url);
+                                                            } catch (e) { winning.log(e); }
+                                                            function sign(url) {
+                                                                var t;
+                                                                var o = window._webmsxyw(url, t);
+                                                                return o;
+                                                            }";
+            var xsxtStr = await this.webView.CoreWebView2.ExecuteScriptAsync(jscode);
+            return xsxtStr;
         }
         /// <summary>
         /// 加载完页面时
@@ -110,6 +130,7 @@ namespace XHS.Spider.Views.Windows
         #endregion
         private void InvokeSplashScreen()
         {
+            scriptHost = ScriptHost.GetScriptHost(webView);
             if (_initialized)
                 return;
 
@@ -127,7 +148,6 @@ namespace XHS.Spider.Views.Windows
                 updateChecker.Check(true);
                 await Dispatcher.InvokeAsync(() =>
                 {
-                    InitializeAsync();
                     RootWelcomeGrid.Visibility = Visibility.Hidden;
                     RootMainGrid.Visibility = Visibility.Visible;
 
@@ -178,8 +198,6 @@ namespace XHS.Spider.Views.Windows
 
         private void RootNavigation_OnNavigated(INavigation sender, RoutedNavigationEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine($"DEBUG | WPF UI Navigated to: {sender?.Current ?? null}", "Wpf.Ui.Demo");
-
             // This funky solution allows us to impose a negative
             // margin for Frame only for the Dashboard page, thanks
             // to which the banner will cover the entire page nicely.

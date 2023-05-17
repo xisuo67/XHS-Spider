@@ -1,6 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Web.WebView2.Wpf;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using System;
+using System.Security.Policy;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -8,12 +12,14 @@ using Wpf.Ui.Common;
 using Wpf.Ui.Common.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
 using XHS.Common.Global;
+using XHS.Common.Helpers;
 using XHS.Common.Utils;
 using XHS.IService.XHS;
 using XHS.Models.Enum;
 using XHS.Service.Log;
 using XHS.Service.XHS;
 using XHS.Spider.Services;
+using System.IO;
 
 namespace XHS.Spider.ViewModels
 {
@@ -22,6 +28,7 @@ namespace XHS.Spider.ViewModels
     /// </summary>
     public partial class SearchViewModel : ObservableObject, INavigationAware
     {
+        public  WebView2 webView;
         private static readonly ILogger Logger = LoggerService.Get(typeof(SearchViewModel));
         private readonly INavigationService _navigationService;
         private readonly IServiceProvider _serviceProvider;
@@ -55,27 +62,49 @@ namespace XHS.Spider.ViewModels
         /// <summary>
         /// 处理输入事件
         /// </summary>
-        private void ExecuteInput()
+        private async void ExecuteInput()
         {
             if (!string.IsNullOrEmpty(InputText))
             {
-                if (GlobalCaChe.Cookies.Count == 0)
+                //if (GlobalCaChe.Cookies.Count == 0)
+                //{
+                //    _snackbarService.Show("提示", "请先设置cookie", SymbolRegular.ErrorCircle12, ControlAppearance.Danger);
+                //    return;
+                //}
+                //TODO:webView跳转
+                this.webView.CoreWebView2.Navigate(InputText);
+                //TODO:注入js脚本，获取xs、xt;
+                string url = InputText;
+                var xsxtFilePath = FileHelper.GetAbsolutePath("/Script/XHS-XSXT.js");
+                var xsxtCode = File.ReadAllText(xsxtFilePath);
+                string jscode = "var url='" + url + "';\r\n" + @"try {
+                                                                sign(url);
+                                                            } catch (e) { winning.log(e); }
+                                                            function sign(url) {
+                                                                var t;
+                                                                var o = window._webmsxyw(url, t);
+                                                                return o;
+                                                            }";
+                var xsxtStr = await this.webView.CoreWebView2.ExecuteScriptAsync(jscode);
+
+                if (!string.IsNullOrEmpty(xsxtStr))
                 {
-                    _snackbarService.Show("提示", "请先设置cookie", SymbolRegular.ErrorCircle12, ControlAppearance.Danger);
-                    return;
+                    JObject xsxt = (JObject)JsonConvert.DeserializeObject(xsxtStr);
+                    var xs = xsxt["X-s"].ToString();
+                    var xt = xsxt["X-t"].ToString();
                 }
-                var navigation = _navigationService.GetNavigationControl();
+                //var navigation = _navigationService.GetNavigationControl();
                 //TODO:搜索服务，跳转对应页面
-                try
-                {
-                    SearchService.SearchInput(InputText, navigation, _serviceProvider, _pageServiceNew);
-                    this.InputText = string.Empty;
-                }
-                catch (Exception ex)
-                {
-                    Logger.Error("跳转异常：",ex);
-                }
-               
+                //try
+                //{
+                //    SearchService.SearchInput(InputText, navigation, _serviceProvider, _pageServiceNew);
+                //    this.InputText = string.Empty;
+                //}
+                //catch (Exception ex)
+                //{
+                //    Logger.Error("跳转异常：",ex);
+                //}
+
             }
         }
         #region 剪贴板

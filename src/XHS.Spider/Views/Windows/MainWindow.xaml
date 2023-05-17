@@ -123,9 +123,6 @@
                     TextAlignment="Center"
                     TextWrapping="Wrap" />
             </StackPanel>
-            <Wpf:WebView2
-            x:Name="webView" Visibility="Hidden"
-        />
         </Grid>
         <!--  The title bar contains window navigation elements and some Tray related extras.  -->
         <!--  You can put additional controls in the header, such as a search bar.  -->
@@ -148,5 +145,7 @@
                 </ui:NotifyIcon>
             </ui:TitleBar.Tray>
         </ui:TitleBar>
+        <Wpf:WebView2
+            x:Name="webView" Visibility="Hidden"/>
     </Grid>
 </ui:UiWindow>

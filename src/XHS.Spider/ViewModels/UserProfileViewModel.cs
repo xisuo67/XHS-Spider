@@ -276,8 +276,8 @@ namespace XHS.Spider.ViewModels
             {
                 try
                 {
-                    //TODO:webView跳转
-                    GlobalCaChe.webView.CoreWebView2.Navigate(InputText);
+                    ////TODO:webView跳转
+                    //GlobalCaChe.webView.CoreWebView2.Navigate(InputText);
                 }
                 catch (Exception ex)
                 {

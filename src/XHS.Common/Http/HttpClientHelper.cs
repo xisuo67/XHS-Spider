@@ -16,6 +16,7 @@ using System.Windows.Threading;
 using static System.Net.Mime.MediaTypeNames;
 using Downloader;
 using System.Windows;
+using XHS.Common.Events;
 
 namespace XHS.Common.Http
 {
@@ -120,11 +121,7 @@ namespace XHS.Common.Http
             try
             {
                 //TODO:注入js脚本，获取xs、xt;
-                var xsxtFilePath = FileHelper.GetAbsolutePath("/Script/XHS-XSXT.js");
-                var xsxtCode = File.ReadAllText(xsxtFilePath);
-                string jscode = "var url='" + url + "';\r\n" + xsxtCode;
-                var xsxtStr = await GlobalCaChe.webView.CoreWebView2.ExecuteScriptAsync(jscode);
-                
+                WebViewHandler.GetXsXtEventEvent.Invoke(this, new DrugChangedEventArgs() { OperationgType = operatingType, DrugItem = drugItem });
                 if (!string.IsNullOrEmpty(xsxtStr))
                 {
                     JObject xsxt = (JObject)JsonConvert.DeserializeObject(xsxtStr);
