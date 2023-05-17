@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:XHS.Spider.Views.Windows"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:pages="clr-namespace:XHS.Spider.Views.Pages"
-    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" xmlns:Wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
     Title="{Binding ViewModel.ApplicationTitle, Mode=OneWay}"
     Width="1100"
     Height="650"
@@ -123,6 +123,9 @@
                     TextAlignment="Center"
                     TextWrapping="Wrap" />
             </StackPanel>
+            <Wpf:WebView2
+            x:Name="webView" Visibility="Hidden"
+        />
         </Grid>
         <!--  The title bar contains window navigation elements and some Tray related extras.  -->
         <!--  You can put additional controls in the header, such as a search bar.  -->

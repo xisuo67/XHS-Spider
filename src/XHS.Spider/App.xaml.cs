@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Threading;
@@ -13,6 +14,7 @@ using Wpf.Ui.Controls.Interfaces;
 using Wpf.Ui.Controls.Navigation;
 using Wpf.Ui.Mvvm.Contracts;
 using Wpf.Ui.Mvvm.Services;
+using XHS.Common.Global;
 using XHS.IService.DI;
 using XHS.Models.DownLoad;
 using XHS.Service.Log;
@@ -41,6 +43,7 @@ namespace XHS.Spider
             {
                 //初始化数据
                 DownloadList = new ObservableCollection<DownloadItem>();
+                GlobalCaChe.Current = Current;
                 // App Host
                 services.AddHostedService<ApplicationHostService>();
                 // Page resolver service

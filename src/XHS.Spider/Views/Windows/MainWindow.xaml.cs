@@ -1,4 +1,5 @@
 ﻿using Hardcodet.Wpf.TaskbarNotification;
+using Microsoft.Web.WebView2.Core;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
@@ -33,6 +34,7 @@ namespace XHS.Spider.Views.Windows
 
         public MainWindow(ViewModels.MainWindowViewModel viewModel, IPageServiceNew pageService, ITaskBarService taskBarService, INavigationService navigationService, ISnackbarService snackbarService)
         {
+           
             _taskBarService = taskBarService;
             ViewModel = viewModel;
             DataContext = this;
@@ -43,9 +45,9 @@ namespace XHS.Spider.Views.Windows
             updateChecker.NewVersionFound += updateChecker_NewVersionFound;
             updateChecker.NewVersionNotFound += updateChecker_NewVersionNotFound;
             #endregion
-
-
+            
             InitializeComponent();
+            webView.Source = new Uri("https://www.xiaohongshu.com/explore");
             SetPageService(pageService);
             navigationService.SetNavigationControl(RootNavigation);
             snackbarService.SetSnackbarControl(RootSnackbar);
@@ -87,6 +89,25 @@ namespace XHS.Spider.Views.Windows
         }
         #endregion
 
+        #region webView
+        private async void InitializeAsync()
+        {
+
+            GlobalCaChe.webView = this.webView;
+            await webView.EnsureCoreWebView2Async(null);
+            await webView.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync("window.chrome.webview.postMessage(window.document.URL);");
+            this.webView.NavigationCompleted += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs>(this.webView_NavigationCompleted);
+        }
+        /// <summary>
+        /// 加载完页面时
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void webView_NavigationCompleted(object sender, CoreWebView2NavigationCompletedEventArgs e)
+        {
+            //TODO:这里处理加载完成后自动获取cookie设置，放到后面处理
+        }
+        #endregion
         private void InvokeSplashScreen()
         {
             if (_initialized)
@@ -101,10 +122,12 @@ namespace XHS.Spider.Views.Windows
             Task.Run(async () =>
             {
                 //TODO:这里预留程序启动初始化数据
+              
                 //await Task.Delay(2000);
                 updateChecker.Check(true);
                 await Dispatcher.InvokeAsync(() =>
                 {
+                    InitializeAsync();
                     RootWelcomeGrid.Visibility = Visibility.Hidden;
                     RootMainGrid.Visibility = Visibility.Visible;
 

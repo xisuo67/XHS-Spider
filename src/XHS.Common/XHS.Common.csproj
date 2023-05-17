@@ -7,7 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Script\" />
+    <None Remove="Script\XHS-XSXT.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Script\XHS-XSXT.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
@@ -15,18 +21,13 @@
     <PackageReference Include="Microsoft.ClearScript.V8" Version="7.4.1" />
     <PackageReference Include="Microsoft.ClearScript.V8.ICUData" Version="7.4.1" />
     <PackageReference Include="Microsoft.ClearScript.V8.Native.win-x64" Version="7.4.1" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1774.30" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\XHS.Models\XHS.Models.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Script\origin_script.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

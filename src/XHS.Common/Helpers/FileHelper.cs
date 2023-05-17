@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Drawing.Imaging;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
-namespace XHS.Spider.Helpers
+namespace XHS.Common.Helpers
 {
     public class FileHelper
     {
@@ -39,11 +39,39 @@ namespace XHS.Spider.Helpers
                 return result;
             }
         }
+        /// <summary>
+        /// 获取文件的绝对路径,针对window程序和web程序都可使用
+        /// </summary>
+        /// <param name="relativePath">相对路径地址</param>
+        /// <returns>绝对路径地址</returns>
+        public static string GetAbsolutePath(string relativePath)
+        {
+            if (string.IsNullOrEmpty(relativePath))
+            {
+                throw new ArgumentNullException("参数relativePath空异常！");
+            }
+            relativePath = relativePath.Replace("/", "\\");
+            if (relativePath[0] == '\\')
+            {
+                relativePath = relativePath.Remove(0, 1);
+            }
+            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
+        }
+
+        /// <summary>
+        /// 判断文件是否存在
+        /// </summary>
+        /// <param name="relativePath">相对路径地址</param>
+        /// <returns>bool</returns>
+        public static bool Exists(string relativePath)
+        {
+            return File.Exists(GetAbsolutePath(relativePath));
+        }
         public static BitmapImage PathToBitmapImage(string filePath)
         {
             try
             {
-                var path= AppDomain.CurrentDomain.BaseDirectory + filePath;
+                var path = AppDomain.CurrentDomain.BaseDirectory + filePath;
                 Image image = Image.FromFile(path);
                 Bitmap bitmap = new Bitmap(image);
                 return BitmapToBitmapImage(bitmap);

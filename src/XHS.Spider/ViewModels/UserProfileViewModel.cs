@@ -20,6 +20,8 @@ using Wpf.Ui.Common;
 using Wpf.Ui.Common.Interfaces;
 using Wpf.Ui.Controls.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
+using XHS.Common.Global;
+using XHS.Common.Helpers;
 using XHS.Common.Utils;
 using XHS.IService.XHS;
 using XHS.Models.DownLoad;
@@ -272,7 +274,15 @@ namespace XHS.Spider.ViewModels
         {
             if (!string.IsNullOrEmpty(InputText))
             {
-                
+                try
+                {
+                    //TODO:webView跳转
+                    GlobalCaChe.webView.CoreWebView2.Navigate(InputText);
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error("webView跳转失败：",ex);
+                }
                 if (InputText.Contains("user/profile/"))
                 {
                     var id = SearchService.GetId(inputText, BaseUrl);
@@ -306,6 +316,7 @@ namespace XHS.Spider.ViewModels
                             var interaction = UserInfo.Interactions.FirstOrDefault(e => e.Type == "interaction");
                             if (interaction != null)
                                 Interaction = interaction;
+
                             App.PropertyChangeAsync(new Action(() =>
                             {
                                 var baseInfo = UserInfo.BasicInfo;

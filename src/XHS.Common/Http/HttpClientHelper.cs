@@ -8,13 +8,21 @@ using System.Threading.Tasks;
 using Microsoft.ClearScript.V8;
 using XHS.Common.Global;
 using System.Windows.Documents;
+using Newtonsoft.Json;
+using XHS.Common.Helpers;
+using System.IO;
+using Newtonsoft.Json.Linq;
+using System.Windows.Threading;
+using static System.Net.Mime.MediaTypeNames;
+using Downloader;
+using System.Windows;
 
 namespace XHS.Common.Http
 {
     public class HttpClientHelper
     {
         private static string _baseUrl = "https://edith.xiaohongshu.com";
-        public static HttpClient _client = new HttpClient(new HttpClientHandler
+        private static HttpClient _client = new HttpClient(new HttpClientHandler
         {
             UseDefaultCredentials = false,
             AllowAutoRedirect = false,
@@ -97,13 +105,13 @@ namespace XHS.Common.Http
                 return string.Empty;
             }
         }
-        private static void AddDefaultHeaders(string url, string postData = "")
+        private static async void AddDefaultHeaders(string url, string postData = "")
         {
             _client.DefaultRequestHeaders.Clear();
             _client.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36");
             //TODO:cookie通过手动设置
             var cookies = GlobalCaChe.Cookies;
-            if (cookies.Count>0)
+            if (cookies.Count > 0)
             {
                 var random = new Random().Next(cookies.Count);
                 string cookie = cookies[random]?.Cookie;
@@ -111,30 +119,26 @@ namespace XHS.Common.Http
             }
             try
             {
-                using (var engine = new V8ScriptEngine())
+                //TODO:注入js脚本，获取xs、xt;
+                var xsxtFilePath = FileHelper.GetAbsolutePath("/Script/XHS-XSXT.js");
+                var xsxtCode = File.ReadAllText(xsxtFilePath);
+                string jscode = "var url='" + url + "';\r\n" + xsxtCode;
+                var xsxtStr = await GlobalCaChe.webView.CoreWebView2.ExecuteScriptAsync(jscode);
+                
+                if (!string.IsNullOrEmpty(xsxtStr))
                 {
-                    engine.DocumentSettings.AccessFlags = Microsoft.ClearScript.DocumentAccessFlags.EnableFileLoading;
-                    engine.DefaultAccess = Microsoft.ClearScript.ScriptAccess.Full; // 这两行是为了允许加载js文件
-                    string originScript = System.IO.File.ReadAllText("Script/origin_script.js", System.Text.Encoding.UTF8);
-                    engine.Execute(originScript);
-                    ////直接C#函数调用
-                    var rValue = engine.Script.sign(url, string.IsNullOrEmpty(postData) ? null : postData);
-                    var dic = rValue as IDictionary<string, object>;
-                    if (dic != null)
-                    {
-                        foreach (var item in dic)
-                        {
-                            _client.DefaultRequestHeaders.Add(item.Key, item.Value.ToString());
-                        }
-                    }
+                    JObject xsxt = (JObject)JsonConvert.DeserializeObject(xsxtStr);
+                    var xs = xsxt["X-s"].ToString();
+                    var xt = xsxt["X-t"].ToString();
+                    _client.DefaultRequestHeaders.Add("x-s", xs);
+                    _client.DefaultRequestHeaders.Add("x-t", xt);
                 }
+
             }
             catch (Exception ex)
             {
 
-                throw;
             }
-           
         }
     }
 }
