@@ -8,6 +8,7 @@ using Microsoft.Web.WebView2.Wpf;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Security.Policy;
@@ -276,17 +277,9 @@ namespace XHS.Spider.ViewModels
         {
             if (!string.IsNullOrEmpty(InputText))
             {
-                try
-                {
-                    ////TODO:webView跳转
-                    //GlobalCaChe.webView.CoreWebView2.Navigate(InputText);
-                }
-                catch (Exception ex)
-                {
-                    Logger.Error("webView跳转失败：",ex);
-                }
                 if (InputText.Contains("user/profile/"))
                 {
+                    var a = getxs();
                     var id = SearchService.GetId(inputText, BaseUrl);
                     if (string.IsNullOrEmpty(id))
                     {
@@ -375,7 +368,27 @@ namespace XHS.Spider.ViewModels
                 }
             }
         }
-        private void InitNullImage()
+        private async Task<string> getxs() {
+            string url = InputText;
+            string jscode = "var url='" + url + "';\r\n" + @"try {
+                                                                            sign(url);
+                                                                        } catch (e) { winning.log(e); }
+                                                                        function sign(url) {
+                                                                            var t;
+                                                                            var o = window._webmsxyw(url, t);
+                                                                            return o;
+                                                                        }";
+            var xsxtStr =await this.webView.CoreWebView2.ExecuteScriptAsync(jscode);
+
+            if (!string.IsNullOrEmpty(xsxtStr))
+            {
+                //JObject xsxt = (JObject)JsonConvert.DeserializeObject(xsxtStr);
+                //var xs = xsxt["X-s"].ToString();
+                //var xt = xsxt["X-t"].ToString();
+            }
+            return xsxtStr;
+        }
+        public void InitNullImage()
         {
             App.PropertyChangeAsync(new Action(() =>
             {

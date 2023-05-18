@@ -25,7 +25,7 @@ namespace XHS.Spider.Views.Pages
     /// </summary>
     public partial class UserProfilePage : INavigableView<ViewModels.UserProfileViewModel>
     {
-        private ScriptHost scriptHost = null;
+        //private ScriptHost scriptHost = null;
      
         public ViewModels.UserProfileViewModel ViewModel
         {
@@ -34,32 +34,33 @@ namespace XHS.Spider.Views.Pages
 
         public UserProfilePage(ViewModels.UserProfileViewModel viewModel)
         {
+            viewModel.InitNullImage();
             ViewModel = viewModel;
             InitializeComponent();
-            InitializeAsync();
+            //InitializeAsync();
             //viewModel.webView = this.webView;
         }
-        #region webView
-        private async void InitializeAsync()
-        {
-            await webView.EnsureCoreWebView2Async(null);
-            await webView.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync("window.chrome.webview.postMessage(window.document.URL);");
-        }
-        //private async Task<string> GetXsXtEvent(object sender, string e)
+        //#region webView
+        //private async void InitializeAsync()
         //{
-        //    string url = e;
-        //    string jscode = "var url='" + url + "';\r\n" + @"try {
-        //                                                        sign(url);
-        //                                                    } catch (e) { winning.log(e); }
-        //                                                    function sign(url) {
-        //                                                        var t;
-        //                                                        var o = window._webmsxyw(url, t);
-        //                                                        return o;
-        //                                                    }";
-        //    var xsxtStr = await this.webView.CoreWebView2.ExecuteScriptAsync(jscode);
-        //    return xsxtStr;
+        //    await webView.EnsureCoreWebView2Async(null);
+        //    await webView.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync("window.chrome.webview.postMessage(window.document.URL);");
         //}
-        #endregion
+        ////private async Task<string> GetXsXtEvent(object sender, string e)
+        ////{
+        ////    string url = e;
+        ////    string jscode = "var url='" + url + "';\r\n" + @"try {
+        ////                                                        sign(url);
+        ////                                                    } catch (e) { winning.log(e); }
+        ////                                                    function sign(url) {
+        ////                                                        var t;
+        ////                                                        var o = window._webmsxyw(url, t);
+        ////                                                        return o;
+        ////                                                    }";
+        ////    var xsxtStr = await this.webView.CoreWebView2.ExecuteScriptAsync(jscode);
+        ////    return xsxtStr;
+        ////}
+        //#endregion
         private void CheckAll_Click(object sender, RoutedEventArgs e)
         {
             for (int i = 0; i < this.dgrdView.Items.Count; i++)

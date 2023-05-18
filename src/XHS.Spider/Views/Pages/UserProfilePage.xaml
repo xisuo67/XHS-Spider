@@ -41,8 +41,8 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <StackPanel  Grid.Column="0" HorizontalAlignment="Right">
-                <Wpf:WebView2
-            x:Name="webView"/>
+                <!--<Wpf:WebView2
+            x:Name="webView"/>-->
                 <Border
                     Width="120"
                     Height="120"
