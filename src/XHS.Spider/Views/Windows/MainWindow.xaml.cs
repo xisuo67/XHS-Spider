@@ -204,17 +204,6 @@ namespace XHS.Spider.Views.Windows
 
         private void RootNavigation_OnNavigated(INavigation sender, RoutedNavigationEventArgs e)
         {
-            var currentTag = sender?.Current?.PageTag;
-            switch (currentTag)
-            {
-                case "search":
-                    _pageServiceNew.Scope = _serviceProvider.CreateScope();
-                    var dc = _pageServiceNew.Scope.ServiceProvider.GetRequiredService<SearchViewModel>();
-                    dc.webView = webView;
-                    break;
-                default:
-                    break;
-            }
             //_navigationService.GetNavigationControl().Current.PageTag;
             // This funky solution allows us to impose a negative
             // margin for Frame only for the Dashboard page, thanks

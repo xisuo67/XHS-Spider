@@ -36,24 +36,6 @@ namespace XHS.Spider.Views.Pages
         {
             ViewModel = viewModel;
             InitializeComponent();
-          
-            InitializeAsync();
         }
-
-        #region webView
-        private async void InitializeAsync()
-        {
-
-            //ViewModel.webView = this.webView;
-            //await webView.EnsureCoreWebView2Async(null);
-            //await webView.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync("window.chrome.webview.postMessage(window.document.URL);");
-        }
-        #endregion
-
-        private void Grid_Loaded(object sender, RoutedEventArgs e)
-        {
-            //scriptHost = ScriptHost.GetScriptHost(webView);
-        }
-
     }
 }
