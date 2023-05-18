@@ -48,15 +48,6 @@ namespace XHS.Spider.Views.Pages
             //await webView.EnsureCoreWebView2Async(null);
             //await webView.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync("window.chrome.webview.postMessage(window.document.URL);");
         }
-        /// <summary>
-        /// 加载完页面时
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void webView_NavigationCompleted(object sender, CoreWebView2NavigationCompletedEventArgs e)
-        {
-            //TODO:这里处理加载完成后自动获取cookie设置，放到后面处理
-        }
         #endregion
 
         private void Grid_Loaded(object sender, RoutedEventArgs e)

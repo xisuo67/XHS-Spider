@@ -8,17 +8,17 @@ namespace XHS.Common.Events
 {
     public class WebViewHandler
     {
-        //public static event GetXsXtEventEventHandler GetXsXtEventEvent;
-        //public delegate Task<string> GetXsXtEventEventHandler(object sender, string url);
-
-
-        public static event EventHandler<string> OnSubscribeGetXsXt;//订阅聊天消息
+        public static event EventHandler OnSubscribeGetXsXtHandler;//订阅聊天消息
         public delegate Task<string> EventHandler(object sender, string url);
-        public static void GetXsXt(string url)
+        public static async Task<string> GetXsXt(string url)
         {
-            if (OnSubscribeGetXsXt != null)
+            if (OnSubscribeGetXsXtHandler != null)
             {
-                OnSubscribeGetXsXt(null,url);
+              return await OnSubscribeGetXsXtHandler.Invoke(null,url);
+            }
+            else
+            {
+                return null;
             }
         }
     }

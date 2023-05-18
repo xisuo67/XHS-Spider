@@ -19,6 +19,8 @@ using XHS.Common.Utils;
 using XHS.Spider.Helpers;
 using XHS.Spider.Services;
 using System.IO;
+using Microsoft.Extensions.DependencyInjection;
+using XHS.Spider.ViewModels;
 
 namespace XHS.Spider.Views.Windows
 {
@@ -33,15 +35,18 @@ namespace XHS.Spider.Views.Windows
         private UpdateCheckerServer updateChecker;
         private bool _initialized = false;
         private readonly ITaskBarService _taskBarService;
+        private readonly IPageServiceNew _pageServiceNew;
+        private readonly IServiceProvider _serviceProvider;
         public ViewModels.MainWindowViewModel ViewModel
         {
             get;
         }
 
-        public MainWindow(ViewModels.MainWindowViewModel viewModel, IPageServiceNew pageService, ITaskBarService taskBarService, INavigationService navigationService, ISnackbarService snackbarService)
+        public MainWindow(ViewModels.MainWindowViewModel viewModel, IPageServiceNew pageService, ITaskBarService taskBarService, INavigationService navigationService, IServiceProvider serviceProvider, ISnackbarService snackbarService)
         {
            
             _taskBarService = taskBarService;
+            _serviceProvider = serviceProvider;
             ViewModel = viewModel;
             DataContext = this;
             #region 通知
@@ -56,6 +61,7 @@ namespace XHS.Spider.Views.Windows
             webView.Source = new Uri("https://www.xiaohongshu.com/explore");
             InitializeAsync();
             SetPageService(pageService);
+            _pageServiceNew = pageService;
             navigationService.SetNavigationControl(RootNavigation);
             snackbarService.SetSnackbarControl(RootSnackbar);
             Loaded += (_, _) => InvokeSplashScreen();
@@ -102,9 +108,9 @@ namespace XHS.Spider.Views.Windows
             //webView = this.webView;
             await webView.EnsureCoreWebView2Async(null);
             await webView.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync("window.chrome.webview.postMessage(window.document.URL);");
-            WebViewHandler.GetXsXtEventEvent += GetXsXtEventEvent;
+            //WebViewHandler.OnSubscribeGetXsXtHandler += GetXsXtEvent;
         }
-        private async Task<string> GetXsXtEventEvent(object sender, string e)
+        private async Task<string> GetXsXtEvent(object sender, string e)
         {
             string url = e;
             string jscode = "var url='" + url + "';\r\n" + @"try {
@@ -198,6 +204,18 @@ namespace XHS.Spider.Views.Windows
 
         private void RootNavigation_OnNavigated(INavigation sender, RoutedNavigationEventArgs e)
         {
+            var currentTag = sender?.Current?.PageTag;
+            switch (currentTag)
+            {
+                case "search":
+                    _pageServiceNew.Scope = _serviceProvider.CreateScope();
+                    var dc = _pageServiceNew.Scope.ServiceProvider.GetRequiredService<SearchViewModel>();
+                    dc.webView = webView;
+                    break;
+                default:
+                    break;
+            }
+            //_navigationService.GetNavigationControl().Current.PageTag;
             // This funky solution allows us to impose a negative
             // margin for Frame only for the Dashboard page, thanks
             // to which the banner will cover the entire page nicely.
