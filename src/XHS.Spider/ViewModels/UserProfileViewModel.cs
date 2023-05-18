@@ -4,6 +4,7 @@ using Downloader;
 using Microsoft.ClearScript;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Web.WebView2.Wpf;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -35,6 +36,7 @@ namespace XHS.Spider.ViewModels
 {
     public partial class UserProfileViewModel : ObservableObject, INavigationAware
     {
+        public WebView2 webView;
         private static readonly Service.Log.ILogger Logger = LoggerService.Get(typeof(UserProfileViewModel));
         #region 变量
         public static readonly string BaseUrl = "https://www.xiaohongshu.com/user/profile/";

@@ -29,7 +29,7 @@ namespace XHS.Spider.Views.Windows
     /// </summary>
     public partial class MainWindow : INavigationWindow
     {
-        private ScriptHost scriptHost = null;
+
         private readonly TaskbarIcon _notifyIcon;
         private ContextMenu _contextMenu;
         private UpdateCheckerServer updateChecker;
@@ -58,8 +58,8 @@ namespace XHS.Spider.Views.Windows
             #endregion
             
             InitializeComponent();
-            webView.Source = new Uri("https://www.xiaohongshu.com/explore");
-            InitializeAsync();
+            //webView.Source = new Uri("https://www.xiaohongshu.com/explore");
+            //InitializeAsync();
             SetPageService(pageService);
             _pageServiceNew = pageService;
             navigationService.SetNavigationControl(RootNavigation);
@@ -101,42 +101,10 @@ namespace XHS.Spider.Views.Windows
             }
         }
         #endregion
-        #region webView
-        private async void InitializeAsync()
-        {
 
-            //webView = this.webView;
-            await webView.EnsureCoreWebView2Async(null);
-            await webView.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync("window.chrome.webview.postMessage(window.document.URL);");
-            //WebViewHandler.OnSubscribeGetXsXtHandler += GetXsXtEvent;
-        }
-        private async Task<string> GetXsXtEvent(object sender, string e)
-        {
-            string url = e;
-            string jscode = "var url='" + url + "';\r\n" + @"try {
-                                                                sign(url);
-                                                            } catch (e) { winning.log(e); }
-                                                            function sign(url) {
-                                                                var t;
-                                                                var o = window._webmsxyw(url, t);
-                                                                return o;
-                                                            }";
-            var xsxtStr = await this.webView.CoreWebView2.ExecuteScriptAsync(jscode);
-            return xsxtStr;
-        }
-        /// <summary>
-        /// 加载完页面时
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void webView_NavigationCompleted(object sender, CoreWebView2NavigationCompletedEventArgs e)
-        {
-            //TODO:这里处理加载完成后自动获取cookie设置，放到后面处理
-        }
-        #endregion
         private void InvokeSplashScreen()
         {
-            scriptHost = ScriptHost.GetScriptHost(webView);
+            //scriptHost = ScriptHost.GetScriptHost(webView);
             if (_initialized)
                 return;
 

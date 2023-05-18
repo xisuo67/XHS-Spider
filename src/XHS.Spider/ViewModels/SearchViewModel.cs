@@ -66,45 +66,43 @@ namespace XHS.Spider.ViewModels
         {
             if (!string.IsNullOrEmpty(InputText))
             {
-                if (GlobalCaChe.Cookies.Count == 0)
-                {
-                    _snackbarService.Show("提示", "请先设置cookie", SymbolRegular.ErrorCircle12, ControlAppearance.Danger);
-                    return;
-                }
+                //if (GlobalCaChe.Cookies.Count == 0)
+                //{
+                //    _snackbarService.Show("提示", "请先设置cookie", SymbolRegular.ErrorCircle12, ControlAppearance.Danger);
+                //    return;
+                //}
                 //TODO:webView跳转
                 //this.webView.CoreWebView2.Navigate(InputText);
                 //TODO:注入js脚本，获取xs、xt;
-                //string url = InputText;
-                //var xsxtFilePath = FileHelper.GetAbsolutePath("/Script/XHS-XSXT.js");
-                //var xsxtCode = File.ReadAllText(xsxtFilePath);
-                //string jscode = "var url='" + url + "';\r\n" + @"try {
-                //                                                sign(url);
-                //                                            } catch (e) { winning.log(e); }
-                //                                            function sign(url) {
-                //                                                var t;
-                //                                                var o = window._webmsxyw(url, t);
-                //                                                return o;
-                //                                            }";
-                //var xsxtStr = await this.webView.CoreWebView2.ExecuteScriptAsync(jscode);
+                string url = InputText;
+                string jscode = "var url='" + url + "';\r\n" + @"try {
+                                                                        sign(url);
+                                                                    } catch (e) { winning.log(e); }
+                                                                    function sign(url) {
+                                                                        var t;
+                                                                        var o = window._webmsxyw(url, t);
+                                                                        return o;
+                                                                    }";
+                var xsxtStr = await this.webView.CoreWebView2.ExecuteScriptAsync(jscode);
 
-                //if (!string.IsNullOrEmpty(xsxtStr))
-                //{
-                //    JObject xsxt = (JObject)JsonConvert.DeserializeObject(xsxtStr);
-                //    var xs = xsxt["X-s"].ToString();
-                //    var xt = xsxt["X-t"].ToString();
-                //}
+                if (!string.IsNullOrEmpty(xsxtStr))
+                {
+                    JObject xsxt = (JObject)JsonConvert.DeserializeObject(xsxtStr);
+                    var xs = xsxt["X-s"].ToString();
+                    var xt = xsxt["X-t"].ToString();
+                }
 
                 var navigation = _navigationService.GetNavigationControl();
                 //TODO:搜索服务，跳转对应页面
-                try
-                {
-                    SearchService.SearchInput(InputText, navigation, _serviceProvider, _pageServiceNew);
-                    this.InputText = string.Empty;
-                }
-                catch (Exception ex)
-                {
-                    Logger.Error("跳转异常：", ex);
-                }
+                //try
+                //{
+                //    SearchService.SearchInput(InputText, navigation, _serviceProvider, _pageServiceNew);
+                //    this.InputText = string.Empty;
+                //}
+                //catch (Exception ex)
+                //{
+                //    Logger.Error("跳转异常：", ex);
+                //}
 
             }
         }

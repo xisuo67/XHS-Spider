@@ -26,7 +26,7 @@ namespace XHS.Spider.Views.Pages
     /// </summary>
     public partial class Search : INavigableView<ViewModels.SearchViewModel>
     {
-     
+        private ScriptHost scriptHost = null;
         public ViewModels.SearchViewModel ViewModel
         {
             get;
@@ -36,6 +36,23 @@ namespace XHS.Spider.Views.Pages
         {
             ViewModel = viewModel;
             InitializeComponent();
+            webView.Source = new Uri("https://www.xiaohongshu.com/explore");
+            InitializeAsync();
+        }
+
+        #region webView
+        private async void InitializeAsync()
+        {
+
+            ViewModel.webView = this.webView;
+            await webView.EnsureCoreWebView2Async(null);
+            await webView.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync("window.chrome.webview.postMessage(window.document.URL);");
+        }
+        #endregion
+
+        private void Grid_Loaded(object sender, RoutedEventArgs e)
+        {
+            scriptHost = ScriptHost.GetScriptHost(webView);
         }
     }
 }
