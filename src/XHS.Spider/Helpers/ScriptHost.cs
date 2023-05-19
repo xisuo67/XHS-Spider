@@ -33,7 +33,7 @@ namespace XHS.Spider.Helpers
             scriptHost = this;
             this.webView = webView;
             //注册事件侦听，加载页面完成时，获取cookie；
-            this.webView.NavigationStarting += WebView_NavigationStarting;
+            //this.webView.NavigationStarting += WebView_NavigationStarting;
             this.webView.NavigationCompleted += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs>(this.webView_NavigationCompleted);
             //webView初始化完成后注册与JavaScript交互
             this.webView.CoreWebView2InitializationCompleted += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2InitializationCompletedEventArgs>(this.webView_CoreWebView2InitializationCompleted);

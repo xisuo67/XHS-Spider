@@ -31,7 +31,7 @@
             </Border>
         </Grid>
         <Wpf:WebView2
-            x:Name="webView"/>
+            x:Name="webView" Visibility="Hidden"/>
 
         <Grid Grid.Row="1" >
             <ui:TextBox 
