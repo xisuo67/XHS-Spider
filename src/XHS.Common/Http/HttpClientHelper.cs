@@ -60,10 +60,8 @@ namespace XHS.Common.Http
         /// <param name="url"></param>
         /// <param name="headers"></param>
         /// <returns></returns>
-        public static string DoPost(string url, Dictionary<string, string> headers)
-        {
-            return DoPost(url, headers);
-        }
+        public static string DoPost(string url, Dictionary<string, string> headers)=> DoPost(url, headers,"");
+
 
         /// <summary>
         /// httpPost
@@ -105,10 +103,7 @@ namespace XHS.Common.Http
         #endregion
 
         #region HttpGet
-        public static string DoGet(string url, Dictionary<string, string> headers)
-        {
-            return DoGet(url, headers);
-        }
+        public static string DoGet(string url, Dictionary<string, string> headers) => DoGet(url, headers,"");
         /// <summary>
         /// get方法
         /// </summary>

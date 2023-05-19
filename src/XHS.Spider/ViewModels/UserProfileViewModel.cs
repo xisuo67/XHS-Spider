@@ -201,7 +201,7 @@ namespace XHS.Spider.ViewModels
         /// </summary>
         /// <param name="nodes"></param>
         /// <param name="isDownLoadAll"></param>
-        private void DownLoad(IEnumerable<NoteModel> nodes, bool isDownLoadAll = true)
+        private async void DownLoad(IEnumerable<NoteModel> nodes, bool isDownLoadAll = true)
         {
             string dirName = Format.FormatFileName(UserInfo.BasicInfo.NickName);
             string dirPath = $"{AppDomain.CurrentDomain.BaseDirectory}DownLoad\\{dirName}";
@@ -209,7 +209,7 @@ namespace XHS.Spider.ViewModels
             //循环笔记数据
             foreach (var item in nodes)
             {
-                var resultData = _xhsSpiderService.GetNodeDetail(item.NoteId);
+                var resultData =await _xhsSpiderService.GetNodeDetail(item.NoteId, webView);
                 if (resultData != null && resultData.Success)
                 {
                     var nodeDetail = resultData.Data.Items;
@@ -273,7 +273,7 @@ namespace XHS.Spider.ViewModels
         /// <summary>
         /// 处理输入事件
         /// </summary>
-        public void ExecuteInitData()
+        public async void ExecuteInitData()
         {
             if (!string.IsNullOrEmpty(InputText))
             {
@@ -288,7 +288,7 @@ namespace XHS.Spider.ViewModels
                     }
                     else
                     {
-                        var apiResult = _xhsSpiderService.GetOtherInfo(id);
+                        var apiResult = await _xhsSpiderService.GetOtherInfo(id, webView);
                         if (apiResult != null && apiResult.Success)
                         {
                             UserInfo = apiResult.Data;
@@ -346,7 +346,7 @@ namespace XHS.Spider.ViewModels
                                 }
                             }));
 
-                            var nodes = _xhsSpiderService.GetAllUserNode(id);
+                            var nodes =await _xhsSpiderService.GetAllUserNode(id, webView);
                             foreach (var node in nodes)
                             {
                                 node.LikedCount = node.interact_info?.LikedCount;
