@@ -44,7 +44,6 @@ namespace XHS.Spider
             {
                 //初始化数据
                 DownloadList = new ObservableCollection<DownloadItem>();
-                GlobalCaChe.Current = Current;
                 // App Host
                 services.AddHostedService<ApplicationHostService>();
                 // Page resolver service

@@ -7,16 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Script\XHS-XSXT.js" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Script\XHS-XSXT.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.ClearScript.Core" Version="7.4.1" />
     <PackageReference Include="Microsoft.ClearScript.V8" Version="7.4.1" />
     <PackageReference Include="Microsoft.ClearScript.V8.ICUData" Version="7.4.1" />

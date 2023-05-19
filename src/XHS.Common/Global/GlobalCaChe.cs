@@ -16,9 +16,7 @@ namespace XHS.Common.Global
         /// cookies
         /// </summary>
         public static List<CookieModel> Cookies=new List<CookieModel>();
-
         public static ClipboardHooker clipboardHooker;
         public static WebView2 webView;
-        public static Application Current;
     }
 }
