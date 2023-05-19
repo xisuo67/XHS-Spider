@@ -70,21 +70,17 @@ namespace XHS.Spider.ViewModels
         {
             if (!string.IsNullOrEmpty(InputText))
             {
-                //if (GlobalCaChe.Cookies.Count == 0)
-                //{
-                //    _snackbarService.Show("提示", "请先设置cookie", SymbolRegular.ErrorCircle12, ControlAppearance.Danger);
-                //    return;
-                //}
-                //TODO:webView跳转
-                //TODO:注入js脚本，获取xs、xt;
-                string url = InputText;
+                if (GlobalCaChe.Cookies.Count == 0)
+                {
+                    _snackbarService.Show("提示", "请先设置cookie", SymbolRegular.ErrorCircle12, ControlAppearance.Danger);
+                    return;
+                }
                 var navigation = _navigationService.GetNavigationControl();
                 //TODO:搜索服务，跳转对应页面
                 try
                 {
                     var searchService= SearchService.GetSearchService(webView, _aggregator,navigation, _serviceProvider, _pageServiceNew);
                     searchService.SearchInput(InputText);
-                    //SearchService.SearchInput(InputText, navigation, _serviceProvider, _pageServiceNew,webView,_aggregator);
                     this.InputText = string.Empty;
                 }
                 catch (Exception ex)

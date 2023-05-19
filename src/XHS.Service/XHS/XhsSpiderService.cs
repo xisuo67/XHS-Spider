@@ -35,7 +35,6 @@ namespace XHS.Service.XHS
                                                                             return o;
                                                                         }";
             var xsxtStr = await webView.CoreWebView2.ExecuteScriptAsync(jscode);
-
             if (!string.IsNullOrEmpty(xsxtStr)&& xsxtStr!="null")
             {
                 try
