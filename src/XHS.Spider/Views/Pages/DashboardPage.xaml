@@ -90,7 +90,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <ui:CardAction
+            <!--<ui:CardAction
                 Grid.Row="0"
                 Grid.Column="0"
                 Margin="0,0,4,0"
@@ -109,10 +109,10 @@
                         Foreground="{DynamicResource TextFillColorTertiaryBrush}"
                         Text="新增Cookie设置" />
                 </StackPanel>
-            </ui:CardAction>
+            </ui:CardAction>-->
             <ui:CardAction
                 Grid.Row="0"
-                Grid.Column="1"
+                Grid.Column="0"
                 Margin="4,0,4,0"
                 Command="{Binding ViewModel.NavigateCommand}"
                 CommandParameter="navigate_to_search"
@@ -129,7 +129,7 @@
                         Text="搜索小红书" />
                 </StackPanel>
             </ui:CardAction>
-            <ui:CardAction
+            <!--<ui:CardAction
                 Grid.Row="0"
                 Grid.Column="2"
                 Margin="4,0,4,0"
@@ -147,7 +147,7 @@
                         Foreground="{DynamicResource TextFillColorTertiaryBrush}"
                         Text="管理小红书Cookie" />
                 </StackPanel>
-            </ui:CardAction>
+            </ui:CardAction>-->
         </Grid>
 
         <Grid Grid.Row="2" Margin="12">
