@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using Wpf.Ui.Controls.Interfaces;
 using XHS.Common.Events;
 using XHS.Common.Events.Model;
 using XHS.Models.Events;
@@ -31,6 +32,8 @@ namespace XHS.Spider.Helpers
         {
             scriptHost = this;
             this.webView = webView;
+            //订阅事件
+            _aggregator.GetEvent<CalcXsXtEvent>().Subscribe(Getxs);
             //注册事件侦听，加载页面完成时，获取cookie；
             this.webView.NavigationCompleted += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs>(this.webView_NavigationCompleted);
             //webView初始化完成后注册与JavaScript交互
@@ -49,6 +52,26 @@ namespace XHS.Spider.Helpers
         public void log(string message)
         {
             Logger.Debug(message);
+        }
+
+        private async void Getxs(string url)
+        {
+            string jscode = "var url='" + url + "';\r\n" + @"try {
+                                                                            sign(url);
+                                                                        } catch (e) { winning.log(e); }
+                                                                        function sign(url) {
+                                                                            var t;
+                                                                            var o = window._webmsxyw(url, t);
+                                                                            return o;
+                                                                        }";
+            var xsxtStr = await webView.CoreWebView2.ExecuteScriptAsync(jscode);
+
+            if (!string.IsNullOrEmpty(xsxtStr))
+            {
+                //JObject xsxt = (JObject)JsonConvert.DeserializeObject(xsxtStr);
+                //var xs = xsxt["X-s"].ToString();
+                //var xt = xsxt["X-t"].ToString();
+            }
         }
         /// <summary>
         /// 加载完页面时，获取cookie

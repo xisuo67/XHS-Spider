@@ -34,6 +34,7 @@ namespace XHS.Service.XHS
             try
             {
                 string url = $"/api/sns/web/v1/feed?source_note_id={nodeid}";
+
                 Logger.Info($"调用接口：{url}");
                 var result = HttpClientHelper.DoPost(url);
                 if (!string.IsNullOrEmpty(result))

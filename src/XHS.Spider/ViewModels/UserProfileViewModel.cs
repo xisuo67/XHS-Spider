@@ -279,7 +279,6 @@ namespace XHS.Spider.ViewModels
             {
                 if (InputText.Contains("user/profile/"))
                 {
-                    var a = getxs();
                     var id = SearchService.GetId(inputText, BaseUrl);
                     if (string.IsNullOrEmpty(id))
                     {
