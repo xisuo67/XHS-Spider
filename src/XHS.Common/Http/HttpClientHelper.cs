@@ -1,22 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.ClearScript.V8;
 using XHS.Common.Global;
-using System.Windows.Documents;
-using Newtonsoft.Json;
-using XHS.Common.Helpers;
-using System.IO;
-using Newtonsoft.Json.Linq;
-using System.Windows.Threading;
-using static System.Net.Mime.MediaTypeNames;
-using Downloader;
-using System.Windows;
-using XHS.Common.Events;
 
 namespace XHS.Common.Http
 {
