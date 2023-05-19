@@ -20,6 +20,7 @@ using XHS.Service.Log;
 using XHS.Service.XHS;
 using XHS.Spider.Services;
 using System.IO;
+using XHS.Common.Events;
 
 namespace XHS.Spider.ViewModels
 {
@@ -34,12 +35,15 @@ namespace XHS.Spider.ViewModels
         private readonly IServiceProvider _serviceProvider;
         private readonly IPageServiceNew _pageServiceNew;
         private readonly ISnackbarService _snackbarService;
+        private readonly IEventAggregator _aggregator;
         public SearchViewModel(
             IServiceProvider serviceProvider,
             IPageServiceNew pageServiceNew,
             ISnackbarService snackbarService,
-            INavigationService navigationService)
+            INavigationService navigationService,
+            IEventAggregator aggregator)
         {
+            _aggregator = aggregator;
             _snackbarService = snackbarService;
             _serviceProvider = serviceProvider;
             _pageServiceNew = pageServiceNew;
@@ -96,7 +100,9 @@ namespace XHS.Spider.ViewModels
                 //TODO:搜索服务，跳转对应页面
                 try
                 {
-                    SearchService.SearchInput(InputText, navigation, _serviceProvider, _pageServiceNew,webView);
+                    var searchService= SearchService.GetSearchService(webView, _aggregator,navigation, _serviceProvider, _pageServiceNew);
+                    searchService.SearchInput(InputText);
+                    //SearchService.SearchInput(InputText, navigation, _serviceProvider, _pageServiceNew,webView,_aggregator);
                     this.InputText = string.Empty;
                 }
                 catch (Exception ex)

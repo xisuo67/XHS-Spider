@@ -59,10 +59,13 @@ namespace XHS.Spider.Helpers
         {
             //TODO:自动获取cookie
             var webView2 = sender as Microsoft.Web.WebView2.Wpf.WebView2;
-            var url=webView2.CoreWebView2.Source;
-            //TODO:发布页面加载完成事件
-            RedirectInfo redirectInfo = new RedirectInfo() { Url=url};
-            _aggregator.GetEvent<NavigationCompletedEvent>().Publish(redirectInfo);
+            if (webView2 != null)
+            {
+                var url = webView2.CoreWebView2.Source;
+                //TODO:发布页面加载完成事件
+                RedirectInfo redirectInfo = new RedirectInfo() { Url = url };
+                _aggregator.GetEvent<NavigationCompletedEvent>().Publish(redirectInfo);
+            }
         }
         /// <summary>
         /// CoreWebView2初始化完成
