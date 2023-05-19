@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Web.WebView2.Core;
 using Microsoft.Web.WebView2.Wpf;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace XHS.Spider.Services
     public class SearchService
     {
         private static readonly Service.Log.ILogger Logger = LoggerService.Get(typeof(SearchService));
+
         /// <summary>
         /// 解析支持的输入
         /// </summary>
@@ -32,17 +34,14 @@ namespace XHS.Spider.Services
                 try
                 {
                     webView.CoreWebView2.Navigate(input);
-                    Task.Run(async () =>
-                    {
-                        await Task.Delay(1000);
-                    }).Wait();
+                    //webView.NavigationCompleted += WebView_NavigationCompleted;
                 }
                 catch (Exception ex)
                 {
                     Logger.Error("webView跳转失败：", ex);
                 }
-                SetJumpParam(input, serviceProvider,pageServiceNew,webView);
-                navigation.Navigate(typeof(Views.Pages.UserProfilePage));
+                //SetJumpParam(input, serviceProvider,pageServiceNew,webView);
+                //navigation.Navigate(typeof(Views.Pages.UserProfilePage));
             }
         }
         private static void SetJumpParam(string input, IServiceProvider serviceProvider, IPageServiceNew pageServiceNew, WebView2 webView)

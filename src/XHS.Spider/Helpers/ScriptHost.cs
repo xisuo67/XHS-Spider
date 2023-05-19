@@ -6,6 +6,9 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using XHS.Common.Events;
+using XHS.Common.Events.Model;
+using XHS.Models.Events;
 using XHS.Service.Log;
 using XHS.Spider.ViewModels;
 
@@ -18,10 +21,11 @@ namespace XHS.Spider.Helpers
     [ComVisible(true)]
     public class ScriptHost
     {
+        private static IEventAggregator _aggregator { get; set; }
         private static readonly Service.Log.ILogger Logger = LoggerService.Get(typeof(ScriptHost));
+        public static event EventHandler OnPublishHandler;//发布页面加载完成时间
         private WebView2 webView;
         private Dictionary<string, string> mCookies = new Dictionary<string, string>();//保存Cookie到字典中
-        private string mUrl;
         public static ScriptHost scriptHost = null;
         private ScriptHost(WebView2 webView)
         {
@@ -32,8 +36,9 @@ namespace XHS.Spider.Helpers
             //webView初始化完成后注册与JavaScript交互
             this.webView.CoreWebView2InitializationCompleted += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2InitializationCompletedEventArgs>(this.webView_CoreWebView2InitializationCompleted);
         }
-        public static ScriptHost GetScriptHost(WebView2 webView)
+        public static ScriptHost GetScriptHost(WebView2 webView, IEventAggregator aggregator)
         {
+            _aggregator = aggregator;
             if (scriptHost == null) scriptHost = new ScriptHost(webView);
             return scriptHost;
         }
@@ -52,7 +57,12 @@ namespace XHS.Spider.Helpers
         /// <param name="e"></param>
         private void webView_NavigationCompleted(object sender, CoreWebView2NavigationCompletedEventArgs e)
         {
-
+            //TODO:自动获取cookie
+            var webView2 = sender as Microsoft.Web.WebView2.Wpf.WebView2;
+            var url=webView2.CoreWebView2.Source;
+            //TODO:发布页面加载完成事件
+            RedirectInfo redirectInfo = new RedirectInfo() { Url=url};
+            _aggregator.GetEvent<NavigationCompletedEvent>().Publish(redirectInfo);
         }
         /// <summary>
         /// CoreWebView2初始化完成

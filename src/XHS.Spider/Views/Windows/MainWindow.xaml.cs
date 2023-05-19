@@ -58,8 +58,6 @@ namespace XHS.Spider.Views.Windows
             #endregion
             
             InitializeComponent();
-            //webView.Source = new Uri("https://www.xiaohongshu.com/explore");
-            //InitializeAsync();
             SetPageService(pageService);
             _pageServiceNew = pageService;
             navigationService.SetNavigationControl(RootNavigation);

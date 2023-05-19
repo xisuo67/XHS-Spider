@@ -14,6 +14,7 @@ using Wpf.Ui.Controls.Interfaces;
 using Wpf.Ui.Controls.Navigation;
 using Wpf.Ui.Mvvm.Contracts;
 using Wpf.Ui.Mvvm.Services;
+using XHS.Common.Events;
 using XHS.Common.Global;
 using XHS.IService.DI;
 using XHS.Models.DownLoad;
@@ -54,6 +55,7 @@ namespace XHS.Spider
                 // TaskBar manipulation
                 services.AddSingleton<ITaskBarService, TaskBarService>();
 
+                services.AddSingleton<IEventAggregator, EventAggregator>();
                 // Snackbar service
                 services.AddSingleton<ISnackbarService, SnackbarService>();
 
