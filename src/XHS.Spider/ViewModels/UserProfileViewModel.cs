@@ -367,26 +367,6 @@ namespace XHS.Spider.ViewModels
                 }
             }
         }
-        private async Task<string> getxs() {
-            string url = InputText;
-            string jscode = "var url='" + url + "';\r\n" + @"try {
-                                                                            sign(url);
-                                                                        } catch (e) { winning.log(e); }
-                                                                        function sign(url) {
-                                                                            var t;
-                                                                            var o = window._webmsxyw(url, t);
-                                                                            return o;
-                                                                        }";
-            var xsxtStr =await this.webView.CoreWebView2.ExecuteScriptAsync(jscode);
-
-            if (!string.IsNullOrEmpty(xsxtStr))
-            {
-                //JObject xsxt = (JObject)JsonConvert.DeserializeObject(xsxtStr);
-                //var xs = xsxt["X-s"].ToString();
-                //var xt = xsxt["X-t"].ToString();
-            }
-            return xsxtStr;
-        }
         public void InitNullImage()
         {
             App.PropertyChangeAsync(new Action(() =>
