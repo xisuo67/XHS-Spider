@@ -33,10 +33,50 @@ namespace XHS.Spider.Helpers
             scriptHost = this;
             this.webView = webView;
             //注册事件侦听，加载页面完成时，获取cookie；
+            this.webView.NavigationStarting += WebView_NavigationStarting;
             this.webView.NavigationCompleted += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs>(this.webView_NavigationCompleted);
             //webView初始化完成后注册与JavaScript交互
             this.webView.CoreWebView2InitializationCompleted += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2InitializationCompletedEventArgs>(this.webView_CoreWebView2InitializationCompleted);
         }
+        /// <summary>
+        /// 开始跳转
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        private async void WebView_NavigationStarting(object? sender, CoreWebView2NavigationStartingEventArgs e)
+        {
+            //var cookieEntity= GlobalCaChe.Cookies.FirstOrDefault(e=>e.IsGetAutomatically==false);
+            string cookie = @"a1=186de24f322i6k85k3pozwymdum8ecsla4a6dcrgr50000322820; webId=50eb4725069e5d0fdb3b38d7dec18649; gid=yYKfdJ4iWj0JyYKfdJ4iq4SFJJ3KTY2TqUlu0kFEv6f76K28YdSM1f888qJJYJ88fWWyjKfj; gid.sign=/z6MNVFYsIl96uA3VEvQwOGynVw=; customerClientId=296074035300859; xhsTrackerId=109c7c25-a067-459e-9bd1-87a12db48ea1; xhsTrackerId.sig=uRtS9bxaCwD1D5U0bysUBIzu3l0ZoRNINCSUR0LwG_w; x-user-id-creator.xiaohongshu.com=643537d4cc5ead00017f3ee1; access-token-creator.xiaohongshu.com=customer.ares.AT-303eb29d32e6473288eb4676bb1be053-fc07a9b202604dcaaa0f3e30f0250dbd; timestamp2=16835252284415e59bfaf1cd7965f6187e0f0453168cbdcce9cd3436f00866b; timestamp2.sig=lAGOQpNSPW0NeeO0HdNzHa9z_Jm77Mm2kWU4snV6Zbg; smidV2=202305121323401a1123c08aef73436afa1d24784bc362004259fa4cec0ee40; xsecappid=xhs-pc-web; web_session=030037a33cbe715cc290d19225234a17a6cec0; webBuild=2.6.6; websectiga=7750c37de43b7be9de8ed9ff8ea0e576519e8cd2157322eb972ecb429a7735d4; sec_poison_id=451ccc43-536d-4f78-8908-c1c1ae9a2aff; extra_exp_ids=yamcha_0327_clt,h5_1208_exp3,ques_clt2; extra_exp_ids.sig=-9P_FIY9nRpp4czlpi3JlPCL_zdr5ZMYd73Vy8sdzzY";
+            //处理手动设置的cookie
+            var a=cookie.Split(';');
+            foreach (var item in a)
+            {
+                var cookieItem=item.Trim();
+                //二次拆分，求name,value
+                cookieItem.Split('=');
+            }
+            //如果存在手动设置cookie，那么更新cookie
+            //if (cookieEntity != null)
+            //{
+            //    var webView2 = sender as WebView2;
+            //    if (webView2 != null)
+            //    {
+            //        var url = webView2.CoreWebView2.Source;
+            //        if (url.Contains("https://www.xiaohongshu.com/"))
+            //        {
+            //            List<CoreWebView2Cookie> cookieList = await webView.CoreWebView2.CookieManager.GetCookiesAsync(url);
+
+            //            CoreWebView2Cookie cookie = webView.CoreWebView2.CookieManager.CreateCookie("CookieName", "CookieValue", ".bing.com", "/");
+            //            webView.CoreWebView2.CookieManager.AddOrUpdateCookie(cookie);
+            //            //webView.CoreWebView2.CookieManager.DeleteAllCookies();
+
+            //        }
+            //    }
+               
+            //}
+        }
+
         public static ScriptHost GetScriptHost(WebView2 webView, IEventAggregator aggregator)
         {
             _aggregator = aggregator;

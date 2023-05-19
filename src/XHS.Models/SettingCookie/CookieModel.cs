@@ -17,5 +17,10 @@ namespace XHS.Models.SettingCookie
         /// Cookie值
         /// </summary>
         public string Cookie { get; set; }
+
+        /// <summary>
+        /// 是否自动获取
+        /// </summary>
+        public bool IsGetAutomatically { get; set; } = false;
     }
 }
