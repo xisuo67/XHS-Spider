@@ -1,6 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Web.WebView2.Wpf;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using System;
+using System.Security.Policy;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -8,12 +12,15 @@ using Wpf.Ui.Common;
 using Wpf.Ui.Common.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
 using XHS.Common.Global;
+using XHS.Common.Helpers;
 using XHS.Common.Utils;
 using XHS.IService.XHS;
 using XHS.Models.Enum;
 using XHS.Service.Log;
 using XHS.Service.XHS;
 using XHS.Spider.Services;
+using System.IO;
+using XHS.Common.Events;
 
 namespace XHS.Spider.ViewModels
 {
@@ -22,17 +29,21 @@ namespace XHS.Spider.ViewModels
     /// </summary>
     public partial class SearchViewModel : ObservableObject, INavigationAware
     {
+        public  WebView2 webView;
         private static readonly ILogger Logger = LoggerService.Get(typeof(SearchViewModel));
         private readonly INavigationService _navigationService;
         private readonly IServiceProvider _serviceProvider;
         private readonly IPageServiceNew _pageServiceNew;
         private readonly ISnackbarService _snackbarService;
+        private readonly IEventAggregator _aggregator;
         public SearchViewModel(
             IServiceProvider serviceProvider,
             IPageServiceNew pageServiceNew,
             ISnackbarService snackbarService,
-            INavigationService navigationService)
+            INavigationService navigationService,
+            IEventAggregator aggregator)
         {
+            _aggregator = aggregator;
             _snackbarService = snackbarService;
             _serviceProvider = serviceProvider;
             _pageServiceNew = pageServiceNew;
@@ -55,7 +66,7 @@ namespace XHS.Spider.ViewModels
         /// <summary>
         /// 处理输入事件
         /// </summary>
-        private void ExecuteInput()
+        private async void ExecuteInput()
         {
             if (!string.IsNullOrEmpty(InputText))
             {
@@ -68,14 +79,15 @@ namespace XHS.Spider.ViewModels
                 //TODO:搜索服务，跳转对应页面
                 try
                 {
-                    SearchService.SearchInput(InputText, navigation, _serviceProvider, _pageServiceNew);
+                    var searchService= SearchService.GetSearchService(webView, _aggregator,navigation, _serviceProvider, _pageServiceNew);
+                    searchService.SearchInput(InputText);
                     this.InputText = string.Empty;
                 }
                 catch (Exception ex)
                 {
-                    Logger.Error("跳转异常：",ex);
+                    Logger.Error("跳转异常：", ex);
                 }
-               
+
             }
         }
         #region 剪贴板

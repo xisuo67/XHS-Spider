@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Web.WebView2.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Wpf.Ui.Common.Interfaces;
 using Wpf.Ui.Controls;
+using XHS.Common.Events;
+using XHS.Common.Global;
+using XHS.Spider.Helpers;
 using XHS.Spider.ViewModels;
 
 namespace XHS.Spider.Views.Pages
@@ -23,15 +27,35 @@ namespace XHS.Spider.Views.Pages
     /// </summary>
     public partial class Search : INavigableView<ViewModels.SearchViewModel>
     {
+        private IEventAggregator _aggregator { get; set; }
+        private ScriptHost scriptHost = null;
         public ViewModels.SearchViewModel ViewModel
         {
             get;
         }
 
-        public Search(ViewModels.SearchViewModel viewModel)
+        public Search(ViewModels.SearchViewModel viewModel, IEventAggregator aggregator)
         {
+            _aggregator = aggregator;
             ViewModel = viewModel;
             InitializeComponent();
+            webView.Source = new Uri("https://www.xiaohongshu.com/explore");
+            InitializeAsync();
+        }
+
+        #region webView
+        private async void InitializeAsync()
+        {
+
+            ViewModel.webView = this.webView;
+            await webView.EnsureCoreWebView2Async(null);
+            await webView.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync("window.chrome.webview.postMessage(window.document.URL);");
+        }
+        #endregion
+
+        private void Grid_Loaded(object sender, RoutedEventArgs e)
+        {
+            scriptHost = ScriptHost.GetScriptHost(webView, _aggregator);
         }
     }
 }

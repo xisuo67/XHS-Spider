@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1774.30" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\XHS.Common\XHS.Common.csproj" />
     <ProjectReference Include="..\XHS.IService\XHS.IService.csproj" />
     <ProjectReference Include="..\XHS.Models\XHS.Models.csproj" />

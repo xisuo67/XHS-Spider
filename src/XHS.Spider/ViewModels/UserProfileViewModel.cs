@@ -4,9 +4,11 @@ using Downloader;
 using Microsoft.ClearScript;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Web.WebView2.Wpf;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Security.Policy;
@@ -20,6 +22,8 @@ using Wpf.Ui.Common;
 using Wpf.Ui.Common.Interfaces;
 using Wpf.Ui.Controls.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
+using XHS.Common.Global;
+using XHS.Common.Helpers;
 using XHS.Common.Utils;
 using XHS.IService.XHS;
 using XHS.Models.DownLoad;
@@ -33,6 +37,7 @@ namespace XHS.Spider.ViewModels
 {
     public partial class UserProfileViewModel : ObservableObject, INavigationAware
     {
+        public WebView2 webView;
         private static readonly Service.Log.ILogger Logger = LoggerService.Get(typeof(UserProfileViewModel));
         #region 变量
         public static readonly string BaseUrl = "https://www.xiaohongshu.com/user/profile/";
@@ -196,7 +201,7 @@ namespace XHS.Spider.ViewModels
         /// </summary>
         /// <param name="nodes"></param>
         /// <param name="isDownLoadAll"></param>
-        private void DownLoad(IEnumerable<NoteModel> nodes, bool isDownLoadAll = true)
+        private async void DownLoad(IEnumerable<NoteModel> nodes, bool isDownLoadAll = true)
         {
             string dirName = Format.FormatFileName(UserInfo.BasicInfo.NickName);
             string dirPath = $"{AppDomain.CurrentDomain.BaseDirectory}DownLoad\\{dirName}";
@@ -204,7 +209,7 @@ namespace XHS.Spider.ViewModels
             //循环笔记数据
             foreach (var item in nodes)
             {
-                var resultData = _xhsSpiderService.GetNodeDetail(item.NoteId);
+                var resultData =await _xhsSpiderService.GetNodeDetail(item.NoteId, webView);
                 if (resultData != null && resultData.Success)
                 {
                     var nodeDetail = resultData.Data.Items;
@@ -268,11 +273,10 @@ namespace XHS.Spider.ViewModels
         /// <summary>
         /// 处理输入事件
         /// </summary>
-        public void ExecuteInitData()
+        public async void ExecuteInitData()
         {
             if (!string.IsNullOrEmpty(InputText))
             {
-                
                 if (InputText.Contains("user/profile/"))
                 {
                     var id = SearchService.GetId(inputText, BaseUrl);
@@ -284,7 +288,7 @@ namespace XHS.Spider.ViewModels
                     }
                     else
                     {
-                        var apiResult = _xhsSpiderService.GetOtherInfo(id);
+                        var apiResult = await _xhsSpiderService.GetOtherInfo(id, webView);
                         if (apiResult != null && apiResult.Success)
                         {
                             UserInfo = apiResult.Data;
@@ -306,6 +310,7 @@ namespace XHS.Spider.ViewModels
                             var interaction = UserInfo.Interactions.FirstOrDefault(e => e.Type == "interaction");
                             if (interaction != null)
                                 Interaction = interaction;
+
                             App.PropertyChangeAsync(new Action(() =>
                             {
                                 var baseInfo = UserInfo.BasicInfo;
@@ -341,7 +346,7 @@ namespace XHS.Spider.ViewModels
                                 }
                             }));
 
-                            var nodes = _xhsSpiderService.GetAllUserNode(id);
+                            var nodes =await _xhsSpiderService.GetAllUserNode(id, webView);
                             foreach (var node in nodes)
                             {
                                 node.LikedCount = node.interact_info?.LikedCount;
@@ -362,7 +367,7 @@ namespace XHS.Spider.ViewModels
                 }
             }
         }
-        private void InitNullImage()
+        public void InitNullImage()
         {
             App.PropertyChangeAsync(new Action(() =>
             {

@@ -8,13 +8,22 @@ using System.Threading.Tasks;
 using Microsoft.ClearScript.V8;
 using XHS.Common.Global;
 using System.Windows.Documents;
+using Newtonsoft.Json;
+using XHS.Common.Helpers;
+using System.IO;
+using Newtonsoft.Json.Linq;
+using System.Windows.Threading;
+using static System.Net.Mime.MediaTypeNames;
+using Downloader;
+using System.Windows;
+using XHS.Common.Events;
 
 namespace XHS.Common.Http
 {
     public class HttpClientHelper
     {
         private static string _baseUrl = "https://edith.xiaohongshu.com";
-        public static HttpClient _client = new HttpClient(new HttpClientHandler
+        private static HttpClient _client = new HttpClient(new HttpClientHandler
         {
             UseDefaultCredentials = false,
             AllowAutoRedirect = false,
@@ -23,13 +32,44 @@ namespace XHS.Common.Http
             UseProxy = false,
             AutomaticDecompression = DecompressionMethods.GZip
         });
+
+        private static async void AddDefaultHeaders(string url, Dictionary<string, string> headers = null)
+        {
+            _client.DefaultRequestHeaders.Clear();
+            _client.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36");
+            //TODO:cookie通过手动设置
+            var cookies = GlobalCaChe.Cookies;
+            if (cookies.Count > 0)
+            {
+                var random = new Random().Next(cookies.Count);
+                string cookie = cookies[random]?.Cookie;
+                _client.DefaultRequestHeaders.Add("cookie", cookie);
+            }
+            if (headers != null)
+            {
+                foreach (var item in headers)
+                {
+                    _client.DefaultRequestHeaders.Add(item.Key, item.Value);
+                }
+            }
+        }
+        #region HttpPost
+        /// <summary>
+        /// httpPost
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="headers"></param>
+        /// <returns></returns>
+        public static string DoPost(string url, Dictionary<string, string> headers)=> DoPost(url, headers,"");
+
+
         /// <summary>
         /// httpPost
         /// </summary>
         /// <param name="url">接口地址</param>
         /// <param name="postData">可选参数</param>
         /// <returns>请求结果</returns>
-        public static string DoPost(string url, string postData = "")
+        public static string DoPost(string url, Dictionary<string, string> headers = null, string postData = "")
         {
             try
             {
@@ -42,7 +82,7 @@ namespace XHS.Common.Http
                 {
                     return Task.Run(() =>
                     {
-                        AddDefaultHeaders(url, postData);
+                        AddDefaultHeaders(url, headers);
                         var response = _client.SendAsync(requestMessage);
                         return response;
                     }).GetAwaiter().GetResult();
@@ -60,13 +100,17 @@ namespace XHS.Common.Http
                 return string.Empty;
             }
         }
+        #endregion
+
+        #region HttpGet
+        public static string DoGet(string url, Dictionary<string, string> headers) => DoGet(url, headers,"");
         /// <summary>
         /// get方法
         /// </summary>
         /// <param name="url"></param>
         /// <param name="postData"></param>
         /// <returns></returns>
-        public static string DoGet(string url, string postData = "")
+        public static string DoGet(string url, Dictionary<string, string> headers = null, string postData = "")
         {
             try
             {
@@ -79,7 +123,7 @@ namespace XHS.Common.Http
                 {
                     return Task.Run(() =>
                     {
-                        AddDefaultHeaders(url, postData);
+                        AddDefaultHeaders(url, headers);
                         var response = _client.SendAsync(requestMessage);
                         return response;
                     }).GetAwaiter().GetResult();
@@ -97,44 +141,6 @@ namespace XHS.Common.Http
                 return string.Empty;
             }
         }
-        private static void AddDefaultHeaders(string url, string postData = "")
-        {
-            _client.DefaultRequestHeaders.Clear();
-            _client.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36");
-            //TODO:cookie通过手动设置
-            var cookies = GlobalCaChe.Cookies;
-            if (cookies.Count>0)
-            {
-                var random = new Random().Next(cookies.Count);
-                string cookie = cookies[random]?.Cookie;
-                _client.DefaultRequestHeaders.Add("cookie", cookie);
-            }
-            try
-            {
-                using (var engine = new V8ScriptEngine())
-                {
-                    engine.DocumentSettings.AccessFlags = Microsoft.ClearScript.DocumentAccessFlags.EnableFileLoading;
-                    engine.DefaultAccess = Microsoft.ClearScript.ScriptAccess.Full; // 这两行是为了允许加载js文件
-                    string originScript = System.IO.File.ReadAllText("Script/origin_script.js", System.Text.Encoding.UTF8);
-                    engine.Execute(originScript);
-                    ////直接C#函数调用
-                    var rValue = engine.Script.sign(url, string.IsNullOrEmpty(postData) ? null : postData);
-                    var dic = rValue as IDictionary<string, object>;
-                    if (dic != null)
-                    {
-                        foreach (var item in dic)
-                        {
-                            _client.DefaultRequestHeaders.Add(item.Key, item.Value.ToString());
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-           
-        }
+        #endregion
     }
 }

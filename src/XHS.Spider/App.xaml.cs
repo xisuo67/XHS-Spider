@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Threading;
@@ -13,6 +14,8 @@ using Wpf.Ui.Controls.Interfaces;
 using Wpf.Ui.Controls.Navigation;
 using Wpf.Ui.Mvvm.Contracts;
 using Wpf.Ui.Mvvm.Services;
+using XHS.Common.Events;
+using XHS.Common.Global;
 using XHS.IService.DI;
 using XHS.Models.DownLoad;
 using XHS.Service.Log;
@@ -51,6 +54,7 @@ namespace XHS.Spider
                 // TaskBar manipulation
                 services.AddSingleton<ITaskBarService, TaskBarService>();
 
+                services.AddSingleton<IEventAggregator, EventAggregator>();
                 // Snackbar service
                 services.AddSingleton<ISnackbarService, SnackbarService>();
 

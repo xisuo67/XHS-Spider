@@ -1,4 +1,7 @@
 ﻿using Hardcodet.Wpf.TaskbarNotification;
+using Microsoft.Web.WebView2.Core;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
@@ -9,10 +12,15 @@ using Wpf.Ui.Controls.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
 using Wpf.Ui.Mvvm.Services;
 using Wpf.Ui.TaskBar;
+using XHS.Common.Events;
 using XHS.Common.Global;
+using XHS.Common.Helpers;
 using XHS.Common.Utils;
 using XHS.Spider.Helpers;
 using XHS.Spider.Services;
+using System.IO;
+using Microsoft.Extensions.DependencyInjection;
+using XHS.Spider.ViewModels;
 
 namespace XHS.Spider.Views.Windows
 {
@@ -21,19 +29,24 @@ namespace XHS.Spider.Views.Windows
     /// </summary>
     public partial class MainWindow : INavigationWindow
     {
+
         private readonly TaskbarIcon _notifyIcon;
         private ContextMenu _contextMenu;
         private UpdateCheckerServer updateChecker;
         private bool _initialized = false;
         private readonly ITaskBarService _taskBarService;
+        private readonly IPageServiceNew _pageServiceNew;
+        private readonly IServiceProvider _serviceProvider;
         public ViewModels.MainWindowViewModel ViewModel
         {
             get;
         }
 
-        public MainWindow(ViewModels.MainWindowViewModel viewModel, IPageServiceNew pageService, ITaskBarService taskBarService, INavigationService navigationService, ISnackbarService snackbarService)
+        public MainWindow(ViewModels.MainWindowViewModel viewModel, IPageServiceNew pageService, ITaskBarService taskBarService, INavigationService navigationService, IServiceProvider serviceProvider, ISnackbarService snackbarService)
         {
+           
             _taskBarService = taskBarService;
+            _serviceProvider = serviceProvider;
             ViewModel = viewModel;
             DataContext = this;
             #region 通知
@@ -43,10 +56,10 @@ namespace XHS.Spider.Views.Windows
             updateChecker.NewVersionFound += updateChecker_NewVersionFound;
             updateChecker.NewVersionNotFound += updateChecker_NewVersionNotFound;
             #endregion
-
-
+            
             InitializeComponent();
             SetPageService(pageService);
+            _pageServiceNew = pageService;
             navigationService.SetNavigationControl(RootNavigation);
             snackbarService.SetSnackbarControl(RootSnackbar);
             Loaded += (_, _) => InvokeSplashScreen();
@@ -89,6 +102,7 @@ namespace XHS.Spider.Views.Windows
 
         private void InvokeSplashScreen()
         {
+            //scriptHost = ScriptHost.GetScriptHost(webView);
             if (_initialized)
                 return;
 
@@ -101,6 +115,7 @@ namespace XHS.Spider.Views.Windows
             Task.Run(async () =>
             {
                 //TODO:这里预留程序启动初始化数据
+              
                 //await Task.Delay(2000);
                 updateChecker.Check(true);
                 await Dispatcher.InvokeAsync(() =>
@@ -155,8 +170,7 @@ namespace XHS.Spider.Views.Windows
 
         private void RootNavigation_OnNavigated(INavigation sender, RoutedNavigationEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine($"DEBUG | WPF UI Navigated to: {sender?.Current ?? null}", "Wpf.Ui.Demo");
-
+            //_navigationService.GetNavigationControl().Current.PageTag;
             // This funky solution allows us to impose a negative
             // margin for Frame only for the Dashboard page, thanks
             // to which the banner will cover the entire page nicely.

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Web.WebView2.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,14 +24,14 @@ namespace XHS.IService.XHS
         /// </summary>
         /// <param name="nodeid"></param>
         /// <returns></returns>
-        XHSBaseApiModel<NodeDetailModel> GetNodeDetail(string nodeid);
+        Task<XHSBaseApiModel<NodeDetailModel>> GetNodeDetail(string nodeid, WebView2 webView);
 
         /// <summary>
         /// 获取当前小红书博主其他信息，包含个人信息等数据
         /// </summary>
         /// <param name="targetUserId"></param>
         /// <returns></returns>
-        XHSBaseApiModel<OtherInfoModel> GetOtherInfo(string targetUserId);
+        Task<XHSBaseApiModel<OtherInfoModel>> GetOtherInfo(string targetUserId, WebView2 webView);
 
 
         /// <summary>
@@ -38,6 +39,6 @@ namespace XHS.IService.XHS
         /// </summary>
         /// <param name="userid"></param>
         /// <returns></returns>
-        List<NoteModel> GetAllUserNode(string userid);
+        Task<List<NoteModel>> GetAllUserNode(string userid, WebView2 webView);
     }
 }

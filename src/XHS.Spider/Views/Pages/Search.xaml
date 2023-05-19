@@ -6,15 +6,15 @@
       xmlns:local="clr-namespace:XHS.Spider.Views.Pages"  
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-      xmlns:viewmodels="clr-namespace:XHS.Spider.ViewModels"
-      d:DataContext="{d:DesignInstance local:Search,
+      xmlns:viewmodels="clr-namespace:XHS.Spider.ViewModels" xmlns:Wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+    d:DataContext="{d:DesignInstance local:Search,
                                      IsDesignTimeCreatable=False}"
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}" 
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Search">
-    <Grid>
+    <Grid Loaded="Grid_Loaded">
         <Grid.RowDefinitions>
             <RowDefinition Height="200" />
             <RowDefinition Height="Auto" />
@@ -30,7 +30,8 @@
                 </Border.Background>
             </Border>
         </Grid>
-
+        <Wpf:WebView2
+            x:Name="webView" Visibility="Hidden"/>
 
         <Grid Grid.Row="1" >
             <ui:TextBox 
@@ -43,6 +44,5 @@
                 </TextBox.InputBindings>
             </ui:TextBox>
         </Grid>
-        
     </Grid>
 </ui:UiPage>
