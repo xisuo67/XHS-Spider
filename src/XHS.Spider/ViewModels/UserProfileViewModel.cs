@@ -44,7 +44,6 @@ namespace XHS.Spider.ViewModels
         }
         private readonly ISnackbarService _snackbarService;
         private readonly IXhsSpiderService _xhsSpiderService;
-        private readonly INavigationService _navigationService;
 
         private IEnumerable<NoteModel> _dataGridItemCollection = new NoteModel[] { };
         public IEnumerable<NoteModel> DataGridItemCollection
@@ -123,9 +122,8 @@ namespace XHS.Spider.ViewModels
             get => _userInfo;
             set => SetProperty(ref _userInfo, value);
         }
-        public UserProfileViewModel(ISnackbarService snackbarService, INavigationService navigationService, IXhsSpiderService xhsSpiderService)
+        public UserProfileViewModel(ISnackbarService snackbarService, IXhsSpiderService xhsSpiderService)
         {
-            _navigationService = navigationService;
             _snackbarService = snackbarService;
             _xhsSpiderService = xhsSpiderService;
         }
