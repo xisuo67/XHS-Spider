@@ -29,9 +29,20 @@ namespace XHS.Spider.Helpers
             scriptHost = this;
             this.webView = webView;
             //注册事件侦听，加载页面完成时，获取cookie；
+            this.webView.WebMessageReceived += WebView_WebMessageReceived;
             this.webView.NavigationCompleted += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs>(this.webView_NavigationCompleted);
             //webView初始化完成后注册与JavaScript交互
             this.webView.CoreWebView2InitializationCompleted += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2InitializationCompletedEventArgs>(this.webView_CoreWebView2InitializationCompleted);
+        }
+
+        private void WebView_WebMessageReceived(object? sender, CoreWebView2WebMessageReceivedEventArgs e)
+        {
+            var webView2 = sender as Microsoft.Web.WebView2.Wpf.WebView2;
+            if (webView2 != null)
+            {
+                var url = webView2.CoreWebView2.Source;
+               
+            }
         }
 
         public static ScriptHost GetScriptHost(WebView2 webView, IEventAggregator aggregator)
@@ -54,34 +65,11 @@ namespace XHS.Spider.Helpers
         /// <param name="url">与cookie关联的域名</param>
         private async void GetCookie(string url)
         {
-            List<CoreWebView2Cookie> cookieList = await webView.CoreWebView2.CookieManager.GetCookiesAsync(url);
-            string cookies =string.Empty;
-            for (int i = 0; i < cookieList.Count; ++i)
-            {
-                CoreWebView2Cookie cookie = webView.CoreWebView2.CookieManager.CreateCookieWithSystemNetCookie(cookieList[i].ToSystemNetCookie());
-                cookies += cookie.Name + "=" + cookie.Value + ";";
-            }
-            GlobalCaChe.Cookies.Clear();
-            GlobalCaChe.Cookies.Add(new XHS.Models.SettingCookie.CookieModel() {
-                Id=Guid.NewGuid(),
-                Cookie=cookies
-            });
-        }
-        /// <summary>
-        /// 加载完页面时，获取cookie
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void webView_NavigationCompleted(object sender, CoreWebView2NavigationCompletedEventArgs e)
-        {
-            //TODO:自动获取cookie
-            string hosturl = webView.Source.Host.ToString();
-            hosturl = "https://" + hosturl;
             var cookieEntity = GlobalCaChe.Cookies.FirstOrDefault(e => e.IsGetAutomatically == false);
             //如果存在手动设置cookie，那么更新cookie
             if (cookieEntity != null)
             {
-                if (hosturl.Contains("https://www.xiaohongshu.com/"))
+                if (url== "https://www.xiaohongshu.com")
                 {
                     //List<CoreWebView2Cookie> cookieList = await webView.CoreWebView2.CookieManager.GetCookiesAsync(url);
                     //处理手动设置的cookie
@@ -97,9 +85,32 @@ namespace XHS.Spider.Helpers
                             webView.CoreWebView2.CookieManager.AddOrUpdateCookie(cookie);
                         }
                     }
-
                 }
             }
+            List<CoreWebView2Cookie> cookieList = await webView.CoreWebView2.CookieManager.GetCookiesAsync(url);
+            string cookies = string.Empty;
+            for (int i = 0; i < cookieList.Count; ++i)
+            {
+                CoreWebView2Cookie cookie = webView.CoreWebView2.CookieManager.CreateCookieWithSystemNetCookie(cookieList[i].ToSystemNetCookie());
+                cookies += cookie.Name + "=" + cookie.Value + ";";
+            }
+            GlobalCaChe.Cookies.Clear();
+            GlobalCaChe.Cookies.Add(new XHS.Models.SettingCookie.CookieModel()
+            {
+                Id = Guid.NewGuid(),
+                Cookie = cookies
+            });
+        }
+        /// <summary>
+        /// 加载完页面时，获取cookie
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void webView_NavigationCompleted(object sender, CoreWebView2NavigationCompletedEventArgs e)
+        {
+            //TODO:自动获取cookie
+            string hosturl = webView.Source.Host.ToString();
+            hosturl = "https://" + hosturl;
             GetCookie(hosturl);
             var webView2 = sender as Microsoft.Web.WebView2.Wpf.WebView2;
             if (webView2 != null)
