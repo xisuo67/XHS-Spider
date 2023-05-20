@@ -1,19 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows;
 using Wpf.Ui.Common.Interfaces;
-using Wpf.Ui.Mvvm.Interfaces;
+using Wpf.Ui.Mvvm.Contracts;
 using XHS.Common.Global;
 using XHS.IService;
 using XHS.Models.SettingCookie;
@@ -28,9 +15,11 @@ namespace XHS.Spider.Views.Pages
     public partial class SettingCookie : INavigableView<SettingCookieViewModel>
     {
         private readonly IWindowService _windowService;
+        private readonly ISnackbarService _snackbarService;
         public SettingCookieViewModel ViewModel { get; }
-        public SettingCookie(SettingCookieViewModel viewModel, IWindowService windowService)
+        public SettingCookie(SettingCookieViewModel viewModel, IWindowService windowService, ISnackbarService snackbarService)
         {
+            _snackbarService = snackbarService;
             ViewModel = viewModel;
             _windowService = windowService;
             InitializeComponent();
@@ -38,6 +27,11 @@ namespace XHS.Spider.Views.Pages
 
         private void CookieSetting_Click(object sender, RoutedEventArgs e)
         {
+            //if (GlobalCaChe.Cookies.Count > 0)
+            //{
+            //    _snackbarService.Show("提示", "无法设置多个cookie", SymbolRegular.ErrorCircle12, ControlAppearance.Danger);
+            //    return;
+            //}
             CookieEdit cookie = new CookieEdit();
             cookie.ShowDialog();
             ViewModel.InitializeData();
