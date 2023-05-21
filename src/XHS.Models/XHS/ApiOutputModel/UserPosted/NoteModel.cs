@@ -52,7 +52,7 @@ namespace XHS.Models.XHS.ApiOutputModel.UserPosted
         /// <summary>
         /// 文件数量
         /// </summary>
-        public int FileCount { get; set; }
+        public int? FileCount { get; set; }
         private bool isHidden = false;
         /// <summary>
         /// 是否解析
