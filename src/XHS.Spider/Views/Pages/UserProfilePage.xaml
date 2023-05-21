@@ -6,6 +6,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:XHS.Spider.Views.Pages"
+      xmlns:li="http://github.com/zeluisping/loadingIndicators/xaml/controls"
       xmlns:viewmodels="clr-namespace:XHS.Spider.ViewModels" xmlns:Wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
     d:DataContext="{d:DesignInstance local:UserProfilePage,
                                      IsDesignTimeCreatable=False}"
@@ -210,7 +211,7 @@
                                 </TextBox.InputBindings>
                             </ui:TextBox>
                             <StackPanel Grid.Column="1" Orientation="Horizontal">
-                                <ui:Button  Content="解析笔记" Margin="4,0,4,0" Appearance="Info" Icon="ArrowDownload16" HorizontalAlignment="left" Command="{Binding ViewModel.DownLoadCheackAll}"/>
+                                <ui:Button  Content="解析笔记" Margin="4,0,4,0" Appearance="Info" Icon="Clock24" HorizontalAlignment="left" Command="{Binding ViewModel.DownLoadCheackAll}"/>
                                 <ui:Button  Content="全部下载" Margin="0,0,4,0" Appearance="Info" Icon="ArrowDownload16" Command="{Binding ViewModel.DownLoadAll}" HorizontalAlignment="left"/>
                                 <ui:Button  Content="下载已选项" Appearance="Info" Icon="ArrowDownload16" HorizontalAlignment="left" Command="{Binding ViewModel.DownLoadCheackAll}" />
                             </StackPanel>
