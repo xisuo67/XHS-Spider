@@ -165,7 +165,11 @@ namespace XHS.Spider.ViewModels
             var cheackNodes = this.Nodes.Where(e => e.IsDownLoad == true);
             if (cheackNodes.Count() > 0)
             {
-                DownLoad(cheackNodes, false);
+                var hasNoParseNode = CheckDownLoadNodesData(cheackNodes);
+                if (!hasNoParseNode)
+                {
+                    DownLoad(cheackNodes, false);
+                }
             }
             else
             {
@@ -178,7 +182,30 @@ namespace XHS.Spider.ViewModels
         public void DownLoadAllNodes()
         {
             var nodes = this.Nodes;
-            DownLoad(nodes);
+            var hasNoParseNode = CheckDownLoadNodesData(nodes);
+            if (!hasNoParseNode)
+            {
+                DownLoad(nodes);
+            }
+        }
+        /// <summary>
+        /// 检查待下载项
+        /// </summary>
+        /// <param name="downLoadNodes"></param>
+        /// <returns></returns>
+        private bool CheckDownLoadNodesData(IEnumerable<NoteModel> downLoadNodes)
+        {
+            bool hasNoParseNode = true;
+            var noParseCount = downLoadNodes.Where(e => e.IsParse == false).Count();
+            if (noParseCount > 0)
+            {
+                _snackbarService.Show("提示", "当前待下载任务中存在未解析笔记数据，无法下载", SymbolRegular.ErrorCircle12, ControlAppearance.Danger);
+            }
+            else
+            {
+                hasNoParseNode = false;
+            }
+            return hasNoParseNode;
         }
         /// <summary>
         /// 下载笔记
