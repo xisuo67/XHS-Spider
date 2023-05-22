@@ -331,7 +331,7 @@ namespace XHS.Spider.ViewModels
                     break;
                 }
                 Random ran = new Random();
-                int awaitTime = ran.Next(2650, 2800);
+                int awaitTime = ran.Next(2800, 3200);
                 await Task.Delay(awaitTime);
             }
             _notifyIcon.ShowBalloonTip($"全部笔记解析完成", "提示", BalloonIcon.Info);
