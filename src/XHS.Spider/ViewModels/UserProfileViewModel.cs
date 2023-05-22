@@ -1,13 +1,16 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Downloader;
+using Hardcodet.Wpf.TaskbarNotification;
 using Microsoft.Web.WebView2.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Xml.Linq;
+using UpdateChecker.Interfaces;
 using Wpf.Ui.Common;
 using Wpf.Ui.Common.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
@@ -37,7 +40,7 @@ namespace XHS.Spider.ViewModels
             get => inputText;
             set => SetProperty(ref inputText, value);
         }
-
+        private readonly TaskbarIcon _notifyIcon;
         private string inputSearchText;
         public string InputSearchText
         {
@@ -148,6 +151,8 @@ namespace XHS.Spider.ViewModels
         }
         public UserProfileViewModel(ISnackbarService snackbarService, IXhsSpiderService xhsSpiderService)
         {
+            _notifyIcon = new TaskbarIcon();
+            _notifyIcon.TrayBalloonTipClicked += notifyIcon_TrayBalloonTipClicked;
             _snackbarService = snackbarService;
             _xhsSpiderService = xhsSpiderService;
         }
@@ -322,15 +327,23 @@ namespace XHS.Spider.ViewModels
                 }
                 else
                 {
-                    _snackbarService.Show("提示",$"解析失败，接口异常。已完成解析【{this.Nodes.Where(e=>e.IsParse==true).Count()}】条笔记", SymbolRegular.ErrorCircle12, ControlAppearance.Danger);
+                    _notifyIcon.ShowBalloonTip($"解析失败，接口异常。已完成解析【{this.Nodes.Where(e => e.IsParse == true).Count()}】条笔记", "提示", BalloonIcon.Error);
                     break;
                 }
                 Random ran = new Random();
-                int awaitTime = ran.Next(2500, 3000);
+                int awaitTime = ran.Next(2650, 2800);
                 await Task.Delay(awaitTime);
             }
-
+            _notifyIcon.ShowBalloonTip($"全部笔记解析完成", "提示", BalloonIcon.Info);
             this.DataGridItemCollection = this.Nodes;
+        }
+        private void notifyIcon_TrayBalloonTipClicked(object sender, RoutedEventArgs e)
+        {
+            var url = "https://www.xiaohongshu.com/explore";
+            if (!string.IsNullOrWhiteSpace(url))
+            {
+                Utils.OpenURL(url);
+            }
         }
         /// <summary>
         /// 下载笔记
