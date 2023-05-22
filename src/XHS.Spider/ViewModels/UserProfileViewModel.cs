@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using System.Xml.Linq;
 using Wpf.Ui.Common;
 using Wpf.Ui.Common.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
@@ -174,7 +175,7 @@ namespace XHS.Spider.ViewModels
         /// <summary>
         /// 下载选中笔记
         /// </summary>
-        public async void DownLoadCheckAll()
+        public void DownLoadCheckAll()
         {
             var cheackNodes = this.Nodes.Where(e => e.IsDownLoad == true);
             if (cheackNodes.Count() > 0)
@@ -182,7 +183,7 @@ namespace XHS.Spider.ViewModels
                 var hasNoParseNode = CheckDownLoadNodesData(cheackNodes);
                 if (!hasNoParseNode)
                 {
-                   //var downLoadNodes= await ParseNodeProcess(cheackNodes, false);
+                    DownLoad(cheackNodes);
                 }
             }
             else
@@ -193,12 +194,13 @@ namespace XHS.Spider.ViewModels
         /// <summary>
         /// 下载所有笔记
         /// </summary>
-        public async void DownLoadAllNodes()
+        public void DownLoadAllNodes()
         {
             var nodes = this.Nodes;
             var hasNoParseNode = CheckDownLoadNodesData(nodes);
             if (!hasNoParseNode)
             {
+                DownLoad(nodes);
             }
         }
         /// <summary>
@@ -304,7 +306,9 @@ namespace XHS.Spider.ViewModels
                     _snackbarService.Show("提示",$"解析失败，接口异常。已完成解析【{this.Nodes.Where(e=>e.IsParse==true).Count()}】条笔记", SymbolRegular.ErrorCircle12, ControlAppearance.Danger);
                     break;
                 }
-                await Task.Delay(5000);
+                Random ran = new Random();
+                int awaitTime = ran.Next(2300, 3000);
+                await Task.Delay(awaitTime);
             }
 
             this.DataGridItemCollection = this.Nodes;
@@ -314,60 +318,14 @@ namespace XHS.Spider.ViewModels
         /// </summary>
         /// <param name="nodes"></param>
         /// <param name="isDownLoadAll"></param>
-        private async void DownLoad(IEnumerable<NoteModel> nodes, bool isDownLoadAll = true)
+        private void DownLoad(IEnumerable<NoteModel> nodes, bool isDownLoadAll = true)
         {
-            string dirName = Format.FormatFileName(UserInfo.BasicInfo.NickName);
-            string dirPath = $"{AppDomain.CurrentDomain.BaseDirectory}DownLoad\\{dirName}";
             List<DownloadItem> downloadItems = new List<DownloadItem>();
-            //循环笔记数据
-            foreach (var item in nodes)
+            foreach (var node in nodes)
             {
-                var resultData =await _xhsSpiderService.GetNodeDetail(item.NoteId, webView);
-                if (resultData != null && resultData.Success)
+                if (node.DownloadItems.Count > 0)
                 {
-                    var nodeDetail = resultData.Data.Items;
-                    foreach (var detailItem in nodeDetail)
-                    {
-                        var nodeCard = detailItem.NoteCard;
-                        var title = Format.FormatFileName(detailItem.NoteCard.Title);
-                        switch (nodeCard.Type)
-                        {
-                            case "normal":
-                                for (int i = 0; i < nodeCard.ImageList.Count; i++)
-                                {
-                                    var imageUrl = string.Format(BaseImageUrl, nodeCard.ImageList[i].TraceId);
-                                    var fpath = $"{dirPath}\\{title}\\{title}-{Guid.NewGuid().ToString()}.png";
-                                    DownloadItem downloadImageItem = new DownloadItem()
-                                    {
-                                        Url = imageUrl,
-                                        FileName = fpath,
-                                        Title = title,
-                                        FolderPath = $"{dirPath}\\{title}",
-                                        Status = DownloadStatus.None,
-                                        FileCount = nodeCard.ImageList.Count,
-                                    };
-                                    downloadItems.Add(downloadImageItem);
-                                }
-
-                                break;
-                            case "video":
-                                var videoUrl = string.Format(BaseVideoUrl, nodeCard.Video.Consumer.OriginVideoKey);
-                                var filePath = $"{dirPath}\\{title}\\{title}-{Guid.NewGuid().ToString()}.mov";
-                                DownloadItem downloadItem = new DownloadItem()
-                                {
-                                    Url = videoUrl,
-                                    FileName = filePath,
-                                    Title = title,
-                                    FolderPath = $"{dirPath}\\{title}",
-                                    Status = DownloadStatus.None,
-                                    FileCount = 1,
-                                };
-                                downloadItems.Add(downloadItem);
-                                break;
-                            default:
-                                break;
-                        }
-                    }
+                    downloadItems.AddRange(node.DownloadItems);
                 }
             }
             App.DownloadList.AddRange(downloadItems);
