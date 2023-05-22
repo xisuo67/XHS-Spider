@@ -142,6 +142,14 @@ namespace XHS.Spider.ViewModels
             get => inputCommand ?? (inputCommand = new Wpf.Ui.Common.RelayCommand(ExecuteInitData));
             set => inputCommand = value;
         }
+        private ICommand parseNode;
+
+        public ICommand ParseNode
+        {
+            get => parseNode ?? (parseNode = new CommunityToolkit.Mvvm.Input.RelayCommand(ParseNodeProcess));
+            set => parseNode = value;
+        }
+
         private ICommand downLoadCheckAll;
 
         public ICommand DownLoadCheackAll
@@ -161,7 +169,7 @@ namespace XHS.Spider.ViewModels
         /// <summary>
         /// 下载选中笔记
         /// </summary>
-        public void DownLoadCheckAll()
+        public async void DownLoadCheckAll()
         {
             var cheackNodes = this.Nodes.Where(e => e.IsDownLoad == true);
             if (cheackNodes.Count() > 0)
@@ -169,7 +177,7 @@ namespace XHS.Spider.ViewModels
                 var hasNoParseNode = CheckDownLoadNodesData(cheackNodes);
                 if (!hasNoParseNode)
                 {
-                    DownLoad(cheackNodes, false);
+                   //var downLoadNodes= await ParseNodeProcess(cheackNodes, false);
                 }
             }
             else
@@ -180,13 +188,12 @@ namespace XHS.Spider.ViewModels
         /// <summary>
         /// 下载所有笔记
         /// </summary>
-        public void DownLoadAllNodes()
+        public async void DownLoadAllNodes()
         {
             var nodes = this.Nodes;
             var hasNoParseNode = CheckDownLoadNodesData(nodes);
             if (!hasNoParseNode)
             {
-                DownLoad(nodes);
             }
         }
         /// <summary>
@@ -214,14 +221,25 @@ namespace XHS.Spider.ViewModels
         /// <param name="nodes"></param>
         /// <param name="isDownLoadAll"></param>
         /// <returns></returns>
-        private async Task<List<DownloadItem>> ParseNodeProcess(IEnumerable<NoteModel> nodes, bool isDownLoadAll = true)
+        private async void ParseNodeProcess()
         {
+            //TODO:有勾选项解析勾选项无勾选项解析所有笔记
+            IEnumerable<NoteModel> nodes = null;
+            var cheackNodes = this.Nodes.Where(e => e.IsDownLoad == true);
+            if (cheackNodes.Any()) {
+                nodes = cheackNodes;
+            }
+            else
+            {
+                nodes = this.Nodes; 
+            }
             List<DownloadItem> downloadItems = new List<DownloadItem>();
             string dirName = Format.FormatFileName(UserInfo.BasicInfo.NickName);
             string dirPath = $"{AppDomain.CurrentDomain.BaseDirectory}DownLoad\\{dirName}";
             //循环笔记数据
             foreach (var item in nodes)
             {
+                await Task.Delay(500);
                 var resultData = await _xhsSpiderService.GetNodeDetail(item.NoteId, webView);
                 if (resultData != null && resultData.Success)
                 {
@@ -268,9 +286,15 @@ namespace XHS.Spider.ViewModels
                                 break;
                         }
                     }
+                    var nodeEntity = nodes.FirstOrDefault(e => e.NoteId == item.NoteId);
+                    if (nodeEntity != null)
+                    {
+                        nodeEntity.IsParse = true;
+                        nodeEntity.FileCount = nodeDetail.Count();
+                        nodeEntity.DownloadItems= downloadItems;
+                    }
                 }
             }
-            return downloadItems;
         }
         /// <summary>
         /// 下载笔记

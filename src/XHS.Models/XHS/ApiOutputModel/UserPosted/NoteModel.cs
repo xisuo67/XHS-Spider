@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XHS.Models.DownLoad;
 
 namespace XHS.Models.XHS.ApiOutputModel.UserPosted
 {
@@ -82,5 +83,7 @@ namespace XHS.Models.XHS.ApiOutputModel.UserPosted
         public string NodeType { get; set; }
 
         public bool IsDownLoad { get; set; }
+
+        public List<DownloadItem> DownloadItems { get; set; }
     }
 }
