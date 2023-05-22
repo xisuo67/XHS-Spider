@@ -73,7 +73,7 @@ namespace XHS.Spider.ViewModels
         /// <summary>
         /// 解析数量
         /// </summary>
-        private string _parseNodeCount;
+        private string _parseNodeCount = "已解析(0)条";
         public string ParseNodeCount
         {
             get => _parseNodeCount;
@@ -260,6 +260,7 @@ namespace XHS.Spider.ViewModels
             
             string dirName = Format.FormatFileName(UserInfo.BasicInfo.NickName);
             string dirPath = $"{AppDomain.CurrentDomain.BaseDirectory}DownLoad\\{dirName}";
+            int index = this.Nodes.Where(e => e.IsParse == true).Count();
             //循环笔记数据
             foreach (var item in nodes)
             {
@@ -317,6 +318,7 @@ namespace XHS.Spider.ViewModels
                         nodeEntity.FileCount = downloadItems.Count();
                         nodeEntity.DownloadItems= downloadItems;
                     }
+                    this.ParseNodeCount = $"已解析({index++})条";
                 }
                 else
                 {
@@ -324,7 +326,7 @@ namespace XHS.Spider.ViewModels
                     break;
                 }
                 Random ran = new Random();
-                int awaitTime = ran.Next(2300, 3000);
+                int awaitTime = ran.Next(2500, 3000);
                 await Task.Delay(awaitTime);
             }
 
