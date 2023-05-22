@@ -47,6 +47,9 @@ namespace XHS.Spider.ViewModels
         private readonly IXhsSpiderService _xhsSpiderService;
 
         private IEnumerable<NoteModel> _dataGridItemCollection = new NoteModel[] { };
+        /// <summary>
+        /// 列表显示数据
+        /// </summary>
         public IEnumerable<NoteModel> DataGridItemCollection
         {
             get => _dataGridItemCollection;
@@ -54,7 +57,9 @@ namespace XHS.Spider.ViewModels
         }
 
         private IEnumerable<NoteModel> _nodes = new NoteModel[] { };
-
+        /// <summary>
+        /// 用于操作数据
+        /// </summary>
         public IEnumerable<NoteModel> Nodes { get => _nodes; set => SetProperty(ref _nodes, value); }
         private BitmapImage _headImage = new BitmapImage();
 
@@ -225,21 +230,21 @@ namespace XHS.Spider.ViewModels
         {
             //TODO:有勾选项解析勾选项无勾选项解析所有笔记
             IEnumerable<NoteModel> nodes = null;
-            var cheackNodes = this.Nodes.Where(e => e.IsDownLoad == true);
+            var cheackNodes = this.Nodes.Where(e => e.IsDownLoad == true&& e.IsParse==false);
             if (cheackNodes.Any()) {
                 nodes = cheackNodes;
             }
             else
             {
-                nodes = this.Nodes; 
+                nodes = this.Nodes.Where(e =>e.IsParse == false);  
             }
-            List<DownloadItem> downloadItems = new List<DownloadItem>();
+            
             string dirName = Format.FormatFileName(UserInfo.BasicInfo.NickName);
             string dirPath = $"{AppDomain.CurrentDomain.BaseDirectory}DownLoad\\{dirName}";
             //循环笔记数据
             foreach (var item in nodes)
             {
-                await Task.Delay(500);
+                List<DownloadItem> downloadItems = new List<DownloadItem>();
                 var resultData = await _xhsSpiderService.GetNodeDetail(item.NoteId, webView);
                 if (resultData != null && resultData.Success)
                 {
@@ -286,15 +291,23 @@ namespace XHS.Spider.ViewModels
                                 break;
                         }
                     }
-                    var nodeEntity = nodes.FirstOrDefault(e => e.NoteId == item.NoteId);
+                    var nodeEntity = this.Nodes.FirstOrDefault(e => e.NoteId == item.NoteId);
                     if (nodeEntity != null)
                     {
                         nodeEntity.IsParse = true;
-                        nodeEntity.FileCount = nodeDetail.Count();
+                        nodeEntity.FileCount = downloadItems.Count();
                         nodeEntity.DownloadItems= downloadItems;
                     }
                 }
+                else
+                {
+                    _snackbarService.Show("提示",$"解析失败，接口异常。已完成解析【{this.Nodes.Where(e=>e.IsParse==true).Count()}】条笔记", SymbolRegular.ErrorCircle12, ControlAppearance.Danger);
+                    break;
+                }
+                await Task.Delay(5000);
             }
+
+            this.DataGridItemCollection = this.Nodes;
         }
         /// <summary>
         /// 下载笔记
