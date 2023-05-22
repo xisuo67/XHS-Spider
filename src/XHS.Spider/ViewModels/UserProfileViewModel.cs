@@ -62,6 +62,23 @@ namespace XHS.Spider.ViewModels
         /// 用于操作数据
         /// </summary>
         public IEnumerable<NoteModel> Nodes { get => _nodes; set => SetProperty(ref _nodes, value); }
+        /// <summary>
+        /// 笔记数量
+        /// </summary>
+        private string _noteCount;
+        public string NoteCount { 
+            get=> _noteCount;
+            set=>SetProperty(ref _noteCount, value);
+        }
+        /// <summary>
+        /// 解析数量
+        /// </summary>
+        private string _parseNodeCount;
+        public string ParseNodeCount
+        {
+            get => _parseNodeCount;
+            set => SetProperty(ref _parseNodeCount, value);
+        }
         private BitmapImage _headImage = new BitmapImage();
 
         public BitmapImage HeadImage
@@ -423,6 +440,7 @@ namespace XHS.Spider.ViewModels
                                 node.LikedCount = node.interact_info?.LikedCount;
                             }
                             Nodes = nodes.ToArray();
+                            NoteCount =$"({nodes.Count()})条" ;
                             DataGridItemCollection = Nodes;
                         }
                         else

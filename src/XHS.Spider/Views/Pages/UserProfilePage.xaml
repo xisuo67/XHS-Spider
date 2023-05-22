@@ -186,6 +186,8 @@
                         <StackPanel Orientation="Horizontal">
                             <ui:SymbolIcon Margin="0,0,6,0" Symbol="NotepadEdit16" />
                             <TextBlock Text="笔记" />
+                            <TextBlock Text="{Binding ViewModel.NoteCount}" />
+
                         </StackPanel>
                     </TabItem.Header>
                     <Grid>
