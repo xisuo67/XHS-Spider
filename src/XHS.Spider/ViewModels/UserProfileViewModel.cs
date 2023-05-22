@@ -4,6 +4,7 @@ using Microsoft.Web.WebView2.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Wpf.Ui.Common;
@@ -206,6 +207,70 @@ namespace XHS.Spider.ViewModels
                 hasNoParseNode = false;
             }
             return hasNoParseNode;
+        }
+        /// <summary>
+        /// 解析下载资源
+        /// </summary>
+        /// <param name="nodes"></param>
+        /// <param name="isDownLoadAll"></param>
+        /// <returns></returns>
+        private async Task<List<DownloadItem>> ParseNodeProcess(IEnumerable<NoteModel> nodes, bool isDownLoadAll = true)
+        {
+            List<DownloadItem> downloadItems = new List<DownloadItem>();
+            string dirName = Format.FormatFileName(UserInfo.BasicInfo.NickName);
+            string dirPath = $"{AppDomain.CurrentDomain.BaseDirectory}DownLoad\\{dirName}";
+            //循环笔记数据
+            foreach (var item in nodes)
+            {
+                var resultData = await _xhsSpiderService.GetNodeDetail(item.NoteId, webView);
+                if (resultData != null && resultData.Success)
+                {
+                    var nodeDetail = resultData.Data.Items;
+                    foreach (var detailItem in nodeDetail)
+                    {
+                        var nodeCard = detailItem.NoteCard;
+                        var title = Format.FormatFileName(detailItem.NoteCard.Title);
+                        switch (nodeCard.Type)
+                        {
+                            case "normal":
+                                for (int i = 0; i < nodeCard.ImageList.Count; i++)
+                                {
+                                    var imageUrl = string.Format(BaseImageUrl, nodeCard.ImageList[i].TraceId);
+                                    var fpath = $"{dirPath}\\{title}\\{title}-{Guid.NewGuid().ToString()}.png";
+                                    DownloadItem downloadImageItem = new DownloadItem()
+                                    {
+                                        Url = imageUrl,
+                                        FileName = fpath,
+                                        Title = title,
+                                        FolderPath = $"{dirPath}\\{title}",
+                                        Status = DownloadStatus.None,
+                                        FileCount = nodeCard.ImageList.Count,
+                                    };
+                                    downloadItems.Add(downloadImageItem);
+                                }
+
+                                break;
+                            case "video":
+                                var videoUrl = string.Format(BaseVideoUrl, nodeCard.Video.Consumer.OriginVideoKey);
+                                var filePath = $"{dirPath}\\{title}\\{title}-{Guid.NewGuid().ToString()}.mov";
+                                DownloadItem downloadItem = new DownloadItem()
+                                {
+                                    Url = videoUrl,
+                                    FileName = filePath,
+                                    Title = title,
+                                    FolderPath = $"{dirPath}\\{title}",
+                                    Status = DownloadStatus.None,
+                                    FileCount = 1,
+                                };
+                                downloadItems.Add(downloadItem);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            return downloadItems;
         }
         /// <summary>
         /// 下载笔记
