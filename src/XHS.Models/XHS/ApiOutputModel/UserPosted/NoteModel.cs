@@ -67,7 +67,6 @@ namespace XHS.Models.XHS.ApiOutputModel.UserPosted
                 this.IsParseStr = isHidden ? "是" : "否";
             }
         }
-
         /// <summary>
         /// 是否解析中文字段
         /// </summary>

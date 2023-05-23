@@ -23,6 +23,7 @@ using XHS.Models.XHS.ApiOutputModel.UserPosted;
 using XHS.Service.Log;
 using XHS.Spider.Helpers;
 using XHS.Spider.Services;
+using XHS.Spider.Views.Windows;
 
 namespace XHS.Spider.ViewModels
 {
@@ -331,7 +332,8 @@ namespace XHS.Spider.ViewModels
                     break;
                 }
                 Random ran = new Random();
-                int awaitTime = ran.Next(2800, 3000);
+                int awaitTime = ran.Next(800, 1200);
+                //int awaitTime = ran.Next(2800, 3200);
                 await Task.Delay(awaitTime);
             }
             var parseNodes= nodes.Where(e =>e.IsParse == false);
@@ -344,10 +346,10 @@ namespace XHS.Spider.ViewModels
         private void notifyIcon_TrayBalloonTipClicked(object sender, RoutedEventArgs e)
         {
             //TODO:这里测试下是否可以重新设置cookie，并刷新后再解析笔记
-            var url = "https://www.xiaohongshu.com/explore";
-            if (!string.IsNullOrWhiteSpace(url))
+            CookieEdit cookie = new CookieEdit();
+            if (cookie.ShowDialog()==true)
             {
-                Utils.OpenURL(url);
+                webView.CoreWebView2.Navigate(this.InputText);
             }
         }
         /// <summary>
