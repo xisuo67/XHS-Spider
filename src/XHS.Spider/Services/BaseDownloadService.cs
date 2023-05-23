@@ -17,12 +17,15 @@ using UpdateChecker.Interfaces;
 using XHS.Common.Utils;
 using XHS.Models.DownLoad;
 using XHS.Models.XHS.ApiOutputModel.OtherInfo;
+using XHS.Service.Log;
 using XHS.Spider.Helpers;
+using XHS.Spider.ViewModels;
 
 namespace XHS.Spider.Services
 {
     public class BaseDownloadService
     {
+        private static readonly Service.Log.ILogger Logger = LoggerService.Get(typeof(BaseDownloadService));
         private string CurrentFolderPath;
         private  TaskbarIcon _notifyIcon;
         protected Task workTask;
@@ -61,8 +64,7 @@ namespace XHS.Spider.Services
                     }
                     catch (Exception ex)
                     {
-
-                        throw;
+                        Logger.Error("下载服务异常",ex);
                     }
                 }
                 // 降低CPU占用

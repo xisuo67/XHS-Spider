@@ -153,7 +153,6 @@ namespace XHS.Spider.ViewModels
         public UserProfileViewModel(ISnackbarService snackbarService, IXhsSpiderService xhsSpiderService)
         {
             _notifyIcon = new TaskbarIcon();
-            _notifyIcon.TrayBalloonTipClicked += notifyIcon_TrayBalloonTipClicked;
             _snackbarService = snackbarService;
             _xhsSpiderService = xhsSpiderService;
         }
@@ -206,7 +205,7 @@ namespace XHS.Spider.ViewModels
                 var hasNoParseNode = CheckDownLoadNodesData(cheackNodes);
                 if (!hasNoParseNode)
                 {
-                    DownLoad(cheackNodes);
+                    DownLoad(cheackNodes,false);
                 }
             }
             else
@@ -267,8 +266,6 @@ namespace XHS.Spider.ViewModels
             
             string dirName = Format.FormatFileName(UserInfo.BasicInfo.NickName);
             string dirPath = $"{AppDomain.CurrentDomain.BaseDirectory}DownLoad\\{dirName}";
-            //var beginTime= DateTime.Now;
-            //int index=0 ;
             //循环笔记数据
             foreach (var item in nodes)
             {
@@ -357,26 +354,17 @@ namespace XHS.Spider.ViewModels
                   
                 }
                 Random ran = new Random();
-                //int awaitTime = ran.Next(500, 1000);
                 int awaitTime = ran.Next(2800, 3500);
                 await Task.Delay(awaitTime);
+                this.DataGridItemCollection = this.Nodes.ToArray();
             }
             var parseNodes= nodes.Where(e =>e.IsParse == false);
             if (parseNodes.Count()==0)
             {
                 _notifyIcon.ShowBalloonTip($"解析完成", "提示", BalloonIcon.Info);
             }
-            this.DataGridItemCollection = this.Nodes;
         }
-        private void notifyIcon_TrayBalloonTipClicked(object sender, RoutedEventArgs e)
-        {
-            //TODO:这里测试下是否可以重新设置cookie，并刷新后再解析笔记
-            CookieEdit cookie = new CookieEdit();
-            if (cookie.ShowDialog()==true)
-            {
-                webView.CoreWebView2.Navigate(this.InputText);
-            }
-        }
+
         /// <summary>
         /// 下载笔记
         /// </summary>
