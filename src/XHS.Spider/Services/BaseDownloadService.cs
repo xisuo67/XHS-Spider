@@ -17,12 +17,15 @@ using UpdateChecker.Interfaces;
 using XHS.Common.Utils;
 using XHS.Models.DownLoad;
 using XHS.Models.XHS.ApiOutputModel.OtherInfo;
+using XHS.Service.Log;
 using XHS.Spider.Helpers;
+using XHS.Spider.ViewModels;
 
 namespace XHS.Spider.Services
 {
     public class BaseDownloadService
     {
+        private static readonly Service.Log.ILogger Logger = LoggerService.Get(typeof(BaseDownloadService));
         private string CurrentFolderPath;
         private  TaskbarIcon _notifyIcon;
         protected Task workTask;
@@ -61,8 +64,7 @@ namespace XHS.Spider.Services
                     }
                     catch (Exception ex)
                     {
-
-                        throw;
+                        Logger.Error("下载服务异常",ex);
                     }
                 }
                 // 降低CPU占用
@@ -136,7 +138,7 @@ namespace XHS.Spider.Services
                         //TODO:搜索文件夹路径文件，判断是否与文件数量一致;
                         System.IO.DirectoryInfo dirInfo = new System.IO.DirectoryInfo(entity.FolderPath);
                         int fileCount = Utils.GetFilesCount(dirInfo);
-                        if (fileCount == entity.FileCount)
+                        if (fileCount >= entity.FileCount)
                         {
                             CurrentFolderPath=entity.FolderPath;
                             _notifyIcon.ShowBalloonTip("下载完成", $"【{entity.Title}】\n点击查看下载文件\n剩余【{_downloadList.Count()-1}】文件待下载", BalloonIcon.Info);

@@ -57,9 +57,9 @@ namespace XHS.Spider.Services
                 try
                 {
                     _webView.CoreWebView2.Navigate(input);
-                    //webView.NavigationCompleted += WebView_NavigationCompleted;
                     //订阅事件
                     _aggregator.GetEvent<NavigationCompletedEvent>().Subscribe(Navigation);
+
                 }
                 catch (Exception ex)
                 {
@@ -73,6 +73,8 @@ namespace XHS.Spider.Services
             if (redirectInfo.Url.Contains("user/profile"))
             {
                 SetJumpParam(redirectInfo.Url, _serviceProvider, _pageServiceNew, _webView);
+                //消事件注册
+                _aggregator.GetEvent<NavigationCompletedEvent>().Unsubscribe(Navigation);
                 _navigation.Navigate(typeof(Views.Pages.UserProfilePage));
             }
         }

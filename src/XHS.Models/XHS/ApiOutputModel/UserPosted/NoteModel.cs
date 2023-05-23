@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XHS.Models.DownLoad;
 
 namespace XHS.Models.XHS.ApiOutputModel.UserPosted
 {
@@ -49,11 +50,54 @@ namespace XHS.Models.XHS.ApiOutputModel.UserPosted
 
         [JsonProperty("note_id")]
         public string NoteId { get; set; }
+        /// <summary>
+        /// 文件数量
+        /// </summary>
+        public int? FileCount { get; set; }
+        private bool isHidden = false;
+        /// <summary>
+        /// 是否解析
+        /// </summary>
+        public bool IsParse
+        {
+            get => isHidden;
+            set
+            {
+                isHidden = value;
+                this.IsParseStr = isHidden ? "是" : "否";
+            }
+        }
 
+        private bool isNormal = true;
+
+        public bool IsNormal { 
+            get=> isNormal;
+            set {
+
+                isNormal = value;
+                this.Status = IsNormal ? "正常" : "异常";
+             }
+        }
+        /// <summary>
+        /// 笔记状态
+        /// </summary>
+        public string Status { get; set; }
+        /// <summary>
+        /// 是否解析中文字段
+        /// </summary>
+        public string IsParseStr { get; set; }
+        /// <summary>
+        /// 笔记喜欢人数
+        /// </summary>
         public string LikedCount { get; set; }
 
+        /// <summary>
+        /// 笔记类型
+        /// </summary>
         public string NodeType { get; set; }
 
         public bool IsDownLoad { get; set; }
+
+        public List<DownloadItem> DownloadItems { get; set; }
     }
 }

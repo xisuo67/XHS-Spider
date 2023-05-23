@@ -6,6 +6,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:XHS.Spider.Views.Pages"
+      xmlns:li="http://github.com/zeluisping/loadingIndicators/xaml/controls"
       xmlns:viewmodels="clr-namespace:XHS.Spider.ViewModels" xmlns:Wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
     d:DataContext="{d:DesignInstance local:UserProfilePage,
                                      IsDesignTimeCreatable=False}"
@@ -50,7 +51,7 @@
                     <Border.Background>
                         <ImageBrush x:Name="headImage" ImageSource="{Binding ViewModel.HeadImage}"/>
                     </Border.Background>
- 
+
                 </Border>
                 <TextBlock
                     HorizontalAlignment="Center"
@@ -185,6 +186,8 @@
                         <StackPanel Orientation="Horizontal">
                             <ui:SymbolIcon Margin="0,0,6,0" Symbol="NotepadEdit16" />
                             <TextBlock Text="笔记" />
+                            <TextBlock Text="{Binding ViewModel.NoteCount}" />
+
                         </StackPanel>
                     </TabItem.Header>
                     <Grid>
@@ -210,10 +213,12 @@
                                 </TextBox.InputBindings>
                             </ui:TextBox>
                             <StackPanel Grid.Column="1" Orientation="Horizontal">
-                                <ui:Button  Content="全部下载" Margin="10,0,4,0" Appearance="Info" Icon="ArrowDownload16" Command="{Binding ViewModel.DownLoadAll}" HorizontalAlignment="left"/>
-                                <ui:Button  Content="下载已选项" Appearance="Info" Icon="ArrowDownload16" HorizontalAlignment="left" Command="{Binding ViewModel.DownLoadCheackAll}" />
+                                <ui:Button  Content="解析笔记" Margin="4,0,4,0" Appearance="Info" Icon="Clock24" HorizontalAlignment="left" Command="{Binding ViewModel.ParseNode}"/>
+                                <ui:Button  Content="全部下载" Margin="0,0,4,0" Appearance="Info" Icon="ArrowDownload16" Command="{Binding ViewModel.DownLoadAll}" HorizontalAlignment="left"/>
+                                <ui:Button  Content="下载已选项" Margin="0,0,4,0" Appearance="Info" Icon="ArrowDownload16" HorizontalAlignment="left" Command="{Binding ViewModel.DownLoadCheackAll}" />
+                                <ui:Button  Content="{Binding ViewModel.ParseNodeCount}" Appearance="Success" HorizontalAlignment="left" />
                             </StackPanel>
-                            
+
                         </Grid>
                         <ui:DataGrid 
                             HorizontalContentAlignment="Center" 
@@ -239,6 +244,9 @@
                                     </DataGridCheckBoxColumn.HeaderTemplate>
                                 </DataGridCheckBoxColumn>
                                 <DataGridTextColumn Width="*" IsReadOnly="True" Binding="{Binding DisplayTitle}" Header="标题"/>
+                                <DataGridTextColumn Width="*" IsReadOnly="True" Binding="{Binding FileCount}" Header="文件数量"/>
+                                <DataGridTextColumn Width="*" IsReadOnly="True" Binding="{Binding IsParseStr}" Header="是否已解析"/>
+                                <DataGridTextColumn Width="*" IsReadOnly="True" Binding="{Binding Status}" Header="笔记状态"/>
                                 <DataGridTextColumn Width="*" IsReadOnly="True" Binding="{Binding NodeType}" Header="类型"/>
                                 <DataGridTextColumn Width="*" IsReadOnly="True" Binding="{Binding LikedCount}" Header="点赞数量"/>
                             </DataGrid.Columns>

@@ -107,52 +107,6 @@ namespace XHS.Service.XHS
             return model;
         }
 
-        /// <summary>
-        /// 分页查询用户所有笔记接口
-        /// TODO:这里后面迭代要改掉，先测试接口是否能调用成功
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        //private async void UserPosted(UserPostedInputModel model, List<NoteModel> userNodes, WebView2 webView)
-        //{
-        //    if (model != null)
-        //    {
-        //        try
-        //        {
-        //            string url = $"/api/sns/web/v1/user_posted?num={model.num}&cursor={model.cursor}&user_id={model.user_id}";
-        //            var header =await GetXsHeader(url, webView);
-        //            Logger.Info($"调用接口：{url}");
-        //            var result = HttpClientHelper.DoGet(url, header);
-        //            if (!string.IsNullOrEmpty(result))
-        //            {
-        //                var resultData = JsonConvert.DeserializeObject<XHSBaseApiModel<UserPostedModel>>(result);
-        //                if (resultData.Success)
-        //                {
-        //                    //TODO:cookie请求多次后，会导致触发反爬机制，导致接口返回has_mode字段明明没有更多条，却返回存在多条记录，然后一直递归查询直到标识为false。所以下面需要过滤重复数据，避免添加辣鸡数据
-        //                    foreach (var item in resultData.Data.Notes)
-        //                    {
-        //                        if (!userNodes.Exists(e=>e.NoteId==item.NoteId))
-        //                        {
-        //                            userNodes.Add(item);
-        //                        }
-        //                    }
-        //                    if (resultData.Data.HasMore)
-        //                    {
-        //                        model.cursor = resultData.Data.Cursor;
-        //                        UserPosted(model, userNodes, webView);
-        //                    }
-        //                }
-        //            }
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            Logger.Error("分页查询用户所有笔记接口失败", ex);
-        //        }
-        //    }
-        //}
-
-
         private async Task<bool> UserPosted(UserPostedInputModel model, List<NoteModel> userNodes, WebView2 webView)
         {
             bool isSuccess = false;
@@ -180,6 +134,7 @@ namespace XHS.Service.XHS
                             if (resultData.Data.HasMore)
                             {
                                 model.cursor = resultData.Data.Cursor;
+                                //await Task.Delay(500);
                                 await UserPosted(model, userNodes, webView);
                             }
                             isSuccess = true;

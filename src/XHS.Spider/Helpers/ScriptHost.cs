@@ -69,21 +69,18 @@ namespace XHS.Spider.Helpers
             //如果存在手动设置cookie，那么更新cookie
             if (cookieEntity != null)
             {
-                if (url== "https://www.xiaohongshu.com")
+                //List<CoreWebView2Cookie> cookieList = await webView.CoreWebView2.CookieManager.GetCookiesAsync(url);
+                //处理手动设置的cookie
+                var cookis = cookieEntity.Cookie.Split(';');
+                foreach (var item in cookis)
                 {
-                    //List<CoreWebView2Cookie> cookieList = await webView.CoreWebView2.CookieManager.GetCookiesAsync(url);
-                    //处理手动设置的cookie
-                    var cookis = cookieEntity.Cookie.Split(';');
-                    foreach (var item in cookis)
+                    var cookieItem = item.Trim();
+                    //二次拆分，求name,value
+                    var cookieItemValue = cookieItem.Split('=');
+                    if (cookieItemValue.Count() == 2)
                     {
-                        var cookieItem = item.Trim();
-                        //二次拆分，求name,value
-                        var cookieItemValue = cookieItem.Split('=');
-                        if (cookieItemValue.Count() == 2)
-                        {
-                            CoreWebView2Cookie cookie = webView.CoreWebView2.CookieManager.CreateCookie(cookieItemValue[0], cookieItemValue[1], ".xiaohongshu.com", "/");
-                            webView.CoreWebView2.CookieManager.AddOrUpdateCookie(cookie);
-                        }
+                        CoreWebView2Cookie cookie = webView.CoreWebView2.CookieManager.CreateCookie(cookieItemValue[0], cookieItemValue[1], ".xiaohongshu.com", "/");
+                        webView.CoreWebView2.CookieManager.AddOrUpdateCookie(cookie);
                     }
                 }
             }
