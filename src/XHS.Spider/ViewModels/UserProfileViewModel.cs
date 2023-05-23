@@ -339,13 +339,20 @@ namespace XHS.Spider.ViewModels
                     }
                     else
                     {
-                        //TODO:其他异常，将笔记状态改为异常
-                        var nodeEntity = this.Nodes.FirstOrDefault(e => e.NoteId == item.NoteId);
-                        if (nodeEntity != null)
-                        {
-                            nodeEntity.IsNormal = false;
+                        //-510001  笔记状态异常，请稍后查看
+                        if (resultData.Code == -510001)
+                        { 
+                            //TODO:其他异常，将笔记状态改为异常
+                            var nodeEntity = this.Nodes.FirstOrDefault(e => e.NoteId == item.NoteId);
+                            if (nodeEntity != null)
+                            {
+                                nodeEntity.IsParse = true;
+                                nodeEntity.FileCount = 0;
+                                nodeEntity.DownloadItems = downloadItems;
+                                nodeEntity.IsNormal = false;
+                            }
+                            this.ParseNodeCount = $"已解析({this.Nodes.Where(e => e.IsParse == true).Count()})条";
                         }
-                        this.ParseNodeCount = $"已解析({this.Nodes.Where(e => e.IsParse == true).Count()})条";
                     }
                   
                 }
