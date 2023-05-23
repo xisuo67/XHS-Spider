@@ -265,7 +265,7 @@ namespace XHS.Spider.ViewModels
             
             string dirName = Format.FormatFileName(UserInfo.BasicInfo.NickName);
             string dirPath = $"{AppDomain.CurrentDomain.BaseDirectory}DownLoad\\{dirName}";
-            int index = this.Nodes.Where(e => e.IsParse == true).Count();
+            //var beginTime= DateTime.Now;
             //循环笔记数据
             foreach (var item in nodes)
             {
@@ -323,7 +323,7 @@ namespace XHS.Spider.ViewModels
                         nodeEntity.FileCount = downloadItems.Count();
                         nodeEntity.DownloadItems= downloadItems;
                     }
-                    this.ParseNodeCount = $"已解析({index++})条";
+                    this.ParseNodeCount = $"已解析({this.Nodes.Where(e => e.IsParse == true).Count()})条";
                 }
                 else
                 {
@@ -331,18 +331,19 @@ namespace XHS.Spider.ViewModels
                     break;
                 }
                 Random ran = new Random();
-                int awaitTime = ran.Next(2800, 3200);
+                int awaitTime = ran.Next(2800, 3000);
                 await Task.Delay(awaitTime);
             }
-            var parseNodes= this.Nodes.Where(e =>e.IsParse == false);
+            var parseNodes= nodes.Where(e =>e.IsParse == false);
             if (parseNodes.Count()==0)
             {
-                _notifyIcon.ShowBalloonTip($"全部笔记解析完成", "提示", BalloonIcon.Info);
+                _notifyIcon.ShowBalloonTip($"解析完成", "提示", BalloonIcon.Info);
             }
             this.DataGridItemCollection = this.Nodes;
         }
         private void notifyIcon_TrayBalloonTipClicked(object sender, RoutedEventArgs e)
         {
+            //TODO:这里测试下是否可以重新设置cookie，并刷新后再解析笔记
             var url = "https://www.xiaohongshu.com/explore";
             if (!string.IsNullOrWhiteSpace(url))
             {
