@@ -334,7 +334,11 @@ namespace XHS.Spider.ViewModels
                 int awaitTime = ran.Next(2800, 3200);
                 await Task.Delay(awaitTime);
             }
-            _notifyIcon.ShowBalloonTip($"全部笔记解析完成", "提示", BalloonIcon.Info);
+            var parseNodes= this.Nodes.Where(e =>e.IsParse == false);
+            if (parseNodes.Count()==0)
+            {
+                _notifyIcon.ShowBalloonTip($"全部笔记解析完成", "提示", BalloonIcon.Info);
+            }
             this.DataGridItemCollection = this.Nodes;
         }
         private void notifyIcon_TrayBalloonTipClicked(object sender, RoutedEventArgs e)
