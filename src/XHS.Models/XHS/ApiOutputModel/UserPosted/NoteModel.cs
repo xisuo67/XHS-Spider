@@ -67,6 +67,21 @@ namespace XHS.Models.XHS.ApiOutputModel.UserPosted
                 this.IsParseStr = isHidden ? "是" : "否";
             }
         }
+
+        private bool isNormal = true;
+
+        public bool IsNormal { 
+            get=> isNormal;
+            set {
+
+                isNormal = value;
+                this.Status = IsNormal ? "正常" : "异常";
+             }
+        }
+        /// <summary>
+        /// 笔记状态
+        /// </summary>
+        public string Status { get; set; }
         /// <summary>
         /// 是否解析中文字段
         /// </summary>

@@ -253,6 +253,7 @@ namespace XHS.Spider.ViewModels
         /// <returns></returns>
         private async void ParseNodeProcess()
         {
+            _snackbarService.Show("提示", "开始解析", SymbolRegular.ErrorCircle12, ControlAppearance.Success);
             //TODO:有勾选项解析勾选项无勾选项解析所有笔记
             IEnumerable<NoteModel> nodes = null;
             var cheackNodes = this.Nodes.Where(e => e.IsDownLoad == true&& e.IsParse==false);
@@ -267,6 +268,7 @@ namespace XHS.Spider.ViewModels
             string dirName = Format.FormatFileName(UserInfo.BasicInfo.NickName);
             string dirPath = $"{AppDomain.CurrentDomain.BaseDirectory}DownLoad\\{dirName}";
             //var beginTime= DateTime.Now;
+            //int index=0 ;
             //循环笔记数据
             foreach (var item in nodes)
             {
@@ -323,17 +325,33 @@ namespace XHS.Spider.ViewModels
                         nodeEntity.IsParse = true;
                         nodeEntity.FileCount = downloadItems.Count();
                         nodeEntity.DownloadItems= downloadItems;
+                        nodeEntity.IsNormal = true;
                     }
                     this.ParseNodeCount = $"已解析({this.Nodes.Where(e => e.IsParse == true).Count()})条";
                 }
                 else
                 {
-                    _notifyIcon.ShowBalloonTip($"解析失败，接口异常。已完成解析【{this.Nodes.Where(e => e.IsParse == true).Count()}】条笔记", "提示", BalloonIcon.Error);
-                    break;
+                    //网络连接异常，请检查网络设置或重启试试
+                    if (resultData.Code== 300012)
+                    {
+                        _notifyIcon.ShowBalloonTip($"解析失败，接口异常。已完成解析【{this.Nodes.Where(e => e.IsParse == true).Count()}】条笔记", "提示", BalloonIcon.Error);
+                        break;
+                    }
+                    else
+                    {
+                        //TODO:其他异常，将笔记状态改为异常
+                        var nodeEntity = this.Nodes.FirstOrDefault(e => e.NoteId == item.NoteId);
+                        if (nodeEntity != null)
+                        {
+                            nodeEntity.IsNormal = false;
+                        }
+                        this.ParseNodeCount = $"已解析({this.Nodes.Where(e => e.IsParse == true).Count()})条";
+                    }
+                  
                 }
                 Random ran = new Random();
-                int awaitTime = ran.Next(800, 1200);
-                //int awaitTime = ran.Next(2800, 3200);
+                //int awaitTime = ran.Next(500, 1000);
+                int awaitTime = ran.Next(2800, 3500);
                 await Task.Delay(awaitTime);
             }
             var parseNodes= nodes.Where(e =>e.IsParse == false);
