@@ -18,7 +18,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="30" />
+            <RowDefinition Height="40" />
         </Grid.RowDefinitions>
         <!--搜索-->
         <Grid Grid.Row="0">
@@ -31,6 +31,101 @@
                     <KeyBinding Key="Enter" Command="{Binding ViewModel.InputCommand}" />
                 </TextBox.InputBindings>
             </ui:TextBox>
+        </Grid>
+
+        <Grid Grid.Row="1" Margin="0,2,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <ui:Card Grid.Column="0" Margin="0,0,4,0" VerticalAlignment="Top">
+                <StackPanel>
+                    <Image
+                            Margin="14"
+                            VerticalAlignment="Center"
+                            RenderOptions.BitmapScalingMode="HighQuality"
+                            Source="pack://application:,,,/Resources/desktop.jpg" />
+                    <TextBlock
+                            Grid.Row="0"
+                            FontSize="10"
+                            FontWeight="Bold"
+                            Text="这种情况怎么办" />
+
+                </StackPanel>
+            </ui:Card>
+
+            <ui:Card Grid.Column="1" Margin="4,0,4,0" VerticalAlignment="Top">
+                <StackPanel>
+                    <Image
+                            Margin="14"
+                            VerticalAlignment="Center"
+                            RenderOptions.BitmapScalingMode="HighQuality"
+                            Source="pack://application:,,,/Resources/desktop.jpg" />
+                    <TextBlock
+                            Grid.Row="0"
+                            FontSize="10"
+                            FontWeight="Bold"
+                            TextWrapping = "Wrap"
+                            Text="第一次在狗的眼睛里看到了崇拜" />
+                </StackPanel>
+            </ui:Card>
+
+            <ui:Card Grid.Column="2" Margin="4,0,4,0" VerticalAlignment="Top">
+                <StackPanel>
+                    <Image
+                            Margin="14"
+                            VerticalAlignment="Center"
+                            RenderOptions.BitmapScalingMode="HighQuality"
+                            Source="pack://application:,,,/Resources/desktop.jpg" />
+                    <TextBlock
+                            Grid.Row="0"
+                            FontSize="10"
+                            FontWeight="Bold"
+                            TextWrapping = "Wrap"
+                            Text="我突然被她删了😭" />
+                </StackPanel>
+            </ui:Card>
+
+            <ui:Card Grid.Column="3" Margin="4,0,4,0" VerticalAlignment="Top">
+                <StackPanel>
+                    <Image
+                            Margin="14"
+                            VerticalAlignment="Center"
+                            RenderOptions.BitmapScalingMode="HighQuality"
+                            Source="pack://application:,,,/Resources/desktop.jpg" />
+                    <TextBlock
+                            Grid.Row="0"
+                            FontSize="10"
+                            FontWeight="Bold"
+                            TextWrapping = "Wrap"
+                            Text="女大学生紧急刹车带" />
+                </StackPanel>
+            </ui:Card>
+
+            <ui:Card Grid.Column="4" Margin="4,0,0,0" VerticalAlignment="Top">
+                <StackPanel>
+                    <Image
+                            Margin="14"
+                            VerticalAlignment="Center"
+                            RenderOptions.BitmapScalingMode="HighQuality"
+                            Source="pack://application:,,,/Resources/desktop.jpg" />
+                    <TextBlock
+                            Grid.Row="0"
+                            FontSize="10"
+                            FontWeight="Bold"
+                            TextWrapping = "Wrap"
+                            Text="海贼王壁纸" />
+                </StackPanel>
+            </ui:Card>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <ui:Button Appearance="Transparent" Content="上一页" Margin="320,0,0,0"/>
+            <ui:Button Appearance="Transparent" Content="下一页" Margin="391,0,0,0"/>
         </Grid>
     </Grid>
 </ui:UiPage>
