@@ -32,8 +32,14 @@
                 </TextBox.InputBindings>
             </ui:TextBox>
         </Grid>
-
-        <Grid Grid.Row="1" Margin="0,2,0,0">
+        <!--<TabControl Grid.Row="1" x:Name="tab">
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Width="40" Height="24" Text="{Binding Title}"/>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+        </TabControl>-->
+        <Grid Grid.Row="1" Margin="0,4,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -42,7 +48,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <ui:Card Grid.Column="0" Margin="0,0,4,0" VerticalAlignment="Top">
+            <ui:Card Grid.Column="0" Margin="4,0,4,0" VerticalAlignment="Top">
                 <StackPanel>
                     <Image
                             Margin="14"
@@ -106,7 +112,7 @@
                 </StackPanel>
             </ui:Card>
 
-            <ui:Card Grid.Column="4" Margin="4,0,0,0" VerticalAlignment="Top">
+            <ui:Card Grid.Column="4" Margin="4,0,4,0" VerticalAlignment="Top">
                 <StackPanel>
                     <Image
                             Margin="14"
