@@ -15,6 +15,22 @@
       Title="HomeExplorePage">
 
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
+        <!--搜索-->
+        <Grid Grid.Row="0">
+            <ui:TextBox 
+            Icon="Search12" 
+            PlaceholderText="请输入关键字"
+            Text="{Binding Path=ViewModel.InputText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+            IconPlacement="Right" Margin="110,6,110,0" VerticalAlignment="Top">
+                <TextBox.InputBindings>
+                    <KeyBinding Key="Enter" Command="{Binding ViewModel.InputCommand}" />
+                </TextBox.InputBindings>
+            </ui:TextBox>
+        </Grid>
     </Grid>
 </ui:UiPage>
