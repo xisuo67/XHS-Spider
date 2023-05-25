@@ -411,6 +411,7 @@ namespace XHS.Spider.ViewModels
                     }
                     else
                     {
+                        this.ParseNodeCount = "已解析(0)条";
                         var apiResult = await _xhsSpiderService.GetOtherInfo(id, webView);
                         if (apiResult != null && apiResult.Success)
                         {

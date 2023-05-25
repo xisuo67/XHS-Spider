@@ -27,9 +27,8 @@ namespace XHS.Spider.ViewModels
     /// <summary>
     /// 搜索
     /// </summary>
-    public partial class SearchViewModel : ObservableObject, INavigationAware
+    public partial class SearchViewModel : BaseSearchViewModel, INavigationAware
     {
-        public  WebView2 webView;
         private static readonly ILogger Logger = LoggerService.Get(typeof(SearchViewModel));
         private readonly INavigationService _navigationService;
         private readonly IServiceProvider _serviceProvider;
@@ -50,12 +49,7 @@ namespace XHS.Spider.ViewModels
             _navigationService = navigationService;
            
         }
-        private string inputText;
-        public string InputText
-        {
-            get => inputText;
-            set => SetProperty(ref inputText, value);
-        }
+
         // 输入确认事件
         private ICommand inputCommand;
         public ICommand InputCommand

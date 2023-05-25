@@ -66,6 +66,10 @@ namespace XHS.Spider.Services
                     Logger.Error("webView跳转失败：", ex);
                 }
             }
+            else if (true)
+            {
+
+            }
         }
 
         private static void Navigation(RedirectInfo redirectInfo)
