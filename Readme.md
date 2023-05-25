@@ -70,6 +70,10 @@ XHS.Spider是一款颜值超高的小红书数据采集工具
 - 因使用本软件产生的版权问题，软件作者概不负责。
 - 任何涉及商业盈利目的均不得使用，否则产生的一切后果将由您自己承担。
 
+## Star
+
+[![Stargazers over time](https://starchart.cc/xisuo67/XHS-Spider.svg)](https://starchart.cc/xisuo67/XHS-Spider)
+
 ## 下载
 
 <p align="left">
