@@ -51,15 +51,13 @@ namespace XHS.Spider.Services
         /// <exception cref="NotImplementedException"></exception>
         public void SearchInput(string input)
         {
-           
+            bool isSubscribeEvent = false;
             if (input.Contains("user/profile"))
             {
                 try
                 {
+                    isSubscribeEvent = true;
                     _webView.CoreWebView2.Navigate(input);
-                    //订阅事件
-                    _aggregator.GetEvent<NavigationCompletedEvent>().Subscribe(Navigation);
-
                 }
                 catch (Exception ex)
                 {
@@ -69,10 +67,14 @@ namespace XHS.Spider.Services
             //非URL默认识别为关键字搜索
             else if (!IsUrl(input))
             {
-                //string keyword = System.Web.HttpUtility.UrlEncode(input, Encoding.UTF8);
-                //TODO将input进行urlEcoend
+                isSubscribeEvent = true;
                 var url = $"https://www.xiaohongshu.com/search_result/?keyword={input}&source=web_explore_feed";
                 _webView.CoreWebView2.Navigate(url);
+            }
+            if (isSubscribeEvent)
+            {
+                //订阅事件
+                _aggregator.GetEvent<NavigationCompletedEvent>().Subscribe(Navigation);
             }
         }
 
@@ -81,10 +83,16 @@ namespace XHS.Spider.Services
             if (redirectInfo.Url.Contains("user/profile"))
             {
                 RedirectService<UserProfileViewModel>.SetJumpParam(redirectInfo.Url, _serviceProvider, _pageServiceNew, _webView);
-                //消事件注册
-                _aggregator.GetEvent<NavigationCompletedEvent>().Unsubscribe(Navigation);
                 _navigation.Navigate(typeof(Views.Pages.UserProfilePage));
             }
+            //非URL默认识别为关键字搜索
+            else if (redirectInfo.Url.Contains("keyword"))
+            {
+                RedirectService<HomeExploreViewModel>.SetJumpParam(redirectInfo.Url, _serviceProvider, _pageServiceNew, _webView);
+                _navigation.Navigate(typeof(Views.Pages.HomeExplorePage));
+            }
+            ////消事件注册
+            //_aggregator.GetEvent<NavigationCompletedEvent>().Unsubscribe(Navigation);
         }
         /// <summary>
         /// 从url中获取id

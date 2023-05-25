@@ -14,7 +14,7 @@ namespace XHS.Spider.ViewModels
     /// <summary>
     /// 搜索首页
     /// </summary>
-    public class HomeExploreViewModel : ObservableObject, INavigationAware
+    public class HomeExploreViewModel : BaseSearchViewModel, INavigationAware
     {
         #region 属性
         private string inputText;
@@ -44,7 +44,7 @@ namespace XHS.Spider.ViewModels
         /// <summary>
         /// 处理输入事件
         /// </summary>
-        public async void ExecuteInitData()
+        public override async void ExecuteInitData()
         {
             List<SearchNode> nodes = new List<SearchNode>();
             for (int i = 0; i < 20; i++)
