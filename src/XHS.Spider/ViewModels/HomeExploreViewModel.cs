@@ -21,6 +21,8 @@ namespace XHS.Spider.ViewModels
             get => inputText;
             set => SetProperty(ref inputText, value);
         }
+
+
         // 输入确认事件
         private ICommand inputCommand;
         public ICommand InputCommand

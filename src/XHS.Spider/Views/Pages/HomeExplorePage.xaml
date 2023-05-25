@@ -32,14 +32,15 @@
                 </TextBox.InputBindings>
             </ui:TextBox>
         </Grid>
-        <!--<TabControl Grid.Row="1" x:Name="tab">
-            <TabControl.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Width="40" Height="24" Text="{Binding Title}"/>
-                </DataTemplate>
-            </TabControl.ItemTemplate>
-        </TabControl>-->
-        <Grid Grid.Row="1" Margin="0,4,0,0">
+        <ScrollViewer Grid.Row="1" Margin="0,4,0,0">
+            <ListBox>
+                <!--<ListBox.ItemTemplate>
+                    
+                </ListBox.ItemTemplate>-->
+            </ListBox>
+        </ScrollViewer>
+
+        <!--<Grid Grid.Row="1" Margin="0,4,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -131,7 +132,7 @@
                             Text="海贼王壁纸" />
                 </StackPanel>
             </ui:Card>
-        </Grid>
+        </Grid>-->
 
         <Grid Grid.Row="2">
             <ui:Button Appearance="Transparent" Content="上一页" Margin="320,0,0,0"/>

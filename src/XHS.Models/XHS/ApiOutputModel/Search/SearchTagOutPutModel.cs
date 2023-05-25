@@ -7,7 +7,10 @@ using System.Threading.Tasks;
 
 namespace XHS.Models.XHS.ApiOutputModel.Search
 {
-    public class SearchOutPutModel
+    /// <summary>
+    /// 关键字搜索返回tab实体
+    /// </summary>
+    public class SearchTagOutPutModel
     {
         [JsonProperty("id")]
         public string Id { get; set; }
