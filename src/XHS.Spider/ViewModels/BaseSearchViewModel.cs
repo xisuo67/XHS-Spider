@@ -12,7 +12,7 @@ namespace XHS.Spider.ViewModels
     /// <summary>
     /// 基础搜索类
     /// </summary>
-    public class BaseSearchViewModel : ObservableObject
+    public abstract class BaseSearchViewModel : ObservableObject
     {
         public WebView2 webView;
 
@@ -23,8 +23,6 @@ namespace XHS.Spider.ViewModels
             set => SetProperty(ref inputText, value);
         }
 
-        public  async  void ExecuteInitData()
-        { 
-        }
+        public abstract void ExecuteInitData();
     }
 }

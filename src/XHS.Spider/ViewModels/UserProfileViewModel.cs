@@ -27,20 +27,20 @@ using XHS.Spider.Views.Windows;
 
 namespace XHS.Spider.ViewModels
 {
-    public partial class UserProfileViewModel : ObservableObject, INavigationAware
+    public partial class UserProfileViewModel : BaseSearchViewModel, INavigationAware
     {
-        public WebView2 webView;
+        //public WebView2 webView;
         private static readonly Service.Log.ILogger Logger = LoggerService.Get(typeof(UserProfileViewModel));
         #region 变量
         public static readonly string BaseUrl = "https://www.xiaohongshu.com/user/profile/";
         public static readonly string BaseVideoUrl = "http://sns-video-bd.xhscdn.com/{0}";
         public static readonly string BaseImageUrl = "https://sns-img-bd.xhscdn.com/{0}?imageView2/format/png";
-        private string inputText;
-        public string InputText
-        {
-            get => inputText;
-            set => SetProperty(ref inputText, value);
-        }
+        //private string inputText;
+        //public string InputText
+        //{
+        //    get => inputText;
+        //    set => SetProperty(ref inputText, value);
+        //}
         private readonly TaskbarIcon _notifyIcon;
         private string inputSearchText;
         public string InputSearchText
@@ -396,13 +396,13 @@ namespace XHS.Spider.ViewModels
         /// <summary>
         /// 处理输入事件
         /// </summary>
-        public async void ExecuteInitData()
+        public override async void ExecuteInitData()
         {
             if (!string.IsNullOrEmpty(InputText))
             {
                 if (InputText.Contains("user/profile/"))
                 {
-                    var id = SearchService.GetId(inputText, BaseUrl);
+                    var id = SearchService.GetId(InputText, BaseUrl);
                     if (string.IsNullOrEmpty(id))
                     {
                         Logger.Error($"URL有误：{InputText}");
