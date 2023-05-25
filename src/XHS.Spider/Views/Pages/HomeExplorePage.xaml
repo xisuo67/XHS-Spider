@@ -51,28 +51,29 @@
             <ui:Card Grid.Column="0" Margin="4,0,4,0" VerticalAlignment="Top">
                 <StackPanel>
                     <Image
-                            Margin="14"
+                            MinHeight="100"
                             VerticalAlignment="Center"
                             RenderOptions.BitmapScalingMode="HighQuality"
-                            Source="pack://application:,,,/Resources/desktop.jpg" />
+                            Source="pack://application:,,,/Resources/test.png" />
                     <TextBlock
                             Grid.Row="0"
+                            Margin="0,5"
                             FontSize="10"
                             FontWeight="Bold"
                             Text="这种情况怎么办" />
-
                 </StackPanel>
             </ui:Card>
 
             <ui:Card Grid.Column="1" Margin="4,0,4,0" VerticalAlignment="Top">
                 <StackPanel>
                     <Image
-                            Margin="14"
+                            MinHeight="100"
                             VerticalAlignment="Center"
                             RenderOptions.BitmapScalingMode="HighQuality"
-                            Source="pack://application:,,,/Resources/desktop.jpg" />
+                            Source="pack://application:,,,/Resources/test1.png" />
                     <TextBlock
                             Grid.Row="0"
+                            Margin="0,5"
                             FontSize="10"
                             FontWeight="Bold"
                             TextWrapping = "Wrap"
@@ -83,12 +84,13 @@
             <ui:Card Grid.Column="2" Margin="4,0,4,0" VerticalAlignment="Top">
                 <StackPanel>
                     <Image
-                            Margin="14"
+                            MinHeight="100"
                             VerticalAlignment="Center"
                             RenderOptions.BitmapScalingMode="HighQuality"
-                            Source="pack://application:,,,/Resources/desktop.jpg" />
+                            Source="pack://application:,,,/Resources/test2.png" />
                     <TextBlock
                             Grid.Row="0"
+                            Margin="0,5"
                             FontSize="10"
                             FontWeight="Bold"
                             TextWrapping = "Wrap"
@@ -99,12 +101,13 @@
             <ui:Card Grid.Column="3" Margin="4,0,4,0" VerticalAlignment="Top">
                 <StackPanel>
                     <Image
-                            Margin="14"
+                            MinHeight="100"
                             VerticalAlignment="Center"
                             RenderOptions.BitmapScalingMode="HighQuality"
-                            Source="pack://application:,,,/Resources/desktop.jpg" />
+                            Source="pack://application:,,,/Resources/test3.png" />
                     <TextBlock
                             Grid.Row="0"
+                            Margin="0,5"
                             FontSize="10"
                             FontWeight="Bold"
                             TextWrapping = "Wrap"
@@ -115,12 +118,13 @@
             <ui:Card Grid.Column="4" Margin="4,0,4,0" VerticalAlignment="Top">
                 <StackPanel>
                     <Image
-                            Margin="14"
+                            MinHeight="100"
                             VerticalAlignment="Center"
                             RenderOptions.BitmapScalingMode="HighQuality"
-                            Source="pack://application:,,,/Resources/desktop.jpg" />
+                            Source="pack://application:,,,/Resources/test4.png" />
                     <TextBlock
                             Grid.Row="0"
+                            Margin="0,5"
                             FontSize="10"
                             FontWeight="Bold"
                             TextWrapping = "Wrap"

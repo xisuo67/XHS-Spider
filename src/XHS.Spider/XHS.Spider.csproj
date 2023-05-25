@@ -40,6 +40,11 @@
     <None Remove="Resources\desktop.jpg" />
     <None Remove="Resources\gender-female-v1.png" />
     <None Remove="Resources\gender-male-v1.png" />
+    <None Remove="Resources\test.png" />
+    <None Remove="Resources\test1.png" />
+    <None Remove="Resources\test2.png" />
+    <None Remove="Resources\test3.png" />
+    <None Remove="Resources\test4.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -60,6 +65,21 @@
     <Resource Include="Resources\gender-female-v1.png" />
     <Resource Include="Resources\gender-male-v1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\test.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\test1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\test2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\test3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\test4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
 
