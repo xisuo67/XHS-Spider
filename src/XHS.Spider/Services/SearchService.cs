@@ -76,20 +76,11 @@ namespace XHS.Spider.Services
         {
             if (redirectInfo.Url.Contains("user/profile"))
             {
-                SetJumpParam(redirectInfo.Url, _serviceProvider, _pageServiceNew, _webView);
+                RedirectService<UserProfileViewModel>.SetJumpParam(redirectInfo.Url, _serviceProvider, _pageServiceNew, _webView);
                 //消事件注册
                 _aggregator.GetEvent<NavigationCompletedEvent>().Unsubscribe(Navigation);
                 _navigation.Navigate(typeof(Views.Pages.UserProfilePage));
             }
-        }
-        private static void SetJumpParam(string input, IServiceProvider serviceProvider, IPageServiceNew pageServiceNew, WebView2 webView)
-        {
-            pageServiceNew.Scope = serviceProvider.CreateScope();
-            var dc = pageServiceNew.Scope.ServiceProvider.GetRequiredService<UserProfileViewModel>();
-            dc.InputText = input;
-            dc.webView = webView;
-            //TODO:webView加载完成后再调用初始化数据
-            dc.ExecuteInitData();
         }
         /// <summary>
         /// 从url中获取id

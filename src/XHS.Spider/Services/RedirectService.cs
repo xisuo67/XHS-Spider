@@ -11,7 +11,7 @@ namespace XHS.Spider.Services
 {
     public class RedirectService<T> where T : BaseSearchViewModel
     {
-        private static void SetJumpParam(string input, IServiceProvider serviceProvider, IPageServiceNew pageServiceNew, WebView2 webView)
+        public static void SetJumpParam(string input, IServiceProvider serviceProvider, IPageServiceNew pageServiceNew, WebView2 webView)
         {
             pageServiceNew.Scope = serviceProvider.CreateScope();
             var dc = pageServiceNew.Scope.ServiceProvider.GetRequiredService<T>();
