@@ -66,9 +66,13 @@ namespace XHS.Spider.Services
                     Logger.Error("webView跳转失败：", ex);
                 }
             }
-            else if (true)
+            //非URL默认识别为关键字搜索
+            else if (!IsUrl(input))
             {
-
+                //string keyword = System.Web.HttpUtility.UrlEncode(input, Encoding.UTF8);
+                //TODO将input进行urlEcoend
+                var url = $"https://www.xiaohongshu.com/search_result/?keyword={input}&source=web_explore_feed";
+                _webView.CoreWebView2.Navigate(url);
             }
         }
 
