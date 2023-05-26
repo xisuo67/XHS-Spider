@@ -32,42 +32,38 @@
                 </TextBox.InputBindings>
             </ui:TextBox>
         </Grid>
-        <ScrollViewer Grid.Row="1" Margin="10,4,0,0">
-            <ListBox ItemsSource="{Binding ViewModel.SearchNodes}" VirtualizingStackPanel.VirtualizationMode="Recycling" >
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <ui:Card Margin="0,0,0,0"   Height="300" Width="180" HorizontalAlignment="Stretch">
-                            <StackPanel>
-                                <Image
+        <ListBox Grid.Row="1" ItemsSource="{Binding ViewModel.SearchNodes}" VirtualizingStackPanel.VirtualizationMode="Recycling" Background="{DynamicResource ApplicationBackgroundBrush}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <ui:Card Margin="0,0,0,0" Height="300" Width="180" HorizontalAlignment="Stretch">
+                        <StackPanel>
+                            <Image
                             VerticalAlignment="Center"
                             RenderOptions.BitmapScalingMode="HighQuality"
                             Source="{Binding CoverImage}" />
-                                <TextBlock
+                            <TextBlock
                             Grid.Row="0"
                             Margin="0,5"
-                            FontSize="12"
+                            FontSize="14"
                             FontWeight="Bold"
                             TextWrapping = "Wrap"            
                             Text="{Binding display_title}" />
-                                <StackPanel Orientation="Horizontal">
-                                    <StackPanel HorizontalAlignment="Left">
-                                        <TextBlock FontSize="10" Text="{Binding nickname}"/>
-                                    </StackPanel>
-                                    <ui:SymbolIcon Symbol="Heart28" FontSize="14"  Margin="0,0,8,0" HorizontalAlignment="Right"/>
-                                    <TextBlock FontSize="10" Text="{Binding liked_count}"  HorizontalAlignment="Right"/>
 
-                                </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontSize="10" Text="{Binding nickname}" HorizontalAlignment="Left"/>
+                                <ui:SymbolIcon Symbol="Heart28" FontSize="14"  Margin="0,0,8,0" HorizontalAlignment="Right"/>
+                                <TextBlock FontSize="10" Text="{Binding liked_count}"  HorizontalAlignment="Right"/>
                             </StackPanel>
-                        </ui:Card>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <UniformGrid Columns="5" Margin="0,0,0,0"/>
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
-            </ListBox>
-        </ScrollViewer>
+                        </StackPanel>
+                    </ui:Card>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="5" Margin="0,0,0,0"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+        </ListBox>
         <Grid Grid.Row="2">
             <StackPanel   Orientation="Horizontal" HorizontalAlignment="Center">
                 <ui:Button Appearance="Info" Icon="ChevronDoubleLeft16" Margin="0,0,20,0" Width="80" FontSize="18"/>
