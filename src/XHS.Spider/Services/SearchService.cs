@@ -6,7 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Web;
 using System.Windows;
 using System.Windows.Threading;
 using UpdateChecker.Interfaces;
@@ -18,6 +20,7 @@ using XHS.Models.Events;
 using XHS.Service.Log;
 using XHS.Spider.Helpers;
 using XHS.Spider.ViewModels;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace XHS.Spider.Services
 {
@@ -88,7 +91,8 @@ namespace XHS.Spider.Services
             //非URL默认识别为关键字搜索
             else if (redirectInfo.Url.Contains("keyword"))
             {
-                RedirectService<HomeExploreViewModel>.SetJumpParam(redirectInfo.Url, _serviceProvider, _pageServiceNew, _webView);
+                var keyword = Regex.Match(redirectInfo.Url, "(?<=keyword=).*?(?=&source)").Value;
+                RedirectService<HomeExploreViewModel>.SetJumpParam(keyword, _serviceProvider, _pageServiceNew, _webView);
                 _navigation.Navigate(typeof(Views.Pages.HomeExplorePage));
             }
             //消事件注册

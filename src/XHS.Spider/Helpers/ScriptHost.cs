@@ -95,7 +95,8 @@ namespace XHS.Spider.Helpers
             GlobalCaChe.Cookies.Add(new XHS.Models.SettingCookie.CookieModel()
             {
                 Id = Guid.NewGuid(),
-                Cookie = cookies
+                Cookie = cookies,
+                IsGetAutomatically=true,
             });
         }
         /// <summary>

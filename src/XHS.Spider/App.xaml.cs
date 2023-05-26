@@ -76,14 +76,13 @@ namespace XHS.Spider
                 services.AddScoped<Views.Pages.SettingCookie>();
                 services.AddScoped<Views.Pages.Search>();
                 services.AddScoped<ViewModels.SearchViewModel>();
+                services.AddScoped<Views.Pages.HomeExplorePage>();
+                services.AddScoped<ViewModels.HomeExploreViewModel>();
                 services.AddScoped<Views.Pages.UserProfilePage>();
                 services.AddScoped<ViewModels.UserProfileViewModel>();
                 services.AddScoped<ViewModels.SettingCookieViewModel>();
                 services.AddScoped<Views.Pages.SettingsPage>();
                 services.AddScoped<ViewModels.SettingsViewModel>();
-                services.AddScoped<Views.Pages.HomeExplorePage>();
-                services.AddScoped<ViewModels.HomeExploreViewModel>();
-
                 services.AddTransient<Views.Windows.CookieEdit>();
                 AddDataService(services);
                 //启动下载服务

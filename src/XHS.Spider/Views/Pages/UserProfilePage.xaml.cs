@@ -1,22 +1,6 @@
-﻿using Microsoft.Web.WebView2.Wpf;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Wpf.Ui.Common.Interfaces;
-using Wpf.Ui.Mvvm.Interfaces;
-using Wpf.Ui.TaskBar;
-using XHS.Spider.Helpers;
 
 namespace XHS.Spider.Views.Pages
 {
@@ -25,8 +9,6 @@ namespace XHS.Spider.Views.Pages
     /// </summary>
     public partial class UserProfilePage : INavigableView<ViewModels.UserProfileViewModel>
     {
-        //private ScriptHost scriptHost = null;
-     
         public ViewModels.UserProfileViewModel ViewModel
         {
             get;
