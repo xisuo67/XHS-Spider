@@ -33,10 +33,34 @@
             </ui:TextBox>
         </Grid>
         <ScrollViewer Grid.Row="1" Margin="10,4,0,0">
-            <ListBox>
-                <!--<ListBox.ItemTemplate>
-                    
-                </ListBox.ItemTemplate>-->
+            <ListBox ItemsSource="{Binding ViewModel.SearchNodes}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border Height="300" Width="160">
+                            <ui:Card >
+                                <StackPanel>
+                                    <Image
+                            VerticalAlignment="Center"
+                            RenderOptions.BitmapScalingMode="HighQuality"
+                            Source="{Binding CoverImage}" />
+                                    <TextBlock
+                            Grid.Row="0"
+                            Margin="0,5"
+                            FontSize="10"
+                            FontWeight="Bold"
+                            TextWrapping = "Wrap"            
+                            Text="{Binding display_title}" />
+                                </StackPanel>
+                            </ui:Card>
+                        </Border>
+
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="5"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
             </ListBox>
         </ScrollViewer>
 
