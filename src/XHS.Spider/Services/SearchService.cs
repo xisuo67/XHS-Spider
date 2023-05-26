@@ -91,8 +91,8 @@ namespace XHS.Spider.Services
                 RedirectService<HomeExploreViewModel>.SetJumpParam(redirectInfo.Url, _serviceProvider, _pageServiceNew, _webView);
                 _navigation.Navigate(typeof(Views.Pages.HomeExplorePage));
             }
-            ////消事件注册
-            //_aggregator.GetEvent<NavigationCompletedEvent>().Unsubscribe(Navigation);
+            //消事件注册
+            _aggregator.GetEvent<NavigationCompletedEvent>().Unsubscribe(Navigation);
         }
         /// <summary>
         /// 从url中获取id

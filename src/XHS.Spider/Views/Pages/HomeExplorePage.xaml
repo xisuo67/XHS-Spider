@@ -33,134 +33,47 @@
             </ui:TextBox>
         </Grid>
         <ScrollViewer Grid.Row="1" Margin="10,4,0,0">
-            <ListBox ItemsSource="{Binding ViewModel.SearchNodes}">
+            <ListBox ItemsSource="{Binding ViewModel.SearchNodes}" VirtualizingStackPanel.VirtualizationMode="Recycling" >
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Border Height="300" Width="160">
-                            <ui:Card >
-                                <StackPanel>
-                                    <Image
+                        <ui:Card Margin="0,0,0,0"   Height="300" Width="180" HorizontalAlignment="Stretch">
+                            <StackPanel>
+                                <Image
                             VerticalAlignment="Center"
                             RenderOptions.BitmapScalingMode="HighQuality"
                             Source="{Binding CoverImage}" />
-                                    <TextBlock
+                                <TextBlock
                             Grid.Row="0"
                             Margin="0,5"
-                            FontSize="10"
+                            FontSize="12"
                             FontWeight="Bold"
                             TextWrapping = "Wrap"            
                             Text="{Binding display_title}" />
-                                </StackPanel>
-                            </ui:Card>
-                        </Border>
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel HorizontalAlignment="Left">
+                                        <TextBlock FontSize="10" Text="{Binding nickname}"/>
+                                    </StackPanel>
+                                    <ui:SymbolIcon Symbol="Heart28" FontSize="14"  Margin="0,0,8,0" HorizontalAlignment="Right"/>
+                                    <TextBlock FontSize="10" Text="{Binding liked_count}"  HorizontalAlignment="Right"/>
 
+                                </StackPanel>
+                            </StackPanel>
+                        </ui:Card>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <UniformGrid Columns="5"/>
+                        <UniformGrid Columns="5" Margin="0,0,0,0"/>
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
             </ListBox>
         </ScrollViewer>
-
-        <!--<Grid Grid.Row="1" Margin="0,4,0,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <ui:Card Grid.Column="0" Margin="4,0,4,0" VerticalAlignment="Top">
-                <StackPanel>
-                    <Image
-                            MinHeight="100"
-                            VerticalAlignment="Center"
-                            RenderOptions.BitmapScalingMode="HighQuality"
-                            Source="pack://application:,,,/Resources/test.png" />
-                    <TextBlock
-                            Grid.Row="0"
-                            Margin="0,5"
-                            FontSize="10"
-                            FontWeight="Bold"
-                            Text="这种情况怎么办" />
-                </StackPanel>
-            </ui:Card>
-
-            <ui:Card Grid.Column="1" Margin="4,0,4,0" VerticalAlignment="Top">
-                <StackPanel>
-                    <Image
-                            MinHeight="100"
-                            VerticalAlignment="Center"
-                            RenderOptions.BitmapScalingMode="HighQuality"
-                            Source="pack://application:,,,/Resources/test1.png" />
-                    <TextBlock
-                            Grid.Row="0"
-                            Margin="0,5"
-                            FontSize="10"
-                            FontWeight="Bold"
-                            TextWrapping = "Wrap"
-                            Text="第一次在狗的眼睛里看到了崇拜" />
-                </StackPanel>
-            </ui:Card>
-
-            <ui:Card Grid.Column="2" Margin="4,0,4,0" VerticalAlignment="Top">
-                <StackPanel>
-                    <Image
-                            MinHeight="100"
-                            VerticalAlignment="Center"
-                            RenderOptions.BitmapScalingMode="HighQuality"
-                            Source="pack://application:,,,/Resources/test2.png" />
-                    <TextBlock
-                            Grid.Row="0"
-                            Margin="0,5"
-                            FontSize="10"
-                            FontWeight="Bold"
-                            TextWrapping = "Wrap"
-                            Text="我突然被她删了😭" />
-                </StackPanel>
-            </ui:Card>
-
-            <ui:Card Grid.Column="3" Margin="4,0,4,0" VerticalAlignment="Top">
-                <StackPanel>
-                    <Image
-                            MinHeight="100"
-                            VerticalAlignment="Center"
-                            RenderOptions.BitmapScalingMode="HighQuality"
-                            Source="pack://application:,,,/Resources/test3.png" />
-                    <TextBlock
-                            Grid.Row="0"
-                            Margin="0,5"
-                            FontSize="10"
-                            FontWeight="Bold"
-                            TextWrapping = "Wrap"
-                            Text="女大学生紧急刹车带" />
-                </StackPanel>
-            </ui:Card>
-
-            <ui:Card Grid.Column="4" Margin="4,0,4,0" VerticalAlignment="Top">
-                <StackPanel>
-                    <Image
-                            MinHeight="100"
-                            VerticalAlignment="Center"
-                            RenderOptions.BitmapScalingMode="HighQuality"
-                            Source="pack://application:,,,/Resources/test4.png" />
-                    <TextBlock
-                            Grid.Row="0"
-                            Margin="0,5"
-                            FontSize="10"
-                            FontWeight="Bold"
-                            TextWrapping = "Wrap"
-                            Text="海贼王壁纸" />
-                </StackPanel>
-            </ui:Card>
-        </Grid>-->
-
         <Grid Grid.Row="2">
-            <ui:Button Appearance="Transparent" Content="上一页" Margin="320,0,0,0"/>
-            <ui:Button Appearance="Transparent" Content="下一页" Margin="391,0,0,0"/>
+            <StackPanel   Orientation="Horizontal" HorizontalAlignment="Center">
+                <ui:Button Appearance="Info" Icon="ChevronDoubleLeft16" Margin="0,0,20,0" Width="80" FontSize="18"/>
+                <ui:Button Appearance="Caution" Content="当前页:1" />
+                <ui:Button Appearance="Info"  Icon="ChevronDoubleRight20"  Margin="20,0,0,0"  Width="80" FontSize="18"/>
+            </StackPanel>
         </Grid>
     </Grid>
 </ui:UiPage>
