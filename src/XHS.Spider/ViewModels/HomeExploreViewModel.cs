@@ -65,8 +65,8 @@ namespace XHS.Spider.ViewModels
                     CoverUrl = "https://sns-img-qc.xhscdn.com/1000g008271vlc9ifm0005ovens0jq7qrqb6a3bg",
                     display_title = "春天的海边的微风🌊配上爱如火🔥",
                     liked = false,
-                    liked_count = 800,
-                    nickname = "橙北北" + i,
+                    liked_count = "100",
+                    nickname = "橙北北111111111111122222222222222222" + i,
                     NodeId = "64102e0d000000000800fa8e",
                     user_id = "63eebf01000000000f011f5b",
                     CoverImage= new BitmapImage(new Uri($"pack://application:,,,/Resources/test{ranNum}.png"))

@@ -35,27 +35,31 @@
         <ListBox Grid.Row="1" ItemsSource="{Binding ViewModel.SearchNodes}" VirtualizingStackPanel.VirtualizationMode="Recycling" Background="{DynamicResource ApplicationBackgroundBrush}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <ui:Card Margin="0,0,0,0" Height="300" Width="180" HorizontalAlignment="Stretch">
-                        <StackPanel>
-                            <Image
+                    <ui:CardControl Margin="0,0,0,0" Height="320" Width="180" HorizontalAlignment="Stretch">
+                        <ui:CardControl.Header>
+                            <StackPanel>
+                                <Image
                             VerticalAlignment="Center"
                             RenderOptions.BitmapScalingMode="HighQuality"
                             Source="{Binding CoverImage}" />
-                            <TextBlock
+                                <TextBlock
                             Grid.Row="0"
                             Margin="0,5"
                             FontSize="14"
                             FontWeight="Bold"
                             TextWrapping = "Wrap"            
                             Text="{Binding display_title}" />
-
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock FontSize="10" Text="{Binding nickname}" HorizontalAlignment="Left"/>
-                                <ui:SymbolIcon Symbol="Heart28" FontSize="14"  Margin="0,0,8,0" HorizontalAlignment="Right"/>
-                                <TextBlock FontSize="10" Text="{Binding liked_count}"  HorizontalAlignment="Right"/>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <ui:SymbolIcon Symbol="Heart28" FontSize="14"  Margin="0,0,8,0" HorizontalAlignment="Right"/>
+                                    <TextBlock FontSize="10" Text="{Binding liked_count}"  HorizontalAlignment="Right"/>
+                                </StackPanel>
+                                <CheckBox FontSize="10">
+                                    <TextBlock TextWrapping="Wrap" 
+                   Text="{Binding nickname}"/>
+                                </CheckBox>
                             </StackPanel>
-                        </StackPanel>
-                    </ui:Card>
+                        </ui:CardControl.Header>
+                    </ui:CardControl>
                 </DataTemplate>
             </ListBox.ItemTemplate>
             <ListBox.ItemsPanel>

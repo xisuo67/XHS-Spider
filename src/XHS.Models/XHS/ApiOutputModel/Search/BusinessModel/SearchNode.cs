@@ -24,7 +24,7 @@ namespace XHS.Models.XHS.ApiOutputModel.Search.BusinessModel
         /// <summary>
         /// 喜欢数量
         /// </summary>
-        public int liked_count { get; set; }
+        public string liked_count { get; set; }
         /// <summary>
         /// 头像
         /// </summary>
