@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace XHS.Models.XHS.ApiOutputModel.Search.BusinessModel
 {
@@ -36,13 +37,28 @@ namespace XHS.Models.XHS.ApiOutputModel.Search.BusinessModel
         /// 用户id
         /// </summary>
         public string user_id { get; set; }
+
+        private string coverUrl = string.Empty;
         /// <summary>
-        /// 用户封面
+        /// 封面
         /// </summary>
-        public string coverUrl { get; set; }
+        public string CoverUrl { 
+            get=>coverUrl; 
+            set {
+                coverUrl = value;
+                this.CoverFullUrl = $"{coverUrl}?imageView2/2/w/640/format/webp|imageMogr2/strip";
+            }
+        }
+
+        public string CoverFullUrl { get; set; }
+        /// <summary>
+        /// 封面
+        /// </summary>
+        public BitmapImage CoverImage { get; set; }
         /// <summary>
         /// 标题
         /// </summary>
         public string display_title { get; set; }
+
     }
 }

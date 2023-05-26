@@ -32,7 +32,7 @@
                 </TextBox.InputBindings>
             </ui:TextBox>
         </Grid>
-        <ScrollViewer Grid.Row="1" Margin="0,4,0,0">
+        <ScrollViewer Grid.Row="1" Margin="10,4,0,0">
             <ListBox>
                 <!--<ListBox.ItemTemplate>
                     
