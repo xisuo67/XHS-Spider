@@ -35,11 +35,14 @@ namespace XHS.Spider.ViewModels
             set=> SetProperty(ref _searchNodes, value);
         }
         // 输入确认事件
-        private ICommand inputCommand;
-        public ICommand InputCommand
+        private ICommand? inputCommand;
+        public ICommand? InputCommand
         {
             get => inputCommand ?? (inputCommand = new Wpf.Ui.Common.RelayCommand(ExecuteInitData));
             set => inputCommand = value;
+        }
+        public HomeExploreViewModel() {
+            var a = this.InputText;
         }
         #endregion
 
@@ -47,7 +50,7 @@ namespace XHS.Spider.ViewModels
         /// <summary>
         /// 处理输入事件
         /// </summary>
-        public override async void ExecuteInitData()
+        public override void ExecuteInitData()
         {
             if (!string.IsNullOrEmpty(InputText))
             {

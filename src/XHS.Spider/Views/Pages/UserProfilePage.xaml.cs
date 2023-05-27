@@ -1,20 +1,21 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using Wpf.Ui.Common.Interfaces;
+using XHS.Spider.ViewModels;
 
 namespace XHS.Spider.Views.Pages
 {
     /// <summary>
     /// UserProfilePage.xaml 的交互逻辑
     /// </summary>
-    public partial class UserProfilePage : INavigableView<ViewModels.UserProfileViewModel>
+    public partial class UserProfilePage : INavigableView<UserProfileViewModel>
     {
-        public ViewModels.UserProfileViewModel ViewModel
+        public UserProfileViewModel ViewModel
         {
             get;
         }
 
-        public UserProfilePage(ViewModels.UserProfileViewModel viewModel)
+        public UserProfilePage(UserProfileViewModel viewModel)
         {
             viewModel.InitNullImage();
             ViewModel = viewModel;
@@ -45,9 +46,5 @@ namespace XHS.Spider.Views.Pages
             }
         }
 
-        private void UiPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            //scriptHost = ScriptHost.GetScriptHost(webView);
-        }
     }
 }
