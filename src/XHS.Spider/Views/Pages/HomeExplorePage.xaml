@@ -25,11 +25,33 @@
             Icon="Search12" 
             PlaceholderText="请输入关键字"
             Text="{Binding Path=ViewModel.InputText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-            IconPlacement="Right" Margin="110,6,110,0" VerticalAlignment="Top">
+            IconPlacement="Right" Margin="110,6,170,0" VerticalAlignment="Top">
                 <TextBox.InputBindings>
                     <KeyBinding Key="Enter" Command="{Binding ViewModel.InputCommand}" />
                 </TextBox.InputBindings>
             </ui:TextBox>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Background="{DynamicResource ApplicationBackgroundBrush}">
+                <Menu Margin="0,0,0,0" >
+                    <MenuItem Header="设置" Width="119">
+                        <MenuItem.Icon>
+                            <ui:SymbolIcon Filled="True" Symbol="Settings28" />
+                        </MenuItem.Icon>
+                        <ui:MenuItem Header="筛选" SymbolIcon="Balloon24">
+                            <ui:MenuItem Header="默认">
+                                <ui:MenuItem Header="最热" IsCheckable="True" IsChecked="True"/>
+                                <ui:MenuItem Header="最新" IsCheckable="True"/>
+                            </ui:MenuItem>
+                            <ui:MenuItem Header="类型">
+                                <ui:MenuItem Header="全部" IsCheckable="True" IsChecked="True"/>
+                                <ui:MenuItem Header="视频" IsCheckable="True"/>
+                                <ui:MenuItem Header="图文" IsCheckable="True"/>
+                            </ui:MenuItem>
+                        </ui:MenuItem>
+                    </MenuItem>
+                </Menu>
+            </StackPanel>
+
+
         </Grid>
         <ListBox Grid.Row="1" ItemsSource="{Binding ViewModel.SearchNodes}" VirtualizingStackPanel.VirtualizationMode="Recycling" Background="{DynamicResource ApplicationBackgroundBrush}">
             <ListBox.ItemTemplate>

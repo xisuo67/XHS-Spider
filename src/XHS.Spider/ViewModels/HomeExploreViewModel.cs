@@ -9,6 +9,7 @@ using System.Web;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Wpf.Ui.Common.Interfaces;
+using XHS.Common.Helpers;
 using XHS.Models.XHS.ApiOutputModel.Search.BusinessModel;
 using XHS.Models.XHS.ApiOutputModel.UserPosted;
 
@@ -68,7 +69,10 @@ namespace XHS.Spider.ViewModels
                     };
                     nodes.Add(searchNode);
                 }
-                this.SearchNodes = nodes.ToArray();
+                App.PropertyChangeAsync(new Action(() =>
+                {
+                    this.SearchNodes = nodes.ToArray();
+                }));
                 SearchNodesModel searchNodesModel = new SearchNodesModel()
                 {
                     Page = 1,

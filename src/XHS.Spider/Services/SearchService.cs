@@ -90,11 +90,10 @@ namespace XHS.Spider.Services
             }
             //非URL默认识别为关键字搜索
             else if (redirectInfo.Url.Contains("keyword"))
-            {
+            { 
                 var keyword = Regex.Match(redirectInfo.Url, "(?<=keyword=).*?(?=&source)").Value;
-                keyword = "https://www.xiaohongshu.com/user/profile/64696f5100000000120377ec";
-                RedirectService<SearchKeywordViewModel>.SetJumpParam(keyword, _serviceProvider, _pageServiceNew, _webView);
-                _navigation.Navigate(typeof(Views.Pages.SearchKeywordPage));
+                RedirectService<HomeExploreViewModel>.SetJumpParam(keyword, _serviceProvider, _pageServiceNew, _webView);
+                _navigation.Navigate(typeof(Views.Pages.HomeExplorePage));
             }
             //消事件注册
             _aggregator.GetEvent<NavigationCompletedEvent>().Unsubscribe(Navigation);

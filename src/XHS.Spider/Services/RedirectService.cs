@@ -17,7 +17,6 @@ namespace XHS.Spider.Services
             var dc = pageServiceNew.Scope.ServiceProvider.GetRequiredService<T>();
             dc.InputText = input;
             dc.webView = webView;
-            //TODO:webView加载完成后再调用初始化数据
             dc.ExecuteInitData();
         }
     }
