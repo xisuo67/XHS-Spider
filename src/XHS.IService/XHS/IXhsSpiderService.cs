@@ -8,6 +8,7 @@ using XHS.IService.DI;
 using XHS.Models.XHS.ApiOutputModel;
 using XHS.Models.XHS.ApiOutputModel.NodeDetail;
 using XHS.Models.XHS.ApiOutputModel.OtherInfo;
+using XHS.Models.XHS.ApiOutputModel.Search;
 using XHS.Models.XHS.ApiOutputModel.UserPosted;
 using XHS.Models.XHS.InputModel;
 
@@ -40,5 +41,12 @@ namespace XHS.IService.XHS
         /// <param name="userid"></param>
         /// <returns></returns>
         Task<List<NoteModel>> GetAllUserNode(string userid, WebView2 webView);
+
+        /// <summary>
+        /// 关键字搜索笔记
+        /// </summary>
+        /// <param name="inputModel"></param>
+        /// <returns></returns>
+        Task<XHSBaseApiModel<SearchNodesOutPutModel>> SearchNotes(SearchInputModel inputModel, WebView2 webView);
     }
 }

@@ -11,6 +11,7 @@ using XHS.IService.XHS;
 using XHS.Models.XHS.ApiOutputModel;
 using XHS.Models.XHS.ApiOutputModel.NodeDetail;
 using XHS.Models.XHS.ApiOutputModel.OtherInfo;
+using XHS.Models.XHS.ApiOutputModel.Search;
 using XHS.Models.XHS.ApiOutputModel.UserPosted;
 using XHS.Models.XHS.InputModel;
 using XHS.Service.Log;
@@ -163,6 +164,33 @@ namespace XHS.Service.XHS
             };
             await UserPosted(model,nodes, webView);
             return nodes;
+        }
+        /// <summary>
+        /// 关键字搜索笔记
+        /// </summary>
+        /// <param name="inputModel"></param>
+        /// <param name="webView"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<XHSBaseApiModel<SearchNodesOutPutModel>> SearchNotes(SearchInputModel inputModel, WebView2 webView)
+        {
+            XHSBaseApiModel<SearchNodesOutPutModel> model = new XHSBaseApiModel<SearchNodesOutPutModel>();
+            try
+            {
+                string url = $"/api/sns/web/v1/search/notes?keyword={inputModel.KeyWord}&note_type={inputModel.NoteType}&page={inputModel.Page}&page_size={inputModel.PageSize}&search_id={inputModel.SearchId}&sort={inputModel.Sort}";
+                var header = await GetXsHeader(url, webView);
+                Logger.Info($"调用接口：{url}");
+                var result = HttpClientHelper.DoPost(url, header);
+                if (!string.IsNullOrEmpty(result))
+                {
+                    model = JsonConvert.DeserializeObject<XHSBaseApiModel<SearchNodesOutPutModel>>(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("获取笔记详细信息失败", ex);
+            }
+            return model;
         }
     }
 }

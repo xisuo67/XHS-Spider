@@ -12,6 +12,7 @@ using Wpf.Ui.Common.Interfaces;
 using XHS.Common.Helpers;
 using XHS.Models.XHS.ApiOutputModel.Search.BusinessModel;
 using XHS.Models.XHS.ApiOutputModel.UserPosted;
+using XHS.Models.XHS.InputModel;
 
 namespace XHS.Spider.ViewModels
 {
@@ -28,13 +29,14 @@ namespace XHS.Spider.ViewModels
             get { return _nodes; }
             set => SetProperty(ref _nodes, value);
         }
-
+        private int _currentPage = 1;
         private IEnumerable<SearchNode> _searchNodes = new SearchNode[] { };
 
         public IEnumerable<SearchNode> SearchNodes { 
             get=> _searchNodes;
             set=> SetProperty(ref _searchNodes, value);
         }
+
         public HomeExploreViewModel() {
             var a = this.InputText;
         }
@@ -50,36 +52,40 @@ namespace XHS.Spider.ViewModels
             {
                 var keyword = HttpUtility.UrlDecode(InputText);
                 this.InputText= keyword;
-
-                List<SearchNode> nodes = new List<SearchNode>();
-                for (int i = 0; i < 20; i++)
-                {
-                    Random ran = new Random();
-                    int ranNum = ran.Next(1, 5);
-                    SearchNode searchNode = new SearchNode()
-                    {
-                        avatar = "https://sns-avatar-qc.xhscdn.com/avatar/640ee7a7e64abc0b310374b2.jpg?imageView2/2/w/80/format/jpg",
-                        CoverUrl = "https://sns-img-qc.xhscdn.com/1000g008271vlc9ifm0005ovens0jq7qrqb6a3bg",
-                        display_title = "春天的海边的微风🌊配上爱如火🔥",
-                        liked = false,
-                        liked_count = "100",
-                        nickname = "橙北北111111111111122222222222222222" + i,
-                        NodeId = "64102e0d000000000800fa8e",
-                        user_id = "63eebf01000000000f011f5b",
-                        CoverImage = new BitmapImage(new Uri($"pack://application:,,,/Resources/test{ranNum}.png"))
-                    };
-                    nodes.Add(searchNode);
-                }
-                App.PropertyChangeAsync(new Action(() =>
-                {
-                    this.SearchNodes = nodes.ToArray();
-                }));
-                SearchNodesModel searchNodesModel = new SearchNodesModel()
-                {
-                    Page = 1,
-                    NodeItems = nodes
+                SearchInputModel model = new SearchInputModel() { 
+                    KeyWord = keyword,
+                    SearchId = AlgorithmHelper.GetSearchId()
                 };
-                this.Nodes.Add(searchNodesModel);
+
+                //List<SearchNode> nodes = new List<SearchNode>();
+                //for (int i = 0; i < 20; i++)
+                //{
+                //    Random ran = new Random();
+                //    int ranNum = ran.Next(1, 5);
+                //    SearchNode searchNode = new SearchNode()
+                //    {
+                //        avatar = "https://sns-avatar-qc.xhscdn.com/avatar/640ee7a7e64abc0b310374b2.jpg?imageView2/2/w/80/format/jpg",
+                //        CoverUrl = "https://sns-img-qc.xhscdn.com/1000g008271vlc9ifm0005ovens0jq7qrqb6a3bg",
+                //        display_title = "春天的海边的微风🌊配上爱如火🔥",
+                //        liked = false,
+                //        liked_count = "100",
+                //        nickname = "橙北北111111111111122222222222222222" + i,
+                //        NodeId = "64102e0d000000000800fa8e",
+                //        user_id = "63eebf01000000000f011f5b",
+                //        CoverImage = new BitmapImage(new Uri($"pack://application:,,,/Resources/test{ranNum}.png"))
+                //    };
+                //    nodes.Add(searchNode);
+                //}
+                //App.PropertyChangeAsync(new Action(() =>
+                //{
+                //    this.SearchNodes = nodes.ToArray();
+                //}));
+                //SearchNodesModel searchNodesModel = new SearchNodesModel()
+                //{
+                //    Page = 1,
+                //    NodeItems = nodes
+                //};
+                //this.Nodes.Add(searchNodesModel);
             }
         }
         #endregion
