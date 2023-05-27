@@ -92,8 +92,9 @@ namespace XHS.Spider.Services
             else if (redirectInfo.Url.Contains("keyword"))
             {
                 var keyword = Regex.Match(redirectInfo.Url, "(?<=keyword=).*?(?=&source)").Value;
-                RedirectService<HomeExploreViewModel>.SetJumpParam(keyword, _serviceProvider, _pageServiceNew, _webView);
-                _navigation.Navigate(typeof(Views.Pages.HomeExplorePage));
+                keyword = "https://www.xiaohongshu.com/user/profile/64696f5100000000120377ec";
+                RedirectService<SearchKeywordViewModel>.SetJumpParam(keyword, _serviceProvider, _pageServiceNew, _webView);
+                _navigation.Navigate(typeof(Views.Pages.SearchKeywordPage));
             }
             //消事件注册
             _aggregator.GetEvent<NavigationCompletedEvent>().Unsubscribe(Navigation);

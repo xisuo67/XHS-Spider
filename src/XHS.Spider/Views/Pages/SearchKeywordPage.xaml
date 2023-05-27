@@ -1,0 +1,287 @@
+﻿<Page 
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" 
+      x:Class="XHS.Spider.Views.Pages.SearchKeywordPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:XHS.Spider.Views.Pages"
+      d:DataContext="{d:DesignInstance local:SearchKeywordPage,
+                                     IsDesignTimeCreatable=False}"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      d:Background="{DynamicResource ApplicationBackgroundBrush}"
+      Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+      Title="SearchKeywordPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="160" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <!--搜索-->
+        <Grid Grid.Row="0">
+            <ui:TextBox 
+            Icon="Search12" 
+            PlaceholderText="请输入博主主页"
+            Text="{Binding Path=ViewModel.InputText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+            IconPlacement="Right" Margin="110,6,110,0" VerticalAlignment="Top">
+                <TextBox.InputBindings>
+                    <KeyBinding Key="Enter" Command="{Binding ViewModel.InputCommand}" />
+                </TextBox.InputBindings>
+            </ui:TextBox>
+        </Grid>
+        <!--个人信息-->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <StackPanel  Grid.Column="0" HorizontalAlignment="Right">
+                <!--<Wpf:WebView2
+            x:Name="webView"/>-->
+                <Border
+                    Width="120"
+                    Height="120"
+                    CornerRadius="60" >
+                    <Border.Background>
+                        <ImageBrush x:Name="headImage" ImageSource="{Binding ViewModel.HeadImage}"/>
+                    </Border.Background>
+
+                </Border>
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    Margin="0,10,0,0"
+                    FontWeight="Bold"
+                    FontSize="14"
+                    Text="{Binding ViewModel.UserInfo.BasicInfo.NickName}" />
+            </StackPanel>
+
+            <StackPanel
+                       VerticalAlignment="Center"
+                        Height="160" Grid.Column="1" Margin="5,0,91,0">
+                <StackPanel Margin="0,2,10,0" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock
+                      HorizontalAlignment="left"
+                        Foreground="#FF999999"
+                            FontSize="11"
+                            Text="小红书号：">
+
+                    </TextBlock>
+                    <TextBlock
+                      HorizontalAlignment="left"
+                         Foreground="#FF999999"
+                            FontSize="11"
+                            Text="{Binding ViewModel.UserInfo.BasicInfo.RedId}">
+
+                    </TextBlock>
+                    <TextBlock
+                        Margin="10,0,0,0"
+                         Foreground="#FF999999"
+                            FontSize="11"
+                            Text="IP属地：" />
+                    <TextBlock
+                         Foreground="#FF999999"
+                            FontSize="11"
+                            Text="{Binding ViewModel.UserInfo.BasicInfo.IpLocation}" />
+                </StackPanel>
+                <StackPanel  Margin="0,4,0,0" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock
+                        Margin="10,4,0,0"
+                        HorizontalAlignment="Center"
+                        FontSize="12"
+                        Text="{Binding ViewModel.UserInfo.BasicInfo.Desc}" />
+                </StackPanel>
+
+                <StackPanel Margin="0,8,10,0" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Border
+                    Width="15"
+                    Height="15"
+                    HorizontalAlignment="left">
+                        <Border.Background>
+                            <ImageBrush x:Name="sexImage" ImageSource="{Binding ViewModel.SexImage}"/>
+                        </Border.Background>
+                    </Border>
+                    <TextBlock
+                         Margin="10,0,0,0"
+                      HorizontalAlignment="left"
+                        Foreground="#FF999999"
+                            FontSize="10"
+                            Text="{Binding ViewModel.Info.Name}">
+
+                    </TextBlock>
+                    <TextBlock
+                        Margin="10,0,0,0"
+                         Foreground="#FF999999"
+                            FontSize="10"
+                            Text="{Binding ViewModel.Location.Name}" />
+                    <TextBlock
+                        Margin="10,0,0,0"
+                         Foreground="#FF999999"
+                            FontSize="10"
+                            Text="{Binding ViewModel.Profession.Name}" />
+                </StackPanel>
+
+                <StackPanel Margin="0,8,10,0" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                        <TextBlock
+                             FontWeight="Bold"
+                      HorizontalAlignment="Center"
+                            FontSize="12"
+                            Text="{Binding ViewModel.Follows.Count}">
+                        </TextBlock>
+                        <TextBlock
+                         Margin="0,2,0,0"
+                      HorizontalAlignment="left"
+                        Foreground="#FF999999"
+                            FontSize="14"
+                            Text="{Binding ViewModel.Follows.Name}">
+
+                        </TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="22,0,0,0">
+                        <TextBlock
+                             FontWeight="Bold"
+                      HorizontalAlignment="Center"
+                            FontSize="12"
+                            Text="{Binding ViewModel.Fans.Count}">
+                        </TextBlock>
+                        <TextBlock
+                         Margin="0,2,0,0"
+                      HorizontalAlignment="left"
+                        Foreground="#FF999999"
+                            FontSize="14"
+                            Text="{Binding ViewModel.Fans.Name}">
+
+                        </TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="22,0,0,0">
+                        <TextBlock
+                             FontWeight="Bold"
+                      HorizontalAlignment="Center"
+                            FontSize="12"
+                            Text="{Binding ViewModel.Interaction.Count}">
+                        </TextBlock>
+                        <TextBlock
+                         Margin="0,2,0,0"
+                      HorizontalAlignment="left"
+                        Foreground="#FF999999"
+                            FontSize="14"
+                            Text="{Binding ViewModel.Interaction.Name}">
+                        </TextBlock>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+
+        </Grid>
+        <!--导航栏、笔记-->
+        <Grid Grid.Row="2" Margin="0,0,0,-23">
+            <TabControl>
+                <TabItem IsSelected="True">
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <ui:SymbolIcon Margin="0,0,6,0" Symbol="NotepadEdit16" />
+                            <TextBlock Text="笔记" />
+                            <TextBlock Text="{Binding ViewModel.NoteCount}" />
+
+                        </StackPanel>
+                    </TabItem.Header>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="35"  />
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="350" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <ui:TextBox 
+                                Grid.Column="0"
+                                Icon="Search12" 
+                                Name="seachNodes"
+                                PlaceholderText="请输入关键字查询笔记"
+                                Text="{Binding Path=ViewModel.InputSearchText, 
+                                UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                IconPlacement="Right">
+                                <TextBox.InputBindings>
+                                    <KeyBinding Key="Enter" Command="{Binding ViewModel.InputNodeSearchCommand}" />
+                                </TextBox.InputBindings>
+                            </ui:TextBox>
+                            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                <ui:Button  Content="解析笔记" Margin="4,0,4,0" Appearance="Info" Icon="Clock24" HorizontalAlignment="left" Command="{Binding ViewModel.ParseNode}"/>
+                                <ui:Button  Content="全部下载" Margin="0,0,4,0" Appearance="Info" Icon="ArrowDownload16" Command="{Binding ViewModel.DownLoadAll}" HorizontalAlignment="left"/>
+                                <ui:Button  Content="下载已选项" Margin="0,0,4,0" Appearance="Info" Icon="ArrowDownload16" HorizontalAlignment="left" Command="{Binding ViewModel.DownLoadCheackAll}" />
+                                <ui:Button  Content="{Binding ViewModel.ParseNodeCount}" Appearance="Success" HorizontalAlignment="left" />
+                            </StackPanel>
+
+                        </Grid>
+                        <ui:DataGrid 
+                            HorizontalContentAlignment="Center" 
+                            ScrollViewer.VerticalScrollBarVisibility="Visible"
+                            MinHeight="270"
+                            MaxHeight="600"
+                            Grid.Row="1" Name="dgrdView" 
+                            Margin="0,8,0,0" 
+                            ItemsSource="{Binding ViewModel.DataGridItemCollection,Mode=TwoWay}"  
+                            AutoGenerateColumns="False">
+                            <DataGrid.RowStyle>
+                                <Style TargetType="DataGridRow">
+                                    <Setter Property="Height" Value="60" />
+                                </Style>
+                            </DataGrid.RowStyle>
+
+                            <DataGrid.Columns>
+                                <DataGridCheckBoxColumn  Binding="{Binding IsDownLoad,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="选择">
+                                    <DataGridCheckBoxColumn.HeaderTemplate>
+                                        <DataTemplate>
+                                            <CheckBox x:Name="ckbSelectedAll" Click="CheckAll_Click" HorizontalAlignment="Center"></CheckBox>
+                                        </DataTemplate>
+                                    </DataGridCheckBoxColumn.HeaderTemplate>
+                                </DataGridCheckBoxColumn>
+                                <DataGridTextColumn Width="*" IsReadOnly="True" Binding="{Binding DisplayTitle}" Header="标题"/>
+                                <DataGridTextColumn Width="*" IsReadOnly="True" Binding="{Binding FileCount}" Header="文件数量"/>
+                                <DataGridTextColumn Width="*" IsReadOnly="True" Binding="{Binding IsParseStr}" Header="是否已解析"/>
+                                <DataGridTextColumn Width="*" IsReadOnly="True" Binding="{Binding Status}" Header="笔记状态"/>
+                                <DataGridTextColumn Width="*" IsReadOnly="True" Binding="{Binding NodeType}" Header="类型"/>
+                                <DataGridTextColumn Width="*" IsReadOnly="True" Binding="{Binding LikedCount}" Header="点赞数量"/>
+                            </DataGrid.Columns>
+                        </ui:DataGrid>
+                    </Grid>
+                </TabItem>
+
+                <TabItem Visibility="Hidden">
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <ui:SymbolIcon Margin="0,0,6,0" Symbol="Star12" />
+                            <TextBlock Text="收藏" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"  />
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal" Grid.Row="0" Cursor="">
+                            <ui:Button Content="下载全部" Appearance="Info" />
+                        </StackPanel>
+                        <ui:DataGrid HorizontalContentAlignment="Center"  Grid.Row="1" Name="startDgrdView" Margin="0,8,0,0"  AutoGenerateColumns="False">
+                            <DataGrid.RowStyle>
+                                <Style TargetType="DataGridRow">
+                                    <Setter Property="Height" Value="60" />
+                                </Style>
+                            </DataGrid.RowStyle>
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Width="*" IsReadOnly="True" Header="标题"/>
+                                <DataGridTextColumn Width="*" IsReadOnly="True" Header="点赞数量"/>
+                            </DataGrid.Columns>
+                        </ui:DataGrid>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </Grid>
+    </Grid>
+</Page>

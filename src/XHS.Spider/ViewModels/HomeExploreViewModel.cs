@@ -34,13 +34,6 @@ namespace XHS.Spider.ViewModels
             get=> _searchNodes;
             set=> SetProperty(ref _searchNodes, value);
         }
-        // 输入确认事件
-        private ICommand? inputCommand;
-        public ICommand? InputCommand
-        {
-            get => inputCommand ?? (inputCommand = new Wpf.Ui.Common.RelayCommand(ExecuteInitData));
-            set => inputCommand = value;
-        }
         public HomeExploreViewModel() {
             var a = this.InputText;
         }

@@ -1,16 +1,13 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Downloader;
+﻿using Downloader;
 using Hardcodet.Wpf.TaskbarNotification;
-using Microsoft.Web.WebView2.Wpf;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using System.Xml.Linq;
-using UpdateChecker.Interfaces;
 using Wpf.Ui.Common;
 using Wpf.Ui.Common.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
@@ -20,16 +17,16 @@ using XHS.IService.XHS;
 using XHS.Models.DownLoad;
 using XHS.Models.XHS.ApiOutputModel.OtherInfo;
 using XHS.Models.XHS.ApiOutputModel.UserPosted;
-using XHS.Service.Log;
 using XHS.Spider.Helpers;
 using XHS.Spider.Services;
-using XHS.Spider.Views.Windows;
 
 namespace XHS.Spider.ViewModels
 {
-    public partial class UserProfileViewModel : BaseSearchViewModel, INavigationAware
+    /// <summary>
+    /// 关键字搜索
+    /// </summary>
+    public partial class SearchKeywordViewModel : BaseSearchViewModel, INavigationAware
     {
-        private static readonly Service.Log.ILogger Logger = LoggerService.Get(typeof(UserProfileViewModel));
         #region 变量
         public static readonly string BaseUrl = "https://www.xiaohongshu.com/user/profile/";
         public static readonly string BaseVideoUrl = "http://sns-video-bd.xhscdn.com/{0}";
@@ -69,9 +66,10 @@ namespace XHS.Spider.ViewModels
         /// 笔记数量
         /// </summary>
         private string _noteCount;
-        public string NoteCount { 
-            get=> _noteCount;
-            set=>SetProperty(ref _noteCount, value);
+        public string NoteCount
+        {
+            get => _noteCount;
+            set => SetProperty(ref _noteCount, value);
         }
         /// <summary>
         /// 解析数量
@@ -149,7 +147,7 @@ namespace XHS.Spider.ViewModels
             get => _userInfo;
             set => SetProperty(ref _userInfo, value);
         }
-        public UserProfileViewModel(ISnackbarService snackbarService, IXhsSpiderService xhsSpiderService)
+        public SearchKeywordViewModel(ISnackbarService snackbarService, IXhsSpiderService xhsSpiderService)
         {
             _notifyIcon = new TaskbarIcon();
             _snackbarService = snackbarService;
@@ -197,7 +195,7 @@ namespace XHS.Spider.ViewModels
                 var hasNoParseNode = CheckDownLoadNodesData(cheackNodes);
                 if (!hasNoParseNode)
                 {
-                    DownLoad(cheackNodes,false);
+                    DownLoad(cheackNodes, false);
                 }
             }
             else
@@ -247,15 +245,16 @@ namespace XHS.Spider.ViewModels
             _snackbarService.Show("提示", "开始解析", SymbolRegular.ErrorCircle12, ControlAppearance.Success);
             //TODO:有勾选项解析勾选项无勾选项解析所有笔记
             IEnumerable<NoteModel> nodes = null;
-            var cheackNodes = this.Nodes.Where(e => e.IsDownLoad == true&& e.IsParse==false);
-            if (cheackNodes.Any()) {
+            var cheackNodes = this.Nodes.Where(e => e.IsDownLoad == true && e.IsParse == false);
+            if (cheackNodes.Any())
+            {
                 nodes = cheackNodes;
             }
             else
             {
-                nodes = this.Nodes.Where(e =>e.IsParse == false);  
+                nodes = this.Nodes.Where(e => e.IsParse == false);
             }
-            
+
             string dirName = Format.FormatFileName(UserInfo.BasicInfo.NickName);
             string dirPath = $"{AppDomain.CurrentDomain.BaseDirectory}DownLoad\\{dirName}";
             //循环笔记数据
@@ -313,7 +312,7 @@ namespace XHS.Spider.ViewModels
                     {
                         nodeEntity.IsParse = true;
                         nodeEntity.FileCount = downloadItems.Count();
-                        nodeEntity.DownloadItems= downloadItems;
+                        nodeEntity.DownloadItems = downloadItems;
                         nodeEntity.IsNormal = true;
                     }
                     this.ParseNodeCount = $"已解析({this.Nodes.Where(e => e.IsParse == true).Count()})条";
@@ -321,7 +320,7 @@ namespace XHS.Spider.ViewModels
                 else
                 {
                     //网络连接异常，请检查网络设置或重启试试
-                    if (resultData.Code== 300012)
+                    if (resultData.Code == 300012)
                     {
                         _notifyIcon.ShowBalloonTip($"解析失败，接口异常。已完成解析【{this.Nodes.Where(e => e.IsParse == true).Count()}】条笔记", "提示", BalloonIcon.Error);
                         break;
@@ -330,7 +329,7 @@ namespace XHS.Spider.ViewModels
                     {
                         //-510001  笔记状态异常，请稍后查看
                         if (resultData.Code == -510001)
-                        { 
+                        {
                             //TODO:其他异常，将笔记状态改为异常
                             var nodeEntity = this.Nodes.FirstOrDefault(e => e.NoteId == item.NoteId);
                             if (nodeEntity != null)
@@ -343,15 +342,15 @@ namespace XHS.Spider.ViewModels
                             this.ParseNodeCount = $"已解析({this.Nodes.Where(e => e.IsParse == true).Count()})条";
                         }
                     }
-                  
+
                 }
                 Random ran = new Random();
                 int awaitTime = ran.Next(2800, 3500);
                 await Task.Delay(awaitTime);
                 this.DataGridItemCollection = this.Nodes.ToArray();
             }
-            var parseNodes= nodes.Where(e =>e.IsParse == false);
-            if (parseNodes.Count()==0)
+            var parseNodes = nodes.Where(e => e.IsParse == false);
+            if (parseNodes.Count() == 0)
             {
                 _notifyIcon.ShowBalloonTip($"解析完成", "提示", BalloonIcon.Info);
             }
@@ -397,7 +396,7 @@ namespace XHS.Spider.ViewModels
                     var id = SearchService.GetId(InputText, BaseUrl);
                     if (string.IsNullOrEmpty(id))
                     {
-                        Logger.Error($"URL有误：{InputText}");
+                        //Logger.Error($"URL有误：{InputText}");
                         InitNullImage();
                         return;
                     }
@@ -444,7 +443,7 @@ namespace XHS.Spider.ViewModels
                                     if (info?.Icon.Contains("gender-female-v1.png") == true)
                                     {
                                         sex = new BitmapImage(new Uri("pack://application:,,,/Resources/gender-female-v1.png"));
-                                       
+
                                     }
                                     else if (info?.Icon.Contains("gender-male-v1.png") == true)
                                     {
@@ -462,13 +461,13 @@ namespace XHS.Spider.ViewModels
                                 }
                             }));
 
-                            var nodes =await _xhsSpiderService.GetAllUserNode(id, webView);
+                            var nodes = await _xhsSpiderService.GetAllUserNode(id, webView);
                             foreach (var node in nodes)
                             {
                                 node.LikedCount = node.interact_info?.LikedCount;
                             }
                             Nodes = nodes.ToArray();
-                            NoteCount =$"({nodes.Count()})条" ;
+                            NoteCount = $"({nodes.Count()})条";
                             DataGridItemCollection = Nodes;
                         }
                         else

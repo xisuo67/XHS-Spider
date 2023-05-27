@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Wpf.Ui.Common.Interfaces;
 
 namespace XHS.Spider.ViewModels
@@ -23,6 +24,13 @@ namespace XHS.Spider.ViewModels
             set => SetProperty(ref inputText, value);
         }
 
+        // 输入确认事件
+        private ICommand inputCommand;
+        public ICommand InputCommand
+        {
+            get => inputCommand ?? (inputCommand = new Wpf.Ui.Common.RelayCommand(ExecuteInitData));
+            set => inputCommand = value;
+        }
         public abstract void ExecuteInitData();
     }
 }
