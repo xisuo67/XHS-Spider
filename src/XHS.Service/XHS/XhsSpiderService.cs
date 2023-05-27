@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Markup;
 using XHS.Common.Http;
 using XHS.IService.XHS;
 using XHS.Models.XHS.ApiOutputModel;
@@ -24,13 +25,23 @@ namespace XHS.Service.XHS
     public class XhsSpiderService : IXhsSpiderService
     {
         private static readonly ILogger Logger = LoggerService.Get(typeof(XhsSpiderService));
-        private async Task<Dictionary<string,string>> GetXsHeader(string url, WebView2 webView)
+        private async Task<Dictionary<string,string>> GetXsHeader(string url, WebView2 webView,string jsonData="")
         {
-            Dictionary<string,string> dic= new Dictionary<string,string>(); 
-            string jscode = "var url='" + url + "';\r\n" + @"try {
-                                                                            sign(url);
+            Dictionary<string,string> dic= new Dictionary<string,string>();
+            string param = string.Empty;
+            if (string.IsNullOrEmpty(jsonData))
+            {
+                param = "var url='" + url + "';\r\n  var data=null;";
+            }
+            else
+            {
+                param = "var url='" + url + "';\r\n var jsonStr='" + jsonData + "';var data = JSON.parse(jsonStr);";
+            }
+
+            string jscode = param + @"try {
+                                                                            sign(url,data);
                                                                         } catch (e) { winning.log(e); }
-                                                                        function sign(url) {
+                                                                        function sign(url,data) {
                                                                             var t;
                                                                             var o = window._webmsxyw(url, t);
                                                                             return o;
