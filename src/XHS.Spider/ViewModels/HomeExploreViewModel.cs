@@ -9,7 +9,9 @@ using System.Web;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Wpf.Ui.Common.Interfaces;
+using Wpf.Ui.Mvvm.Contracts;
 using XHS.Common.Helpers;
+using XHS.IService.XHS;
 using XHS.Models.XHS.ApiOutputModel.Search.BusinessModel;
 using XHS.Models.XHS.ApiOutputModel.UserPosted;
 using XHS.Models.XHS.InputModel;
@@ -22,6 +24,8 @@ namespace XHS.Spider.ViewModels
     public class HomeExploreViewModel : BaseSearchViewModel, INavigationAware
     {
         #region 属性
+        private readonly ISnackbarService _snackbarService;
+        private readonly IXhsSpiderService _xhsSpiderService;
         private ObservableCollection<SearchNodesModel> _nodes = new ObservableCollection<SearchNodesModel>();
 
         public ObservableCollection<SearchNodesModel> Nodes
@@ -37,8 +41,9 @@ namespace XHS.Spider.ViewModels
             set=> SetProperty(ref _searchNodes, value);
         }
 
-        public HomeExploreViewModel() {
-            var a = this.InputText;
+        public HomeExploreViewModel(ISnackbarService snackbarService, IXhsSpiderService xhsSpiderService) {
+            _snackbarService = snackbarService;
+            _xhsSpiderService = xhsSpiderService;
         }
         #endregion
 
@@ -46,7 +51,7 @@ namespace XHS.Spider.ViewModels
         /// <summary>
         /// 处理输入事件
         /// </summary>
-        public override void ExecuteInitData()
+        public override async void ExecuteInitData()
         {
             if (!string.IsNullOrEmpty(InputText))
             {
@@ -56,7 +61,7 @@ namespace XHS.Spider.ViewModels
                     KeyWord = keyword,
                     SearchId = AlgorithmHelper.GetSearchId()
                 };
-
+                var apiResult= await _xhsSpiderService.SearchNotes(model,webView);
                 //List<SearchNode> nodes = new List<SearchNode>();
                 //for (int i = 0; i < 20; i++)
                 //{
