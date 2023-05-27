@@ -50,6 +50,7 @@ namespace XHS.Spider.ViewModels
             {
                 var keyword = HttpUtility.UrlDecode(InputText);
                 this.InputText= keyword;
+
                 List<SearchNode> nodes = new List<SearchNode>();
                 for (int i = 0; i < 20; i++)
                 {

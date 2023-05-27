@@ -31,8 +31,8 @@
                 </TextBox.InputBindings>
             </ui:TextBox>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Background="{DynamicResource ApplicationBackgroundBrush}">
-                <Menu Margin="0,0,0,0" >
-                    <MenuItem Header="设置" Width="119">
+                <Menu Margin="0,0,50,0" >
+                    <MenuItem Header="设置">
                         <MenuItem.Icon>
                             <ui:SymbolIcon Filled="True" Symbol="Settings28" />
                         </MenuItem.Icon>
