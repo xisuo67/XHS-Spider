@@ -39,13 +39,13 @@ namespace XHS.Service.XHS
             }
 
             string jscode = param + @"try {
-                                                                            sign(url,data);
-                                                                        } catch (e) { winning.log(e); }
-                                                                        function sign(url,data) {
-                                                                            var t;
-                                                                            var o = window._webmsxyw(url, t);
-                                                                            return o;
-                                                                        }";
+                                        sign(url,data);
+                                    } catch (e) { winning.log(e); }
+                                    function sign(url,data) {
+                                        var t;
+                                        var o = window._webmsxyw(url, t);
+                                        return o;
+                                    }";
             var xsxtStr = await webView.CoreWebView2.ExecuteScriptAsync(jscode);
             if (!string.IsNullOrEmpty(xsxtStr)&& xsxtStr!="null")
             {
@@ -188,8 +188,10 @@ namespace XHS.Service.XHS
             XHSBaseApiModel<SearchNodesOutPutModel> model = new XHSBaseApiModel<SearchNodesOutPutModel>();
             try
             {
-                string url = $"/api/sns/web/v1/search/notes?keyword={inputModel.KeyWord}&note_type={inputModel.NoteType}&page={inputModel.Page}&page_size={inputModel.PageSize}&search_id={inputModel.SearchId}&sort={inputModel.Sort}";
-                var header = await GetXsHeader(url, webView);
+                //string url = $"/api/sns/web/v1/search/notes?keyword={inputModel.KeyWord}&note_type={inputModel.NoteType}&page={inputModel.Page}&page_size={inputModel.PageSize}&search_id={inputModel.SearchId}&sort={inputModel.Sort}";
+                string url = "/api/sns/web/v1/search/notes";
+                var postData=JsonConvert.SerializeObject(inputModel);
+                var header = await GetXsHeader(url, webView, postData);
                 Logger.Info($"调用接口：{url}");
                 var result = HttpClientHelper.DoPost(url, header);
                 if (!string.IsNullOrEmpty(result))
