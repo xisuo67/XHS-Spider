@@ -193,7 +193,7 @@ namespace XHS.Service.XHS
                 var postData=JsonConvert.SerializeObject(inputModel);
                 var header = await GetXsHeader(url, webView, postData);
                 Logger.Info($"调用接口：{url}");
-                var result = HttpClientHelper.DoPost(url, header);
+                var result = HttpClientHelper.DoPost(url, header,postData);
                 if (!string.IsNullOrEmpty(result))
                 {
                     model = JsonConvert.DeserializeObject<XHSBaseApiModel<SearchNodesOutPutModel>>(result);

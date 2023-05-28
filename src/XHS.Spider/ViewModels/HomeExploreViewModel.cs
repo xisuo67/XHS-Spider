@@ -57,9 +57,9 @@ namespace XHS.Spider.ViewModels
             {
                 var keyword = HttpUtility.UrlDecode(InputText);
                 this.InputText= keyword;
-                SearchInputModel model = new SearchInputModel() { 
-                    KeyWord = keyword,
-                    SearchId = AlgorithmHelper.GetSearchId()
+                SearchInputModel model = new SearchInputModel() {
+                    keyword = keyword,
+                    search_id = AlgorithmHelper.GetSearchId()
                 };
                 var apiResult= await _xhsSpiderService.SearchNotes(model,webView);
                 //List<SearchNode> nodes = new List<SearchNode>();

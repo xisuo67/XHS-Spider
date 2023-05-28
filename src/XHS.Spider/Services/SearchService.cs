@@ -70,9 +70,11 @@ namespace XHS.Spider.Services
             //非URL默认识别为关键字搜索
             else if (!IsUrl(input))
             {
-                isSubscribeEvent = true;
-                var url = $"https://www.xiaohongshu.com/search_result/?keyword={input}&source=web_explore_feed";
-                _webView.CoreWebView2.Navigate(url);
+                //isSubscribeEvent = true;
+                RedirectService<HomeExploreViewModel>.SetJumpParam(input, _serviceProvider, _pageServiceNew, _webView);
+                _navigation.Navigate(typeof(Views.Pages.HomeExplorePage));
+                //var url = $"https://www.xiaohongshu.com/search_result/?keyword={input}&source=web_explore_feed";
+                //_webView.CoreWebView2.Navigate(url);
             }
             if (isSubscribeEvent)
             {
