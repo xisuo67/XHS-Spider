@@ -189,5 +189,14 @@ namespace XHS.Spider.Views.Windows
                 right: 0,
                 bottom: 0);
         }
+
+        private void Border_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            WebViewContainer container = new WebViewContainer();
+            if (container.ShowDialog()==true)
+            {
+
+            }
+        }
     }
 }

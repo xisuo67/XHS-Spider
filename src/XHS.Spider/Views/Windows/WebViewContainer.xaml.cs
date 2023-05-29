@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using XHS.Common.Global;
 
 namespace XHS.Spider.Views.Windows
 {
@@ -22,6 +23,8 @@ namespace XHS.Spider.Views.Windows
         public WebViewContainer()
         {
             InitializeComponent();
+
+            //GlobalCaChe.webView;
         }
     }
 }

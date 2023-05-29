@@ -71,7 +71,7 @@
                     Width="40"
                     Height="40"
                         Grid.Row="0"
-                    CornerRadius="20" Margin="0,0,32,0">
+                    CornerRadius="20" Margin="0,0,32,0" MouseDown="Border_MouseDown">
                             <Border.Background>
                                 <ImageBrush x:Name="headImage" ImageSource="{Binding ViewModel.CurrentUser.HeadImage}"/>
                             </Border.Background>
