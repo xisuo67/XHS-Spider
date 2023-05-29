@@ -66,6 +66,20 @@
                         VerticalAlignment="Top"
                         FontSize="24"
                         Navigation="{Binding ElementName=RootNavigation}" />
+                    <StackPanel  HorizontalAlignment="Right" VerticalAlignment="Top">
+                        <Border
+                    Width="40"
+                    Height="40"
+                        Grid.Row="0"
+                    CornerRadius="20" Margin="0,0,32,0">
+                            <Border.Background>
+                                <ImageBrush x:Name="headImage" ImageSource="{x:Null}"/>
+                            </Border.Background>
+
+                        </Border>
+                        <TextBlock HorizontalAlignment="Center" FontSize="12" DataContext="{Binding UserName}"></TextBlock>
+                    </StackPanel>
+
                     <ui:Snackbar
                         x:Name="RootSnackbar"
                         Title=""
@@ -76,18 +90,6 @@
                         Icon="PuzzlePiece24"
                         Message=""
                         Timeout="5000" />
-                    <!--<Border
-                    Width="40"
-                    Height="40"
-                        Grid.Row="0"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Top"
-                    CornerRadius="20" Margin="0,0,32,0">
-                        --><!--<Image Name="imgDynamic" Source="pack://application:,,,/Resources/wpfui_full.png"></Image>--><!--
-                        <Border.Background>
-                            <ImageBrush x:Name="imgDynamic" />
-                        </Border.Background>
-                    </Border>-->
                 </Grid>
             </Border>
         </Grid>

@@ -6,6 +6,8 @@ using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
 using Wpf.Ui.Controls.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
+using XHS.Models.Business;
+using XHS.Models.XHS.ApiOutputModel.Search.BusinessModel;
 
 namespace XHS.Spider.ViewModels
 {
@@ -31,6 +33,12 @@ namespace XHS.Spider.ViewModels
                 InitializeViewModel();
         }
 
+        private UserInfoModel _currentUser = null;
+
+        public UserInfoModel CurrentUser {
+            get => _currentUser;
+            set => SetProperty(ref _currentUser, value);
+        }
         private void InitializeViewModel()
         {
             ApplicationTitle = "小红书数据采集工具";

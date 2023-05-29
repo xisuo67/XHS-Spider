@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using XHS.Common.Utils;
+using XHS.Models.Business;
 using XHS.Models.SettingCookie;
 
 namespace XHS.Common.Global
@@ -18,5 +19,7 @@ namespace XHS.Common.Global
         public static List<CookieModel> Cookies=new List<CookieModel>();
         public static ClipboardHooker clipboardHooker;
         public static WebView2 webView;
+
+        public static UserInfoModel CurrentUser;
     }
 }
