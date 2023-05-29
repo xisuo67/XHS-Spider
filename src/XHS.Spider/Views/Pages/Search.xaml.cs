@@ -39,7 +39,7 @@ namespace XHS.Spider.Views.Pages
             _aggregator = aggregator;
             ViewModel = viewModel;
             InitializeComponent();
-            webView.Source = new Uri("https://www.xiaohongshu.com/explore");
+            //webView.Source = new Uri("https://www.xiaohongshu.com/explore");
             InitializeAsync();
         }
 
@@ -47,15 +47,15 @@ namespace XHS.Spider.Views.Pages
         private async void InitializeAsync()
         {
 
-            ViewModel.webView = this.webView;
-            await webView.EnsureCoreWebView2Async(null);
-            await webView.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync("window.chrome.webview.postMessage(window.document.URL);");
+            //ViewModel.webView = this.webView;
+            //await webView.EnsureCoreWebView2Async(null);
+            //await webView.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync("window.chrome.webview.postMessage(window.document.URL);");
         }
         #endregion
 
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
-            scriptHost = ScriptHost.GetScriptHost(webView, _aggregator);
+            //scriptHost = ScriptHost.GetScriptHost(webView, _aggregator);
         }
     }
 }

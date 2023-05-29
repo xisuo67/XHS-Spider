@@ -20,15 +20,6 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <ui:TextBox 
-            Icon="Search12" 
-            PlaceholderText="请输入关键字或博主首页地址"
-            Text="{Binding Path=ViewModel.InputText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-            IconPlacement="Right" Margin="110,0,110,0">
-                <TextBox.InputBindings>
-                    <KeyBinding Key="Enter" Command="{Binding ViewModel.InputCommand}" />
-                </TextBox.InputBindings>
-            </ui:TextBox>
             <Border HorizontalAlignment="Center" Width="131" Margin="0,130,0,18" 
            >
                 <Border.Background>
@@ -42,8 +33,15 @@
         
 
         <Grid Grid.Row="1" >
-            <Wpf:WebView2
-            x:Name="webView" Margin="0,0,0,-245"/>
+            <ui:TextBox 
+            Icon="Search12" 
+            PlaceholderText="请输入关键字或博主首页地址"
+            Text="{Binding Path=ViewModel.InputText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+            IconPlacement="Right" Margin="110,0,110,0">
+                <TextBox.InputBindings>
+                    <KeyBinding Key="Enter" Command="{Binding ViewModel.InputCommand}" />
+                </TextBox.InputBindings>
+            </ui:TextBox>
         </Grid>
     </Grid>
 </ui:UiPage>
