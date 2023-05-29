@@ -262,7 +262,7 @@ namespace XHS.Spider.ViewModels
             foreach (var item in nodes)
             {
                 List<DownloadItem> downloadItems = new List<DownloadItem>();
-                var resultData = await _xhsSpiderService.GetNodeDetail(item.NoteId, webView);
+                var resultData = await _xhsSpiderService.GetNodeDetail(item.NoteId);
                 if (resultData != null && resultData.Success)
                 {
                     var nodeDetail = resultData.Data.Items;
@@ -404,7 +404,7 @@ namespace XHS.Spider.ViewModels
                     else
                     {
                         this.ParseNodeCount = "已解析(0)条";
-                        var apiResult = await _xhsSpiderService.GetOtherInfo(id, webView);
+                        var apiResult = await _xhsSpiderService.GetOtherInfo(id);
                         if (apiResult != null && apiResult.Success)
                         {
                             UserInfo = apiResult.Data;
@@ -462,7 +462,7 @@ namespace XHS.Spider.ViewModels
                                 }
                             }));
 
-                            var nodes =await _xhsSpiderService.GetAllUserNode(id, webView);
+                            var nodes =await _xhsSpiderService.GetAllUserNode(id);
                             foreach (var node in nodes)
                             {
                                 node.LikedCount = node.interact_info?.LikedCount;

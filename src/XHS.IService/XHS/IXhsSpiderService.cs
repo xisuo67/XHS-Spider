@@ -25,14 +25,14 @@ namespace XHS.IService.XHS
         /// </summary>
         /// <param name="nodeid"></param>
         /// <returns></returns>
-        Task<XHSBaseApiModel<NodeDetailModel>> GetNodeDetail(string nodeid, WebView2 webView);
+        Task<XHSBaseApiModel<NodeDetailModel>> GetNodeDetail(string nodeid);
 
         /// <summary>
         /// 获取当前小红书博主其他信息，包含个人信息等数据
         /// </summary>
         /// <param name="targetUserId"></param>
         /// <returns></returns>
-        Task<XHSBaseApiModel<OtherInfoModel>> GetOtherInfo(string targetUserId, WebView2 webView);
+        Task<XHSBaseApiModel<OtherInfoModel>> GetOtherInfo(string targetUserId);
 
 
         /// <summary>
@@ -40,13 +40,13 @@ namespace XHS.IService.XHS
         /// </summary>
         /// <param name="userid"></param>
         /// <returns></returns>
-        Task<List<NoteModel>> GetAllUserNode(string userid, WebView2 webView);
+        Task<List<NoteModel>> GetAllUserNode(string userid);
 
         /// <summary>
         /// 关键字搜索笔记
         /// </summary>
         /// <param name="inputModel"></param>
         /// <returns></returns>
-        Task<XHSBaseApiModel<SearchNodesOutPutModel>> SearchNotes(SearchInputModel inputModel, WebView2 webView);
+        Task<XHSBaseApiModel<SearchNodesOutPutModel>> SearchNotes(SearchInputModel inputModel);
     }
 }

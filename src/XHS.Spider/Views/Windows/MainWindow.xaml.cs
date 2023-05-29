@@ -29,7 +29,7 @@ namespace XHS.Spider.Views.Windows
     /// </summary>
     public partial class MainWindow : INavigationWindow
     {
-
+        private IEventAggregator _aggregator { get; set; }
         private readonly TaskbarIcon _notifyIcon;
         private ContextMenu _contextMenu;
         private UpdateCheckerServer updateChecker;
@@ -42,9 +42,9 @@ namespace XHS.Spider.Views.Windows
             get;
         }
 
-        public MainWindow(ViewModels.MainWindowViewModel viewModel, IPageServiceNew pageService, ITaskBarService taskBarService, INavigationService navigationService, IServiceProvider serviceProvider, ISnackbarService snackbarService)
+        public MainWindow(ViewModels.MainWindowViewModel viewModel, IPageServiceNew pageService, ITaskBarService taskBarService, INavigationService navigationService, IServiceProvider serviceProvider, ISnackbarService snackbarService, IEventAggregator aggregator)
         {
-           
+            _aggregator = aggregator;
             _taskBarService = taskBarService;
             _serviceProvider = serviceProvider;
             ViewModel = viewModel;
@@ -56,8 +56,11 @@ namespace XHS.Spider.Views.Windows
             updateChecker.NewVersionFound += updateChecker_NewVersionFound;
             updateChecker.NewVersionNotFound += updateChecker_NewVersionNotFound;
             #endregion
-            
             InitializeComponent();
+            #region webView
+            webView.Source = new Uri("https://www.xiaohongshu.com/explore");
+            InitializeAsync();
+            #endregion
             SetPageService(pageService);
             _pageServiceNew = pageService;
             navigationService.SetNavigationControl(RootNavigation);
@@ -115,7 +118,8 @@ namespace XHS.Spider.Views.Windows
             Task.Run(async () =>
             {
                 //TODO:这里预留程序启动初始化数据
-              
+  
+                ScriptHost.GetScriptHost(GlobalCaChe.webView, _aggregator);
                 //await Task.Delay(2000);
                 updateChecker.Check(true);
                 await Dispatcher.InvokeAsync(() =>
@@ -153,7 +157,12 @@ namespace XHS.Spider.Views.Windows
 
         #endregion INavigationWindow methods
 
-        
+        private async void InitializeAsync()
+        {
+            GlobalCaChe.webView = this.webView;
+            await webView.EnsureCoreWebView2Async(null);
+            await webView.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync("window.chrome.webview.postMessage(window.document.URL);");
+        }
         /// <summary>
         /// Raises the closed event.
         /// </summary>

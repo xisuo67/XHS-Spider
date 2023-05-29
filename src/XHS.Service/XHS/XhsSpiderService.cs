@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Markup;
+using XHS.Common.Global;
 using XHS.Common.Http;
 using XHS.IService.XHS;
 using XHS.Models.XHS.ApiOutputModel;
@@ -25,7 +26,7 @@ namespace XHS.Service.XHS
     public class XhsSpiderService : IXhsSpiderService
     {
         private static readonly ILogger Logger = LoggerService.Get(typeof(XhsSpiderService));
-        private async Task<Dictionary<string,string>> GetXsHeader(string url, WebView2 webView,string jsonData="")
+        private async Task<Dictionary<string,string>> GetXsHeader(string url,string jsonData="")
         {
             Dictionary<string,string> dic= new Dictionary<string,string>();
             string param = string.Empty;
@@ -46,7 +47,7 @@ namespace XHS.Service.XHS
                                         var o = window._webmsxyw(url, t);
                                         return o;
                                     }";
-            var xsxtStr = await webView.CoreWebView2.ExecuteScriptAsync(jscode);
+            var xsxtStr = await GlobalCaChe.webView.CoreWebView2.ExecuteScriptAsync(jscode);
             if (!string.IsNullOrEmpty(xsxtStr)&& xsxtStr!="null")
             {
                 try
@@ -72,13 +73,13 @@ namespace XHS.Service.XHS
         /// <param name="nodeid"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public async Task<XHSBaseApiModel<NodeDetailModel>> GetNodeDetail(string nodeid, WebView2 webView)
+        public async Task<XHSBaseApiModel<NodeDetailModel>> GetNodeDetail(string nodeid)
         {
             XHSBaseApiModel<NodeDetailModel> nodeDetailModel = new XHSBaseApiModel<NodeDetailModel>();
             try
             {
                 string url = $"/api/sns/web/v1/feed?source_note_id={nodeid}";
-                var header=await GetXsHeader(url,webView);
+                var header=await GetXsHeader(url);
                 Logger.Info($"调用接口：{url}");
                 var result = HttpClientHelper.DoPost(url, header);
                 if (!string.IsNullOrEmpty(result))
@@ -98,13 +99,13 @@ namespace XHS.Service.XHS
         /// <param name="targetUserId"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public async Task<XHSBaseApiModel<OtherInfoModel>> GetOtherInfo(string targetUserId, WebView2 webView)
+        public async Task<XHSBaseApiModel<OtherInfoModel>> GetOtherInfo(string targetUserId)
         {
             XHSBaseApiModel<OtherInfoModel> model = new XHSBaseApiModel<OtherInfoModel>();
             try
             {
                 string url = $"/api/sns/web/v1/user/otherinfo?target_user_id={targetUserId}";
-                var header = await GetXsHeader(url, webView);
+                var header = await GetXsHeader(url);
                 Logger.Info($"调用接口：{url}");
                 var result = HttpClientHelper.DoGet(url, header);
                 if (!string.IsNullOrEmpty(result))
@@ -119,7 +120,7 @@ namespace XHS.Service.XHS
             return model;
         }
 
-        private async Task<bool> UserPosted(UserPostedInputModel model, List<NoteModel> userNodes, WebView2 webView)
+        private async Task<bool> UserPosted(UserPostedInputModel model, List<NoteModel> userNodes)
         {
             bool isSuccess = false;
             if (model != null)
@@ -127,7 +128,7 @@ namespace XHS.Service.XHS
                 try
                 {
                     string url = $"/api/sns/web/v1/user_posted?num={model.num}&cursor={model.cursor}&user_id={model.user_id}";
-                    var header = await GetXsHeader(url, webView);
+                    var header = await GetXsHeader(url);
                     Logger.Info($"调用接口：{url}");
                     var result = HttpClientHelper.DoGet(url, header);
                     if (!string.IsNullOrEmpty(result))
@@ -147,7 +148,7 @@ namespace XHS.Service.XHS
                             {
                                 model.cursor = resultData.Data.Cursor;
                                 //await Task.Delay(500);
-                                await UserPosted(model, userNodes, webView);
+                                await UserPosted(model, userNodes);
                             }
                             isSuccess = true;
                         }
@@ -166,14 +167,14 @@ namespace XHS.Service.XHS
         /// <param name="userid"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public async Task<List<NoteModel>> GetAllUserNode(string userid, WebView2 webView)
+        public async Task<List<NoteModel>> GetAllUserNode(string userid)
         {
             List<NoteModel> nodes = new List<NoteModel>();
             UserPostedInputModel model = new UserPostedInputModel { 
                 user_id= userid,
                 num=30,
             };
-            await UserPosted(model,nodes, webView);
+            await UserPosted(model,nodes);
             return nodes;
         }
         /// <summary>
@@ -183,7 +184,7 @@ namespace XHS.Service.XHS
         /// <param name="webView"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public async Task<XHSBaseApiModel<SearchNodesOutPutModel>> SearchNotes(SearchInputModel inputModel, WebView2 webView)
+        public async Task<XHSBaseApiModel<SearchNodesOutPutModel>> SearchNotes(SearchInputModel inputModel)
         {
             XHSBaseApiModel<SearchNodesOutPutModel> model = new XHSBaseApiModel<SearchNodesOutPutModel>();
             try
@@ -191,7 +192,7 @@ namespace XHS.Service.XHS
                 //string url = $"/api/sns/web/v1/search/notes?keyword={inputModel.KeyWord}&note_type={inputModel.NoteType}&page={inputModel.Page}&page_size={inputModel.PageSize}&search_id={inputModel.SearchId}&sort={inputModel.Sort}";
                 string url = "/api/sns/web/v1/search/notes";
                 var postData=JsonConvert.SerializeObject(inputModel);
-                var header = await GetXsHeader(url, webView, postData);
+                var header = await GetXsHeader(url, postData);
                 Logger.Info($"调用接口：{url}");
                 var result = HttpClientHelper.DoPost(url, header,postData);
                 if (!string.IsNullOrEmpty(result))

@@ -15,7 +15,7 @@ namespace XHS.Spider.ViewModels
     /// </summary>
     public abstract class BaseSearchViewModel : ObservableObject
     {
-        public WebView2 webView;
+        //public WebView2 webView;
 
         private string inputText;
         public string InputText

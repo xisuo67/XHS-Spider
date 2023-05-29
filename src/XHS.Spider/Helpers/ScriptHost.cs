@@ -110,7 +110,7 @@ namespace XHS.Spider.Helpers
             string hosturl = webView.Source.Host.ToString();
             hosturl = "https://" + hosturl;
             GetCookie(hosturl);
-            var webView2 = sender as Microsoft.Web.WebView2.Wpf.WebView2;
+            var webView2 = sender as WebView2;
             if (webView2 != null)
             {
                 var url = webView2.CoreWebView2.Source;
