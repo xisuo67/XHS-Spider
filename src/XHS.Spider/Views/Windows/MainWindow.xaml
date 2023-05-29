@@ -77,7 +77,7 @@
                             </Border.Background>
 
                         </Border>
-                        <TextBlock HorizontalAlignment="Center" FontSize="12" DataContext="{Binding ViewModel.CurrentUser.UserName}"></TextBlock>
+                        <TextBlock HorizontalAlignment="Center" FontSize="12" DataContext="{Binding ViewModel.CurrentUser.NickName}"></TextBlock>
                     </StackPanel>
 
                     <ui:Snackbar

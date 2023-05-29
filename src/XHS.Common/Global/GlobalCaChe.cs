@@ -6,8 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using XHS.Common.Utils;
-using XHS.Models.Business;
 using XHS.Models.SettingCookie;
+using XHS.Models.XHS.ApiOutputModel.Me;
 
 namespace XHS.Common.Global
 {

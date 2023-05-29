@@ -1,15 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.ObjectModel;
-using System.Windows;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
 using Wpf.Ui.Controls.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
 using XHS.Common.Global;
 using XHS.Common.Helpers;
-using XHS.Models.Business;
-using XHS.Models.XHS.ApiOutputModel.Search.BusinessModel;
+using XHS.Models.XHS.ApiOutputModel.Me;
 
 namespace XHS.Spider.ViewModels
 {
@@ -44,7 +42,7 @@ namespace XHS.Spider.ViewModels
         private void InitCurrentUser() {
             if (GlobalCaChe.CurrentUser!=null)
             {
-                GlobalCaChe.CurrentUser.HeadImage=FileHelper.UrlToBitmapImage(GlobalCaChe.CurrentUser.HeadUrl);
+                GlobalCaChe.CurrentUser.HeadImage=FileHelper.UrlToBitmapImage(GlobalCaChe.CurrentUser.Images);
                 CurrentUser =GlobalCaChe.CurrentUser;
             }
             else
