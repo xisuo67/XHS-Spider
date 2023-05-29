@@ -73,11 +73,11 @@
                         Grid.Row="0"
                     CornerRadius="20" Margin="0,0,32,0">
                             <Border.Background>
-                                <ImageBrush x:Name="headImage" ImageSource="{x:Null}"/>
+                                <ImageBrush x:Name="headImage" ImageSource="{Binding ViewModel.CurrentUser.HeadImage}"/>
                             </Border.Background>
 
                         </Border>
-                        <TextBlock HorizontalAlignment="Center" FontSize="12" DataContext="{Binding UserName}"></TextBlock>
+                        <TextBlock HorizontalAlignment="Center" FontSize="12" DataContext="{Binding ViewModel.CurrentUser.UserName}"></TextBlock>
                     </StackPanel>
 
                     <ui:Snackbar

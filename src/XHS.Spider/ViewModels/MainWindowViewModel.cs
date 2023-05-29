@@ -6,6 +6,8 @@ using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
 using Wpf.Ui.Controls.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
+using XHS.Common.Global;
+using XHS.Common.Helpers;
 using XHS.Models.Business;
 using XHS.Models.XHS.ApiOutputModel.Search.BusinessModel;
 
@@ -33,16 +35,29 @@ namespace XHS.Spider.ViewModels
                 InitializeViewModel();
         }
 
-        private UserInfoModel _currentUser = null;
+        private UserInfoModel _currentUser = new UserInfoModel();
 
-        public UserInfoModel CurrentUser {
+        public UserInfoModel? CurrentUser {
             get => _currentUser;
             set => SetProperty(ref _currentUser, value);
+        }
+        private void InitCurrentUser() {
+            if (GlobalCaChe.CurrentUser!=null)
+            {
+                GlobalCaChe.CurrentUser.HeadImage=FileHelper.UrlToBitmapImage(GlobalCaChe.CurrentUser.HeadUrl);
+                CurrentUser =GlobalCaChe.CurrentUser;
+            }
+            else
+            {
+                var image = DrawHealper.CreateHead("未登录");
+                var bit= FileHelper.BitmapToBitmapImage(image);
+                CurrentUser.HeadImage = bit;
+            }
         }
         private void InitializeViewModel()
         {
             ApplicationTitle = "小红书数据采集工具";
-
+            InitCurrentUser();
             NavigationItems = new ObservableCollection<INavigationControl>
             {
                 new NavigationItem()
