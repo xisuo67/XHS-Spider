@@ -10,7 +10,7 @@ namespace XHS.Spider.Services
     public class WebViewTest : WebView2Control
     {
         public WebViewTest() { 
-        
+         
         }
     }
 }

@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:XHS.Spider.Views.Windows" xmlns:Wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
         mc:Ignorable="d"
-        Title="扫码登录" Height="450" Width="800">
+        Title="扫码登录" Height="500" Width="800">
     <Grid>
-        
+        <Wpf:WebView2
+            x:Name="webView" Source="https://www.xiaohongshu.com/explore"/>
     </Grid>
 </Window>

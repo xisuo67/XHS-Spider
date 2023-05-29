@@ -18,6 +18,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\edgesharp.wpf\0.9.0\contentFiles\any\net5.0-windows7.0\WebView2Loader.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="applicationIcon.ico" />
   </ItemGroup>
 
