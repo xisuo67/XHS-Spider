@@ -9,7 +9,15 @@
         Title="扫码登录" Height="500" Width="800">
     <Grid>
 
-        <Wpf:WebView2
-            x:Name="webView" Source="https://www.xiaohongshu.com/explore"/>
+        <DockPanel>
+            <DockPanel DockPanel.Dock="Top">
+                <Button Content="搜索测试" HorizontalAlignment="Left" Margin="29,10,0,0" VerticalAlignment="Top" Click="testSearch_click" Height="36" Width="79"/>
+
+            </DockPanel>
+
+            <Wpf:WebView2
+            x:Name="webView"
+        />
+        </DockPanel>
     </Grid>
 </Window>
