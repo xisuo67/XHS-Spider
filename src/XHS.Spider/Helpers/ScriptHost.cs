@@ -51,6 +51,13 @@ namespace XHS.Spider.Helpers
             if (scriptHost == null) scriptHost = new ScriptHost(webView);
             return scriptHost;
         }
+
+        public static ScriptHost UpdateScriptHost(WebView2 webView, IEventAggregator aggregator)
+        {
+            _aggregator = aggregator;
+            scriptHost = new ScriptHost(webView);
+            return scriptHost;
+        }
         /// <summary>
         /// 日志记录（JavaScript前端调用
         /// </summary>
