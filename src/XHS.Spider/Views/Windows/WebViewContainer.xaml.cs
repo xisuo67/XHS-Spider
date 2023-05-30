@@ -23,8 +23,12 @@ namespace XHS.Spider.Views.Windows
         public WebViewContainer()
         {
             InitializeComponent();
+            this.webView.NavigationCompleted += WebView_NavigationCompleted;
+        }
 
-            //GlobalCaChe.webView;
+        private void WebView_NavigationCompleted(object? sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
+        {
+            //TODO:加载完成，通知打开页面
         }
     }
 }

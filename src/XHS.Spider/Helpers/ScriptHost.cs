@@ -29,22 +29,10 @@ namespace XHS.Spider.Helpers
             scriptHost = this;
             this.webView = webView;
             //注册事件侦听，加载页面完成时，获取cookie；
-            this.webView.WebMessageReceived += WebView_WebMessageReceived;
             this.webView.NavigationCompleted += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs>(this.webView_NavigationCompleted);
             //webView初始化完成后注册与JavaScript交互
             this.webView.CoreWebView2InitializationCompleted += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2InitializationCompletedEventArgs>(this.webView_CoreWebView2InitializationCompleted);
         }
-
-        private void WebView_WebMessageReceived(object? sender, CoreWebView2WebMessageReceivedEventArgs e)
-        {
-            var webView2 = sender as Microsoft.Web.WebView2.Wpf.WebView2;
-            if (webView2 != null)
-            {
-                var url = webView2.CoreWebView2.Source;
-               
-            }
-        }
-
         public static ScriptHost GetScriptHost(WebView2 webView, IEventAggregator aggregator)
         {
             _aggregator = aggregator;
