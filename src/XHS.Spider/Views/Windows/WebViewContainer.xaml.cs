@@ -29,6 +29,29 @@ namespace XHS.Spider.Views.Windows
         {
             InitializeComponent();
             this.webView.NavigationCompleted += WebView_NavigationCompleted;
+            this.webView.SourceChanged += WebView_SourceChanged;
+            this.webView.ContentLoading += WebView_ContentLoading;
+           
+        }
+
+        private void CoreWebView2_DOMContentLoaded(object? sender, Microsoft.Web.WebView2.Core.CoreWebView2DOMContentLoadedEventArgs e)
+        {
+            //throw new NotImplementedException();
+        }
+
+        private void CoreWebView2_HistoryChanged(object? sender, object e)
+        {
+            //throw new NotImplementedException();
+        }
+
+        private void WebView_ContentLoading(object? sender, Microsoft.Web.WebView2.Core.CoreWebView2ContentLoadingEventArgs e)
+        {
+            //throw new NotImplementedException();
+        }
+
+        private void WebView_SourceChanged(object? sender, Microsoft.Web.WebView2.Core.CoreWebView2SourceChangedEventArgs e)
+        {
+            //throw new NotImplementedException();
         }
 
         private void WebView_NavigationCompleted(object? sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
@@ -55,6 +78,17 @@ namespace XHS.Spider.Views.Windows
             //    string result = HttpClientHelper.DoPost(url + "\n", data);
             //    MessageBox.Show(result);
             //}
+        }
+
+        private void load(object sender, RoutedEventArgs e)
+        {
+            //this.webView.CoreWebView2.HistoryChanged += CoreWebView2_HistoryChanged;
+            //this.webView.CoreWebView2.DOMContentLoaded += CoreWebView2_DOMContentLoaded;
+        }
+
+        private void test_click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
