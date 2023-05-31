@@ -36,7 +36,9 @@ namespace XHS.Spider.Helpers
         public static ScriptHost GetScriptHost(WebView2 webView, IEventAggregator aggregator)
         {
             _aggregator = aggregator;
-            if (scriptHost == null) scriptHost = new ScriptHost(webView);
+            //if (scriptHost == null)
+            scriptHost = new ScriptHost(webView);
+            GlobalCaChe.webView=webView;
             return scriptHost;
         }
 

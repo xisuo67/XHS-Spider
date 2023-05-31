@@ -21,6 +21,7 @@ using XHS.Spider.Services;
 using System.IO;
 using Microsoft.Extensions.DependencyInjection;
 using XHS.Spider.ViewModels;
+using XHS.IService;
 
 namespace XHS.Spider.Views.Windows
 {
@@ -37,13 +38,22 @@ namespace XHS.Spider.Views.Windows
         private readonly ITaskBarService _taskBarService;
         private readonly IPageServiceNew _pageServiceNew;
         private readonly IServiceProvider _serviceProvider;
-        public ViewModels.MainWindowViewModel ViewModel
+        private readonly IWindowService _windowService;
+        public MainWindowViewModel ViewModel
         {
             get;
         }
 
-        public MainWindow(ViewModels.MainWindowViewModel viewModel, IPageServiceNew pageService, ITaskBarService taskBarService, INavigationService navigationService, IServiceProvider serviceProvider, ISnackbarService snackbarService, IEventAggregator aggregator)
+        public MainWindow(MainWindowViewModel viewModel, 
+            IPageServiceNew pageService, 
+            ITaskBarService taskBarService, 
+            INavigationService navigationService, 
+            IServiceProvider serviceProvider, 
+            ISnackbarService snackbarService,
+             IWindowService windowService,
+            IEventAggregator aggregator)
         {
+            _windowService = windowService;
             _aggregator = aggregator;
             _taskBarService = taskBarService;
             _serviceProvider = serviceProvider;
@@ -192,8 +202,7 @@ namespace XHS.Spider.Views.Windows
 
         private async void Border_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            WebViewContainer container = new WebViewContainer();
-            container.Show();
+            _windowService.Show<WebViewContainer>();
         }
     }
 }

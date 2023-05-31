@@ -12,10 +12,13 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using XHS.Common.Events;
 using XHS.Common.Global;
 using XHS.Common.Helpers;
 using XHS.Common.Http;
+using XHS.IService.XHS;
 using XHS.Models.XHS.InputModel;
+using XHS.Service.XHS;
 using XHS.Spider.Helpers;
 
 namespace XHS.Spider.Views.Windows
@@ -25,13 +28,24 @@ namespace XHS.Spider.Views.Windows
     /// </summary>
     public partial class WebViewContainer : Window
     {
-        public WebViewContainer()
+        private readonly IXhsSpiderService _xhsSpiderService;
+        private IEventAggregator _aggregator { get; set; }
+        public WebViewContainer(IEventAggregator aggregator, IXhsSpiderService xhsSpiderService)
         {
+            _xhsSpiderService = xhsSpiderService;
+            _aggregator = aggregator;
             InitializeComponent();
+            InitializeAsync();
             this.webView.NavigationCompleted += WebView_NavigationCompleted;
             this.webView.SourceChanged += WebView_SourceChanged;
             this.webView.ContentLoading += WebView_ContentLoading;
            
+        }
+        private async void InitializeAsync()
+        {
+            GlobalCaChe.webView = this.webView;
+            await webView.EnsureCoreWebView2Async(null);
+            await webView.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync("window.chrome.webview.postMessage(window.document.URL);");
         }
 
         private void CoreWebView2_DOMContentLoaded(object? sender, Microsoft.Web.WebView2.Core.CoreWebView2DOMContentLoadedEventArgs e)
@@ -67,8 +81,8 @@ namespace XHS.Spider.Views.Windows
                 keyword = "美女",
                 search_id = AlgorithmHelper.GetSearchId()
             };
-            var data = JsonConvert.SerializeObject(model);
-
+            //var data = JsonConvert.SerializeObject(model);
+            var apiResult = await _xhsSpiderService.SearchNotes(model);
             //var xsxt = await webView.CoreWebView2.ExecuteScriptAsync(jscode);
             //if (!string.IsNullOrEmpty(xsxt))
             //{
@@ -82,8 +96,7 @@ namespace XHS.Spider.Views.Windows
 
         private void load(object sender, RoutedEventArgs e)
         {
-            //this.webView.CoreWebView2.HistoryChanged += CoreWebView2_HistoryChanged;
-            //this.webView.CoreWebView2.DOMContentLoaded += CoreWebView2_DOMContentLoaded;
+           var scriptHost = ScriptHost.GetScriptHost(this.webView, _aggregator);
         }
 
         private void test_click(object sender, RoutedEventArgs e)
