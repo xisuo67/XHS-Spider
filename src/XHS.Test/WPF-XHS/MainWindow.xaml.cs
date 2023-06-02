@@ -108,7 +108,7 @@ namespace WPF_XHS
                 GetStatus(data.Data);
             }
         }
-
+        //string url= "/api/sns/web/v2/user/me" get方法  
         private async void GetStatus(QrCode qrCode)
         {
             string url = $"/api/sns/web/v1/login/qrcode/status?qr_id={qrCode.qr_id}&code={qrCode.code}";
@@ -121,6 +121,7 @@ namespace WPF_XHS
                 HttpClientHelper.xs = sign.Xs;
                 HttpClientHelper.xt = sign.Xt.ToString();
                 string result = HttpClientHelper.DoGet(url + "\n");
+                //TODO:判断状态，退出循环，设置cookie，web_session，并查询用户信息
             }
             await Task.Delay(2000);
             GetStatus(qrCode);
