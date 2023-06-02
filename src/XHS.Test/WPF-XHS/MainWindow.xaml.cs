@@ -121,9 +121,18 @@ namespace WPF_XHS
                 HttpClientHelper.xs = sign.Xs;
                 HttpClientHelper.xt = sign.Xt.ToString();
                 string result = HttpClientHelper.DoGet(url + "\n");
+                var data = JsonConvert.DeserializeObject<XHSBaseApiModel<LoginInfoStatus>>(result);
+                //登录成功刷新cookie
+                if (data.Data.code_status==2)
+                {
+                    Dictionary<string,string> dic=new Dictionary<string,string>();
+                    dic.TryAdd("web_session",data.Data.login_info.session);
+                    scriptHost.UpdateCookie(dic);
+                    return;
+                }
                 //TODO:判断状态，退出循环，设置cookie，web_session，并查询用户信息
             }
-            await Task.Delay(2000);
+            await Task.Delay(4000);
             GetStatus(qrCode);
         }
 

@@ -106,6 +106,25 @@ namespace WPF_XHS
                 mCookies.Add(cookie.Name, cookie.Value);
             }
         }
+
+        public async void UpdateCookie(Dictionary<string, string> dic)
+        {
+            foreach (var item in dic)
+            {
+                CoreWebView2Cookie cookie = webView.CoreWebView2.CookieManager.CreateCookie(item.Key, item.Value, ".xiaohongshu.com", "/");
+                webView.CoreWebView2.CookieManager.AddOrUpdateCookie(cookie);
+            }
+            mCookies.Clear();
+            webView.Reload();
+            //string url = "https://www.xiaohongshu.com/explore";
+            //List<CoreWebView2Cookie> cookieList = await webView.CoreWebView2.CookieManager.GetCookiesAsync(url);
+    
+            //for (int i = 0; i < cookieList.Count; ++i)
+            //{
+            //    CoreWebView2Cookie cookie = webView.CoreWebView2.CookieManager.CreateCookieWithSystemNetCookie(cookieList[i].ToSystemNetCookie());
+            //    mCookies.Add(cookie.Name, cookie.Value);
+            //}
+        }
         public string getCookie()
         {
             string cookies = "";
