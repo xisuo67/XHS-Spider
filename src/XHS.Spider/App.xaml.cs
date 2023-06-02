@@ -75,10 +75,6 @@ namespace XHS.Spider
                 services.AddScoped<Views.Pages.SettingCookie>();
                 services.AddScoped<Views.Pages.Search>();
                 services.AddScoped<ViewModels.SearchViewModel>();
-
-                services.AddScoped<Views.Pages.SearchKeywordPage>();
-                services.AddScoped<ViewModels.SearchKeywordViewModel>();
-
                 services.AddSingleton<Views.Pages.HomeExplorePage>();
                 services.AddSingleton<ViewModels.HomeExploreViewModel>();
                 services.AddScoped<Views.Pages.UserProfilePage>();
