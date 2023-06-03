@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using XHS.IService.DI;
 using XHS.Models.XHS.ApiOutputModel;
+using XHS.Models.XHS.ApiOutputModel.CreateQrCode;
 using XHS.Models.XHS.ApiOutputModel.NodeDetail;
 using XHS.Models.XHS.ApiOutputModel.OtherInfo;
 using XHS.Models.XHS.ApiOutputModel.Search;
@@ -48,5 +49,10 @@ namespace XHS.IService.XHS
         /// <param name="inputModel"></param>
         /// <returns></returns>
         Task<XHSBaseApiModel<SearchNodesOutPutModel>> SearchNotes(SearchInputModel inputModel);
+        /// <summary>
+        /// 创建登录二维码
+        /// </summary>
+        /// <returns></returns>
+        Task<QrCodeModel> CreateQrCode();
     }
 }

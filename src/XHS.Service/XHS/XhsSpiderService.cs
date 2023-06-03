@@ -11,6 +11,7 @@ using XHS.Common.Global;
 using XHS.Common.Http;
 using XHS.IService.XHS;
 using XHS.Models.XHS.ApiOutputModel;
+using XHS.Models.XHS.ApiOutputModel.CreateQrCode;
 using XHS.Models.XHS.ApiOutputModel.NodeDetail;
 using XHS.Models.XHS.ApiOutputModel.OtherInfo;
 using XHS.Models.XHS.ApiOutputModel.Search;
@@ -25,10 +26,11 @@ namespace XHS.Service.XHS
     /// </summary>
     public class XhsSpiderService : IXhsSpiderService
     {
+        #region 公共方法
         private static readonly ILogger Logger = LoggerService.Get(typeof(XhsSpiderService));
-        private async Task<Dictionary<string,string>> GetXsHeader(string url,string jsonData="")
+        private async Task<Dictionary<string, string>> GetXsHeader(string url, string jsonData = "")
         {
-            Dictionary<string,string> dic= new Dictionary<string,string>();
+            Dictionary<string, string> dic = new Dictionary<string, string>();
             string param = string.Empty;
             if (string.IsNullOrEmpty(jsonData))
             {
@@ -48,7 +50,7 @@ namespace XHS.Service.XHS
                                         return o;
                                     }";
             var xsxtStr = await GlobalCaChe.webView.CoreWebView2.ExecuteScriptAsync(jscode);
-            if (!string.IsNullOrEmpty(xsxtStr)&& xsxtStr!="null")
+            if (!string.IsNullOrEmpty(xsxtStr) && xsxtStr != "null")
             {
                 try
                 {
@@ -61,12 +63,15 @@ namespace XHS.Service.XHS
                 catch (Exception ex)
                 {
 
-                    Logger.Error("获取xs，xt算法失败：",ex);
+                    Logger.Error("获取xs，xt算法失败：", ex);
                 }
-              
+
             }
             return dic;
         }
+        #endregion
+
+        #region 笔记相关
         /// <summary>
         /// 获取笔记详情
         /// </summary>
@@ -79,7 +84,7 @@ namespace XHS.Service.XHS
             try
             {
                 string url = $"/api/sns/web/v1/feed?source_note_id={nodeid}";
-                var header=await GetXsHeader(url);
+                var header = await GetXsHeader(url);
                 Logger.Info($"调用接口：{url}");
                 var result = HttpClientHelper.DoPost(url, header);
                 if (!string.IsNullOrEmpty(result))
@@ -89,7 +94,7 @@ namespace XHS.Service.XHS
             }
             catch (Exception ex)
             {
-                Logger.Error("获取笔记详细信息失败",ex);
+                Logger.Error("获取笔记详细信息失败", ex);
             }
             return nodeDetailModel;
         }
@@ -119,7 +124,12 @@ namespace XHS.Service.XHS
             }
             return model;
         }
-
+        /// <summary>
+        /// 递归获取用户笔记
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="userNodes"></param>
+        /// <returns></returns>
         private async Task<bool> UserPosted(UserPostedInputModel model, List<NoteModel> userNodes)
         {
             bool isSuccess = false;
@@ -170,13 +180,19 @@ namespace XHS.Service.XHS
         public async Task<List<NoteModel>> GetAllUserNode(string userid)
         {
             List<NoteModel> nodes = new List<NoteModel>();
-            UserPostedInputModel model = new UserPostedInputModel { 
-                user_id= userid,
-                num=30,
+            UserPostedInputModel model = new UserPostedInputModel
+            {
+                user_id = userid,
+                num = 30,
             };
-            await UserPosted(model,nodes);
+            await UserPosted(model, nodes);
             return nodes;
         }
+        #endregion
+
+
+
+        #region 关键字搜索
         /// <summary>
         /// 关键字搜索笔记
         /// </summary>
@@ -191,10 +207,10 @@ namespace XHS.Service.XHS
             {
                 //string url = $"/api/sns/web/v1/search/notes?keyword={inputModel.KeyWord}&note_type={inputModel.NoteType}&page={inputModel.Page}&page_size={inputModel.PageSize}&search_id={inputModel.SearchId}&sort={inputModel.Sort}";
                 string url = "/api/sns/web/v1/search/notes";
-                var postData=JsonConvert.SerializeObject(inputModel);
+                var postData = JsonConvert.SerializeObject(inputModel);
                 var header = await GetXsHeader(url, postData);
                 Logger.Info($"调用接口：{url}");
-                var result = HttpClientHelper.DoPost(url, header,postData);
+                var result = HttpClientHelper.DoPost(url, header, postData);
                 if (!string.IsNullOrEmpty(result))
                 {
                     model = JsonConvert.DeserializeObject<XHSBaseApiModel<SearchNodesOutPutModel>>(result);
@@ -204,6 +220,43 @@ namespace XHS.Service.XHS
             {
                 Logger.Error("获取笔记详细信息失败", ex);
             }
+            return model;
+        }
+        #endregion
+
+        /// <summary>
+        /// 创建二维码
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<QrCodeModel> CreateQrCode()
+        {
+            QrCodeModel model = new QrCodeModel();
+            try
+            {
+                string url = "/api/sns/web/v1/login/qrcode/create";
+                var header = await GetXsHeader(url);
+                Logger.Info($"调用接口：{url}");
+                var result = HttpClientHelper.DoPost(url, header);
+                if (!string.IsNullOrEmpty(result))
+                {
+                    var qrcodeModel = JsonConvert.DeserializeObject<XHSBaseApiModel<QrCodeModel>>(result);
+                    if (qrcodeModel!=null && qrcodeModel.Success)
+                    {
+                        model = qrcodeModel.Data;
+                    }
+                    else
+                    {
+                        model = null;
+                        Logger.Error("获取二维码信息失败:"+qrcodeModel.Msg);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("获取二维码信息失败", ex);
+            }
+            
             return model;
         }
     }
