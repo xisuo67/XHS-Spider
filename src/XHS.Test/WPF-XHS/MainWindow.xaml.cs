@@ -105,11 +105,11 @@ namespace WPF_XHS
                 var data= JsonConvert.DeserializeObject<XHSBaseApiModel<QrCode>>(result);
                 var qrcode = GetLoginQRCode(data.Data.url);
                 nameLoginQRCode.Source = qrcode;
-                GetStatus(data.Data);
+                await GetStatus(data.Data);
             }
         }
         //string url= "/api/sns/web/v2/user/me" get方法  
-        private async void GetStatus(QrCode qrCode)
+        private async Task<bool> GetStatus(QrCode qrCode)
         {
             string url = $"/api/sns/web/v1/login/qrcode/status?qr_id={qrCode.qr_id}&code={qrCode.code}";
             string jscode = "var url='" + url + "';\r\n var t=null;" + Config.jscode;
@@ -128,14 +128,28 @@ namespace WPF_XHS
                     Dictionary<string,string> dic=new Dictionary<string,string>();
                     dic.TryAdd("web_session",data.Data.login_info.session);
                     scriptHost.UpdateCookie(dic);
-                    return;
+                    return true;
                 }
                 //TODO:判断状态，退出循环，设置cookie，web_session，并查询用户信息
             }
             await Task.Delay(10000);
-            GetStatus(qrCode);
+            GetStatus(qrCode).GetAwaiter();
+            return false;
         }
-
+        private async void GetCurrentUser() {
+            string url = "/api/sns/web/v2/user/me";
+            string jscode = "var url='" + url + "';\r\n var t=null;" + Config.jscode;
+            HttpClientHelper.cookie = scriptHost.getCookie();
+            var xsxt = await webView.CoreWebView2.ExecuteScriptAsync(jscode);
+            if (!string.IsNullOrEmpty(xsxt))
+            {
+                var sign = JsonConvert.DeserializeObject<XsXt>(xsxt);
+                HttpClientHelper.xs = sign.Xs;
+                HttpClientHelper.xt = sign.Xt.ToString();
+                string result = HttpClientHelper.DoGet(url + "\n");
+                MessageBox.Show(result);
+            }
+        }
         /// <summary>
         /// 根据输入url生成二维码
         /// </summary>
@@ -156,6 +170,11 @@ namespace WPF_XHS
             image.StreamSource = new MemoryStream(bytes);
             image.EndInit();
             return image;
+        }
+
+        private void currentUser_click(object sender, RoutedEventArgs e)
+        {
+            GetCurrentUser();
         }
     }
     public class SearchInputModel
