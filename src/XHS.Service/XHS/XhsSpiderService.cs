@@ -233,7 +233,7 @@ namespace XHS.Service.XHS
         /// <exception cref="NotImplementedException"></exception>
         public async Task<QrCodeModel> CreateQrCode()
         {
-            QrCodeModel model = new QrCodeModel();
+            QrCodeModel model =null;
             try
             {
                 string url = "/api/sns/web/v1/login/qrcode/create";
@@ -249,7 +249,6 @@ namespace XHS.Service.XHS
                     }
                     else
                     {
-                        model = null;
                         Logger.Error("获取二维码信息失败:" + qrcodeModel.Msg);
                     }
                 }
