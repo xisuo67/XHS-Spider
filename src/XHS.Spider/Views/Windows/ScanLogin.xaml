@@ -5,8 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:XHS.Spider.Views.Windows"
         mc:Ignorable="d"
-        Title="ScanLogin" Height="391" Width="403">
-    <Grid>
-
+        Title="扫码登录" Height="280" Width="210">
+    <Grid Margin="0,0,0,3">
+        <Image
+            Name="nameLoginQRCode"
+            Grid.Row="2"
+            Width="200"
+            Height="200"
+            Source="{x:Null}" />
     </Grid>
 </Window>
