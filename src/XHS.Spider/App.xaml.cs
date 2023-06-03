@@ -83,7 +83,6 @@ namespace XHS.Spider
                 services.AddScoped<Views.Pages.SettingsPage>();
                 services.AddScoped<ViewModels.SettingsViewModel>();
                 services.AddTransient<Views.Windows.CookieEdit>();
-                services.AddTransient<Views.Windows.WebViewContainer>();
                 AddDataService(services);
                 //启动下载服务
                 BaseDownloadService baseDownloadService = new BaseDownloadService(DownloadList);

@@ -11,17 +11,50 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Wpf.Ui.Controls;
+using Wpf.Ui.Controls.Interfaces;
+using Wpf.Ui.Mvvm.Contracts;
 
 namespace XHS.Spider.Views.Windows
 {
     /// <summary>
     /// ScanLogin.xaml 的交互逻辑
     /// </summary>
-    public partial class ScanLogin : Window
+    public partial class ScanLogin : UiWindow, INavigationWindow
     {
         public ScanLogin()
         {
             InitializeComponent();
+        }
+
+        public void CloseWindow()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Frame GetFrame()
+        {
+            throw new NotImplementedException();
+        }
+
+        public INavigation GetNavigation()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Navigate(Type pageType)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetPageService(IPageService pageService)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ShowWindow()
+        {
+            throw new NotImplementedException();
         }
     }
 }
