@@ -50,7 +50,7 @@ namespace XHS.Spider.Views.Windows
             INavigationService navigationService, 
             IServiceProvider serviceProvider, 
             ISnackbarService snackbarService,
-             IWindowService windowService,
+            IWindowService windowService,
             IEventAggregator aggregator)
         {
             _windowService = windowService;

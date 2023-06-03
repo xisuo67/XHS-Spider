@@ -12,6 +12,7 @@ using XHS.Common.Http;
 using XHS.IService.XHS;
 using XHS.Models.XHS.ApiOutputModel;
 using XHS.Models.XHS.ApiOutputModel.CreateQrCode;
+using XHS.Models.XHS.ApiOutputModel.Login;
 using XHS.Models.XHS.ApiOutputModel.NodeDetail;
 using XHS.Models.XHS.ApiOutputModel.OtherInfo;
 using XHS.Models.XHS.ApiOutputModel.Search;
@@ -224,6 +225,7 @@ namespace XHS.Service.XHS
         }
         #endregion
 
+        #region 登录
         /// <summary>
         /// 创建二维码
         /// </summary>
@@ -241,14 +243,14 @@ namespace XHS.Service.XHS
                 if (!string.IsNullOrEmpty(result))
                 {
                     var qrcodeModel = JsonConvert.DeserializeObject<XHSBaseApiModel<QrCodeModel>>(result);
-                    if (qrcodeModel!=null && qrcodeModel.Success)
+                    if (qrcodeModel != null && qrcodeModel.Success)
                     {
                         model = qrcodeModel.Data;
                     }
                     else
                     {
                         model = null;
-                        Logger.Error("获取二维码信息失败:"+qrcodeModel.Msg);
+                        Logger.Error("获取二维码信息失败:" + qrcodeModel.Msg);
                     }
                 }
             }
@@ -256,8 +258,47 @@ namespace XHS.Service.XHS
             {
                 Logger.Error("获取二维码信息失败", ex);
             }
-            
+
             return model;
         }
+        /// <summary>
+        /// 获取登录状态
+        /// </summary>
+        /// <param name="qrCode"></param>
+        /// <returns></returns>
+        public async Task<LoginInfoStatus> GetStatus(QrCodeModel qrCode)
+        {
+            LoginInfoStatus status = null;
+            try
+            {
+                string url = $"/api/sns/web/v1/login/qrcode/status?qr_id={qrCode.QrId}&code={qrCode.Code}";
+                var header = await GetXsHeader(url);
+                Logger.Info($"调用接口：{url}");
+                var result = HttpClientHelper.DoGet(url, header);
+                if (!string.IsNullOrEmpty(result))
+                {
+                    var loginStatus = JsonConvert.DeserializeObject<XHSBaseApiModel<LoginInfoStatus>>(result);
+                    if (loginStatus != null && loginStatus.Success && loginStatus.Data.CodeStatus==2)
+                    {
+                        status = loginStatus.Data;
+                    }
+                    else
+                    {
+                        await Task.Delay(1000);
+                        //递归
+                        GetStatus(qrCode).GetAwaiter();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("获取二维码信息失败", ex);
+            }
+            return status;
+        }
+
+
+        #endregion
+
     }
 }

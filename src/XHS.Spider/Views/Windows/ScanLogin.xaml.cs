@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using Wpf.Ui.Controls;
 using Wpf.Ui.Controls.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
+using XHS.Spider.ViewModels;
 
 namespace XHS.Spider.Views.Windows
 {
@@ -22,8 +23,13 @@ namespace XHS.Spider.Views.Windows
     /// </summary>
     public partial class ScanLogin : UiWindow, INavigationWindow
     {
-        public ScanLogin()
+        public ScanLoginViewModel ViewModel
         {
+            get;
+        }
+        public ScanLogin(ScanLoginViewModel viewModel)
+        {
+            this.ViewModel= viewModel;
             InitializeComponent();
         }
 

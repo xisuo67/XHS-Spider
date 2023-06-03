@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using XHS.IService.DI;
 using XHS.Models.XHS.ApiOutputModel;
 using XHS.Models.XHS.ApiOutputModel.CreateQrCode;
+using XHS.Models.XHS.ApiOutputModel.Login;
 using XHS.Models.XHS.ApiOutputModel.NodeDetail;
 using XHS.Models.XHS.ApiOutputModel.OtherInfo;
 using XHS.Models.XHS.ApiOutputModel.Search;
@@ -54,5 +55,11 @@ namespace XHS.IService.XHS
         /// </summary>
         /// <returns></returns>
         Task<QrCodeModel> CreateQrCode();
+        /// <summary>
+        /// 获取登录状态
+        /// </summary>
+        /// <param name="qrCode"></param>
+        /// <returns></returns>
+        Task<LoginInfoStatus> GetStatus(QrCodeModel qrCode);
     }
 }

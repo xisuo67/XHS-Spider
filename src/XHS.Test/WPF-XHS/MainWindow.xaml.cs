@@ -132,7 +132,7 @@ namespace WPF_XHS
                 }
                 //TODO:判断状态，退出循环，设置cookie，web_session，并查询用户信息
             }
-            await Task.Delay(4000);
+            await Task.Delay(10000);
             GetStatus(qrCode);
         }
 
