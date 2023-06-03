@@ -84,7 +84,6 @@ namespace XHS.Spider
                 services.AddScoped<ViewModels.SettingsViewModel>();
 
                 services.AddTransient<Views.Windows.ScanLogin>();
-                services.AddTransient<ViewModels.ScanLoginViewModel>();
 
                 services.AddTransient<Views.Windows.CookieEdit>();
                 AddDataService(services);

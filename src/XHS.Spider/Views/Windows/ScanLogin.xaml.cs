@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hardcodet.Wpf.TaskbarNotification;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -19,6 +21,7 @@ using XHS.Common.Helpers;
 using XHS.IService.XHS;
 using XHS.Service.Log;
 using XHS.Service.XHS;
+using XHS.Spider.Helpers;
 using XHS.Spider.ViewModels;
 
 namespace XHS.Spider.Views.Windows
@@ -30,10 +33,12 @@ namespace XHS.Spider.Views.Windows
     {
         private static readonly Service.Log.ILogger Logger = LoggerService.Get(typeof(ScanLogin));
         #region 属性
+        private readonly TaskbarIcon _notifyIcon;
         private readonly IXhsSpiderService _xhsSpiderService;
         #endregion
         public ScanLogin(IXhsSpiderService xhsSpiderService)
         {
+            _notifyIcon = new TaskbarIcon();
             _xhsSpiderService = xhsSpiderService;
             WindowStartupLocation = WindowStartupLocation.CenterScreen;// 窗体居中
             InitializeComponent();
@@ -53,7 +58,12 @@ namespace XHS.Spider.Views.Windows
                         {
                             this.nameLoginQRCode.Source = qrcode;
                         }));
+                        //TODO:二维码设置成功后，轮询状态
                     }
+                }
+                else
+                {
+                    _notifyIcon.ShowBalloonTip("二维码获取失败", "提示", BalloonIcon.Error);
                 }
             }
             catch (Exception ex)
