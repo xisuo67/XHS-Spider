@@ -21,7 +21,7 @@ namespace XHS.Spider.Views.Windows
     /// <summary>
     /// ScanLogin.xaml 的交互逻辑
     /// </summary>
-    public partial class ScanLogin : UiWindow, INavigationWindow
+    public partial class ScanLogin : Window, INavigationWindow
     {
         public ScanLoginViewModel ViewModel
         {
@@ -29,6 +29,7 @@ namespace XHS.Spider.Views.Windows
         }
         public ScanLogin(ScanLoginViewModel viewModel)
         {
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;// 窗体居中
             this.ViewModel= viewModel;
             InitializeComponent();
         }

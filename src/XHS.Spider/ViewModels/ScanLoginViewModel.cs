@@ -20,8 +20,8 @@ namespace XHS.Spider.ViewModels
         public BitmapImage QrCodeImage { get; set; }
         #endregion
 
-        public ScanLoginViewModel(string url) {
-            QrCodeImage = GetLoginQRCode(url);
+        public ScanLoginViewModel() {
+            //QrCodeImage = GetLoginQRCode(url);
         }
 
         /// <summary>

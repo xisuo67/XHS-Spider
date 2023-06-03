@@ -202,7 +202,7 @@ namespace XHS.Spider.Views.Windows
 
         private async void Border_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            
+            _windowService.Show<ScanLogin>();
         }
     }
 }

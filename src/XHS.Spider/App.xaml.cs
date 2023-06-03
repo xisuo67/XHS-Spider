@@ -82,6 +82,10 @@ namespace XHS.Spider
                 services.AddScoped<ViewModels.SettingCookieViewModel>();
                 services.AddScoped<Views.Pages.SettingsPage>();
                 services.AddScoped<ViewModels.SettingsViewModel>();
+
+                services.AddTransient<Views.Windows.ScanLogin>();
+                services.AddTransient<ViewModels.ScanLoginViewModel>();
+
                 services.AddTransient<Views.Windows.CookieEdit>();
                 AddDataService(services);
                 //启动下载服务

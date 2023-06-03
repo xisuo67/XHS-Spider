@@ -1,4 +1,4 @@
-﻿<ui:UiWindow  
+﻿<Window  
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" 
         x:Class="XHS.Spider.Views.Windows.ScanLogin"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -16,4 +16,4 @@
             Height="200"
             Source="{x:Null}" />
     </Grid>
-</ui:UiWindow>
+</Window>
