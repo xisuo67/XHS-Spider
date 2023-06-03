@@ -281,6 +281,7 @@ namespace XHS.Service.XHS
                     if (loginStatus != null && loginStatus.Success && loginStatus.Data.CodeStatus==2)
                     {
                         status = loginStatus.Data;
+                        return status;
                     }
                     else
                     {
