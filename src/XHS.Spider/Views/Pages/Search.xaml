@@ -35,7 +35,7 @@
         <Grid Grid.Row="1" >
             <ui:TextBox 
             Icon="Search12" 
-            PlaceholderText="请输入关键字或博主首页地址"
+            PlaceholderText="请输入博主首页地址"
             Text="{Binding Path=ViewModel.InputText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
             IconPlacement="Right" Margin="110,0,110,0">
                 <TextBox.InputBindings>
