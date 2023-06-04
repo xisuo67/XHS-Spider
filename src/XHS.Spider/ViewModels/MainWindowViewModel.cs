@@ -89,13 +89,13 @@ namespace XHS.Spider.ViewModels
                     Icon = SymbolRegular.Search12,
                     PageType = typeof(Views.Pages.Search)
                 },
-                new NavigationItem()
-                {
-                    Content = "Cookie",
-                    PageTag = "cookie",
-                    Icon = SymbolRegular.DataHistogram24,
-                    PageType = typeof(Views.Pages.SettingCookie)
-                }
+                //new NavigationItem()
+                //{
+                //    Content = "Cookie",
+                //    PageTag = "cookie",
+                //    Icon = SymbolRegular.DataHistogram24,
+                //    PageType = typeof(Views.Pages.SettingCookie)
+                //}
             };
 
             NavigationFooter = new ObservableCollection<INavigationControl>
