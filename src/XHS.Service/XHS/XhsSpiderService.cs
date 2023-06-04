@@ -13,6 +13,7 @@ using XHS.IService.XHS;
 using XHS.Models.XHS.ApiOutputModel;
 using XHS.Models.XHS.ApiOutputModel.CreateQrCode;
 using XHS.Models.XHS.ApiOutputModel.Login;
+using XHS.Models.XHS.ApiOutputModel.Me;
 using XHS.Models.XHS.ApiOutputModel.NodeDetail;
 using XHS.Models.XHS.ApiOutputModel.OtherInfo;
 using XHS.Models.XHS.ApiOutputModel.Search;
@@ -289,6 +290,36 @@ namespace XHS.Service.XHS
                 Logger.Error("获取二维码信息失败", ex);
             }
             return status;
+        }
+        /// <summary>
+        /// 获取当前登录用户
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<UserInfoModel> GetCurrentUser()
+        {
+            UserInfoModel user=null;
+            try
+            {
+                await Task.Delay(1000);
+                string url = "/api/sns/web/v2/user/me";
+                var header = await GetXsHeader(url);
+                Logger.Info($"调用接口：{url}");
+                var result = HttpClientHelper.DoGet(url, header);
+                if (!string.IsNullOrEmpty(result))
+                {
+                    var model = JsonConvert.DeserializeObject<XHSBaseApiModel<UserInfoModel>>(result);
+                    if (model != null && model.Success)
+                    {
+                        return model.Data;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("用户获取失败", ex);
+            }
+            return user;
         }
 
 

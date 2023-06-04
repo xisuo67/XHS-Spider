@@ -21,6 +21,7 @@ using Wpf.Ui.Controls.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
 using XHS.Common.Events;
 using XHS.Common.Events.Model;
+using XHS.Common.Global;
 using XHS.Common.Helpers;
 using XHS.IService.XHS;
 using XHS.Models.Events;
@@ -106,10 +107,12 @@ namespace XHS.Spider.Views.Windows
                 if (_scriptHost != null)
                 {
                     _scriptHost.UpdateCookie(dic);
+                    
+                    //TODO:获取当前登录用户
+                    int index = 1;
+                    GetCurrentUser(index);
                     //登录成功，提示登录成功，并关闭扫码扫码界面；
                     _notifyIcon.ShowBalloonTip("扫码登录成功", "提示", BalloonIcon.None);
-                    //TODO:获取当前登录用户
-                    _xhsSpiderService.
                     this.Close();
                     return;
                 }
@@ -119,7 +122,32 @@ namespace XHS.Spider.Views.Windows
                 GetStatus(qrCode);
             }
         }
+        /// <summary>
+        /// 获取当前登录用户信息
+        /// </summary>
+        /// <param name="reTryCount">重试次数</param>
+        private async void GetCurrentUser(int reTryCount) {
 
+            var currentUser = await _xhsSpiderService.GetCurrentUser();
+            //由于更新cookie需要后需要一定时间等待cookie刷新，会出现一定几率获取不到当前登录用户数据，需要增加重试机制
+            if (currentUser != null)
+            {
+                GlobalCaChe.CurrentUser = currentUser;
+            }
+            else
+            {
+                //3次以后不管了，不获取当前登录信息了
+                if (reTryCount==3)
+                {
+                    return;
+                }
+                else
+                {
+                    reTryCount++;
+                    GetCurrentUser(reTryCount);
+                }
+            }
+        }
         /// <summary>
         /// 根据输入url生成二维码
         /// </summary>
