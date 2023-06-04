@@ -3,6 +3,7 @@ using Microsoft.Web.WebView2.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Runtime.InteropServices;
 using XHS.Common.Events;
 using XHS.Common.Events.Model;
@@ -36,8 +37,8 @@ namespace XHS.Spider.Helpers
         public static ScriptHost GetScriptHost(WebView2 webView, IEventAggregator aggregator)
         {
             _aggregator = aggregator;
-            //if (scriptHost == null)
-            scriptHost = new ScriptHost(webView);
+            if (scriptHost == null)
+                scriptHost = new ScriptHost(webView);
             GlobalCaChe.webView=webView;
             return scriptHost;
         }
@@ -47,6 +48,15 @@ namespace XHS.Spider.Helpers
             _aggregator = aggregator;
             scriptHost = new ScriptHost(webView);
             return scriptHost;
+        }
+        public async void UpdateCookie(Dictionary<string, string> dic)
+        {
+            foreach (var item in dic)
+            {
+                CoreWebView2Cookie cookie = webView.CoreWebView2.CookieManager.CreateCookie(item.Key, item.Value, ".xiaohongshu.com", "/");
+                webView.CoreWebView2.CookieManager.AddOrUpdateCookie(cookie);
+            }
+            webView.Reload();
         }
         /// <summary>
         /// 日志记录（JavaScript前端调用
