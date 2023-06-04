@@ -66,7 +66,7 @@ namespace XHS.Spider.ViewModels
         /// <summary>
         /// 处理输入事件
         /// </summary>
-        private async void ExecuteInput()
+        private void ExecuteInput()
         {
             if (!string.IsNullOrEmpty(InputText))
             {

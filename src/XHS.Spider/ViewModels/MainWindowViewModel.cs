@@ -1,11 +1,15 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.ObjectModel;
-using System.Windows;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
 using Wpf.Ui.Controls.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
+using XHS.Common.Events;
+using XHS.Common.Events.Model;
+using XHS.Common.Global;
+using XHS.Common.Helpers;
+using XHS.Models.XHS.ApiOutputModel.Me;
 
 namespace XHS.Spider.ViewModels
 {
@@ -25,16 +29,50 @@ namespace XHS.Spider.ViewModels
         [ObservableProperty]
         private ObservableCollection<MenuItem> _trayMenuItems = new();
 
-        public MainWindowViewModel(INavigationService navigationService)
+        private IEventAggregator _aggregator { get; set; }
+        private UserInfoModel _currentUser = new UserInfoModel();
+
+        public UserInfoModel? CurrentUser
+        {
+            get => _currentUser;
+            set => SetProperty(ref _currentUser, value);
+        }
+        public MainWindowViewModel(INavigationService navigationService, IEventAggregator aggregator)
         {
             if (!_isInitialized)
+            {
+                _aggregator=aggregator;
+                _aggregator.GetEvent<LoginCompletedCallbackEvent>().Subscribe(SetCurrentUser);
                 InitializeViewModel();
+            }
         }
 
+        private void SetCurrentUser(bool isLogin) {
+            if (isLogin)
+            {
+                this.InitCurrentUser();
+            }
+        }
+
+        private void InitCurrentUser() {
+            if (GlobalCaChe.CurrentUser!=null)
+            {
+                var imageUrl = GlobalCaChe.CurrentUser.Images;
+                var url = imageUrl.Split('?')[0];
+                GlobalCaChe.CurrentUser.HeadImage=FileHelper.UrlToBitmapImage(url);
+                CurrentUser =GlobalCaChe.CurrentUser;
+            }
+            else
+            {
+                var image = DrawHealper.CreateHead("未登录");
+                var bit= FileHelper.BitmapToBitmapImage(image);
+                CurrentUser.HeadImage = bit;
+            }
+        }
         private void InitializeViewModel()
         {
             ApplicationTitle = "小红书数据采集工具";
-
+            InitCurrentUser();
             NavigationItems = new ObservableCollection<INavigationControl>
             {
                 new NavigationItem()
@@ -51,13 +89,13 @@ namespace XHS.Spider.ViewModels
                     Icon = SymbolRegular.Search12,
                     PageType = typeof(Views.Pages.Search)
                 },
-                //new NavigationItem()
-                //{
-                //    Content = "Cookie",
-                //    PageTag = "cookie",
-                //    Icon = SymbolRegular.DataHistogram24,
-                //    PageType = typeof(Views.Pages.SettingCookie)
-                //}
+                new NavigationItem()
+                {
+                    Content = "Cookie",
+                    PageTag = "cookie",
+                    Icon = SymbolRegular.DataHistogram24,
+                    PageType = typeof(Views.Pages.SettingCookie)
+                }
             };
 
             NavigationFooter = new ObservableCollection<INavigationControl>

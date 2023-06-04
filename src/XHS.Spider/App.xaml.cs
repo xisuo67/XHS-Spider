@@ -47,7 +47,6 @@ namespace XHS.Spider
                 // App Host
                 services.AddHostedService<ApplicationHostService>();
                 // Page resolver service
-                //services.AddSingleton<IPageService, PageService>();
                 services.AddSingleton<IPageServiceNew, PageService>();
                 // Theme manipulation
                 services.AddSingleton<IThemeService, ThemeService>();
@@ -76,11 +75,15 @@ namespace XHS.Spider
                 services.AddScoped<Views.Pages.SettingCookie>();
                 services.AddScoped<Views.Pages.Search>();
                 services.AddScoped<ViewModels.SearchViewModel>();
+                services.AddSingleton<Views.Pages.HomeExplorePage>();
+                services.AddSingleton<ViewModels.HomeExploreViewModel>();
                 services.AddScoped<Views.Pages.UserProfilePage>();
                 services.AddScoped<ViewModels.UserProfileViewModel>();
                 services.AddScoped<ViewModels.SettingCookieViewModel>();
                 services.AddScoped<Views.Pages.SettingsPage>();
                 services.AddScoped<ViewModels.SettingsViewModel>();
+
+                services.AddTransient<Views.Windows.ScanLogin>();
 
                 services.AddTransient<Views.Windows.CookieEdit>();
                 AddDataService(services);

@@ -9,7 +9,7 @@ using XHS.Models.XHS.ApiOutputModel.UserPosted;
 
 namespace XHS.Models.XHS.ApiOutputModel.NodeDetail
 {
-    public class NoteCardModel
+    public class NoteCardModel: BaseNoteCardModel
     {
         [JsonProperty("time")]
         public long Time { get; set; }
@@ -19,19 +19,13 @@ namespace XHS.Models.XHS.ApiOutputModel.NodeDetail
         public string Title { get; set; }
         [JsonProperty("desc")]
         public string Desc { get; set; }
-        [JsonProperty("user")]
-        public NodeUser User { get; set; }
-
-        [JsonProperty("interact_info")]
-        public InteractInfoModel InteractInfo { get; set; }
         [JsonProperty("image_list")]
         public List<ImageListModel> ImageList { get; set; }
         [JsonProperty("tag_list")]
         public List<TagListModel> TagList { get; set; }
         [JsonProperty("note_id")]
         public string NoteId { get; set; }
-        [JsonProperty("type")]
-        public string Type { get; set; }
+
         [JsonProperty("video")]
         public Video Video { get; set; }
 

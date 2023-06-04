@@ -3,6 +3,7 @@ using Microsoft.Web.WebView2.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Runtime.InteropServices;
 using XHS.Common.Events;
 using XHS.Common.Events.Model;
@@ -29,27 +30,33 @@ namespace XHS.Spider.Helpers
             scriptHost = this;
             this.webView = webView;
             //注册事件侦听，加载页面完成时，获取cookie；
-            this.webView.WebMessageReceived += WebView_WebMessageReceived;
             this.webView.NavigationCompleted += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs>(this.webView_NavigationCompleted);
             //webView初始化完成后注册与JavaScript交互
             this.webView.CoreWebView2InitializationCompleted += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2InitializationCompletedEventArgs>(this.webView_CoreWebView2InitializationCompleted);
         }
-
-        private void WebView_WebMessageReceived(object? sender, CoreWebView2WebMessageReceivedEventArgs e)
-        {
-            var webView2 = sender as Microsoft.Web.WebView2.Wpf.WebView2;
-            if (webView2 != null)
-            {
-                var url = webView2.CoreWebView2.Source;
-               
-            }
-        }
-
         public static ScriptHost GetScriptHost(WebView2 webView, IEventAggregator aggregator)
         {
             _aggregator = aggregator;
-            if (scriptHost == null) scriptHost = new ScriptHost(webView);
+            if (scriptHost == null)
+                scriptHost = new ScriptHost(webView);
+            GlobalCaChe.webView=webView;
             return scriptHost;
+        }
+
+        public static ScriptHost UpdateScriptHost(WebView2 webView, IEventAggregator aggregator)
+        {
+            _aggregator = aggregator;
+            scriptHost = new ScriptHost(webView);
+            return scriptHost;
+        }
+        public async void UpdateCookie(Dictionary<string, string> dic)
+        {
+            foreach (var item in dic)
+            {
+                CoreWebView2Cookie cookie = webView.CoreWebView2.CookieManager.CreateCookie(item.Key, item.Value, ".xiaohongshu.com", "/");
+                webView.CoreWebView2.CookieManager.AddOrUpdateCookie(cookie);
+            }
+            webView.Reload();
         }
         /// <summary>
         /// 日志记录（JavaScript前端调用
@@ -95,7 +102,8 @@ namespace XHS.Spider.Helpers
             GlobalCaChe.Cookies.Add(new XHS.Models.SettingCookie.CookieModel()
             {
                 Id = Guid.NewGuid(),
-                Cookie = cookies
+                Cookie = cookies,
+                IsGetAutomatically=true,
             });
         }
         /// <summary>
@@ -109,7 +117,7 @@ namespace XHS.Spider.Helpers
             string hosturl = webView.Source.Host.ToString();
             hosturl = "https://" + hosturl;
             GetCookie(hosturl);
-            var webView2 = sender as Microsoft.Web.WebView2.Wpf.WebView2;
+            var webView2 = sender as WebView2;
             if (webView2 != null)
             {
                 var url = webView2.CoreWebView2.Source;

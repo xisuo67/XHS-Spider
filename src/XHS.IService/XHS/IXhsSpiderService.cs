@@ -6,8 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using XHS.IService.DI;
 using XHS.Models.XHS.ApiOutputModel;
+using XHS.Models.XHS.ApiOutputModel.CreateQrCode;
+using XHS.Models.XHS.ApiOutputModel.Login;
+using XHS.Models.XHS.ApiOutputModel.Me;
 using XHS.Models.XHS.ApiOutputModel.NodeDetail;
 using XHS.Models.XHS.ApiOutputModel.OtherInfo;
+using XHS.Models.XHS.ApiOutputModel.Search;
 using XHS.Models.XHS.ApiOutputModel.UserPosted;
 using XHS.Models.XHS.InputModel;
 
@@ -24,14 +28,14 @@ namespace XHS.IService.XHS
         /// </summary>
         /// <param name="nodeid"></param>
         /// <returns></returns>
-        Task<XHSBaseApiModel<NodeDetailModel>> GetNodeDetail(string nodeid, WebView2 webView);
+        Task<XHSBaseApiModel<NodeDetailModel>> GetNodeDetail(string nodeid);
 
         /// <summary>
         /// 获取当前小红书博主其他信息，包含个人信息等数据
         /// </summary>
         /// <param name="targetUserId"></param>
         /// <returns></returns>
-        Task<XHSBaseApiModel<OtherInfoModel>> GetOtherInfo(string targetUserId, WebView2 webView);
+        Task<XHSBaseApiModel<OtherInfoModel>> GetOtherInfo(string targetUserId);
 
 
         /// <summary>
@@ -39,6 +43,30 @@ namespace XHS.IService.XHS
         /// </summary>
         /// <param name="userid"></param>
         /// <returns></returns>
-        Task<List<NoteModel>> GetAllUserNode(string userid, WebView2 webView);
+        Task<List<NoteModel>> GetAllUserNode(string userid);
+
+        /// <summary>
+        /// 关键字搜索笔记
+        /// </summary>
+        /// <param name="inputModel"></param>
+        /// <returns></returns>
+        Task<XHSBaseApiModel<SearchNodesOutPutModel>> SearchNotes(SearchInputModel inputModel);
+        /// <summary>
+        /// 创建登录二维码
+        /// </summary>
+        /// <returns></returns>
+        Task<QrCodeModel> CreateQrCode();
+        /// <summary>
+        /// 获取登录状态
+        /// </summary>
+        /// <param name="qrCode"></param>
+        /// <returns></returns>
+        Task<LoginInfoStatus> GetStatus(QrCodeModel qrCode);
+
+        /// <summary>
+        /// 获取当前登录用户
+        /// </summary>
+        /// <returns></returns>
+        Task<UserInfoModel> GetCurrentUser();
     }
 }

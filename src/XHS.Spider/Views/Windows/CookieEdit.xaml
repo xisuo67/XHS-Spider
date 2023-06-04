@@ -4,7 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:XHS.Spider.Views.Windows"
-        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" x:Class="XHS.Spider.Views.Windows.CookieEdit"
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" 
+        x:Class="XHS.Spider.Views.Windows.CookieEdit"
         mc:Ignorable="d"
         Background="{DynamicResource ApplicationBackgroundBrush}"
         Title="Cookie设置" Height="251" Width="312" HorizontalAlignment="Center" VerticalAlignment="Center" ResizeMode="CanMinimize">

@@ -6,11 +6,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Markup;
+using XHS.Common.Global;
 using XHS.Common.Http;
 using XHS.IService.XHS;
 using XHS.Models.XHS.ApiOutputModel;
+using XHS.Models.XHS.ApiOutputModel.CreateQrCode;
+using XHS.Models.XHS.ApiOutputModel.Login;
+using XHS.Models.XHS.ApiOutputModel.Me;
 using XHS.Models.XHS.ApiOutputModel.NodeDetail;
 using XHS.Models.XHS.ApiOutputModel.OtherInfo;
+using XHS.Models.XHS.ApiOutputModel.Search;
 using XHS.Models.XHS.ApiOutputModel.UserPosted;
 using XHS.Models.XHS.InputModel;
 using XHS.Service.Log;
@@ -22,20 +28,31 @@ namespace XHS.Service.XHS
     /// </summary>
     public class XhsSpiderService : IXhsSpiderService
     {
+        #region 公共方法
         private static readonly ILogger Logger = LoggerService.Get(typeof(XhsSpiderService));
-        private async Task<Dictionary<string,string>> GetXsHeader(string url, WebView2 webView)
+        private async Task<Dictionary<string, string>> GetXsHeader(string url, string jsonData = "")
         {
-            Dictionary<string,string> dic= new Dictionary<string,string>(); 
-            string jscode = "var url='" + url + "';\r\n" + @"try {
-                                                                            sign(url);
-                                                                        } catch (e) { winning.log(e); }
-                                                                        function sign(url) {
-                                                                            var t;
-                                                                            var o = window._webmsxyw(url, t);
-                                                                            return o;
-                                                                        }";
-            var xsxtStr = await webView.CoreWebView2.ExecuteScriptAsync(jscode);
-            if (!string.IsNullOrEmpty(xsxtStr)&& xsxtStr!="null")
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+            string param = string.Empty;
+            if (string.IsNullOrEmpty(jsonData))
+            {
+                param = "var url='" + url + "';\r\n  var data=null;";
+            }
+            else
+            {
+                param = "var url='" + url + "';\r\n var jsonStr='" + jsonData + "';var data = JSON.parse(jsonStr);";
+            }
+
+            string jscode = param + @"try {
+                                        sign(url,data);
+                                    } catch (e) { winning.log(e); }
+                                    function sign(url,data) {
+                                        var t;
+                                        var o = window._webmsxyw(url, t);
+                                        return o;
+                                    }";
+            var xsxtStr = await GlobalCaChe.webView.CoreWebView2.ExecuteScriptAsync(jscode);
+            if (!string.IsNullOrEmpty(xsxtStr) && xsxtStr != "null")
             {
                 try
                 {
@@ -48,25 +65,28 @@ namespace XHS.Service.XHS
                 catch (Exception ex)
                 {
 
-                    Logger.Error("获取xs，xt算法失败：",ex);
+                    Logger.Error("获取xs，xt算法失败：", ex);
                 }
-              
+
             }
             return dic;
         }
+        #endregion
+
+        #region 笔记相关
         /// <summary>
         /// 获取笔记详情
         /// </summary>
         /// <param name="nodeid"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public async Task<XHSBaseApiModel<NodeDetailModel>> GetNodeDetail(string nodeid, WebView2 webView)
+        public async Task<XHSBaseApiModel<NodeDetailModel>> GetNodeDetail(string nodeid)
         {
             XHSBaseApiModel<NodeDetailModel> nodeDetailModel = new XHSBaseApiModel<NodeDetailModel>();
             try
             {
                 string url = $"/api/sns/web/v1/feed?source_note_id={nodeid}";
-                var header=await GetXsHeader(url,webView);
+                var header = await GetXsHeader(url);
                 Logger.Info($"调用接口：{url}");
                 var result = HttpClientHelper.DoPost(url, header);
                 if (!string.IsNullOrEmpty(result))
@@ -76,7 +96,7 @@ namespace XHS.Service.XHS
             }
             catch (Exception ex)
             {
-                Logger.Error("获取笔记详细信息失败",ex);
+                Logger.Error("获取笔记详细信息失败", ex);
             }
             return nodeDetailModel;
         }
@@ -86,13 +106,13 @@ namespace XHS.Service.XHS
         /// <param name="targetUserId"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public async Task<XHSBaseApiModel<OtherInfoModel>> GetOtherInfo(string targetUserId, WebView2 webView)
+        public async Task<XHSBaseApiModel<OtherInfoModel>> GetOtherInfo(string targetUserId)
         {
             XHSBaseApiModel<OtherInfoModel> model = new XHSBaseApiModel<OtherInfoModel>();
             try
             {
                 string url = $"/api/sns/web/v1/user/otherinfo?target_user_id={targetUserId}";
-                var header = await GetXsHeader(url, webView);
+                var header = await GetXsHeader(url);
                 Logger.Info($"调用接口：{url}");
                 var result = HttpClientHelper.DoGet(url, header);
                 if (!string.IsNullOrEmpty(result))
@@ -106,8 +126,13 @@ namespace XHS.Service.XHS
             }
             return model;
         }
-
-        private async Task<bool> UserPosted(UserPostedInputModel model, List<NoteModel> userNodes, WebView2 webView)
+        /// <summary>
+        /// 递归获取用户笔记
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="userNodes"></param>
+        /// <returns></returns>
+        private async Task<bool> UserPosted(UserPostedInputModel model, List<NoteModel> userNodes)
         {
             bool isSuccess = false;
             if (model != null)
@@ -115,7 +140,7 @@ namespace XHS.Service.XHS
                 try
                 {
                     string url = $"/api/sns/web/v1/user_posted?num={model.num}&cursor={model.cursor}&user_id={model.user_id}";
-                    var header = await GetXsHeader(url, webView);
+                    var header = await GetXsHeader(url);
                     Logger.Info($"调用接口：{url}");
                     var result = HttpClientHelper.DoGet(url, header);
                     if (!string.IsNullOrEmpty(result))
@@ -135,7 +160,7 @@ namespace XHS.Service.XHS
                             {
                                 model.cursor = resultData.Data.Cursor;
                                 //await Task.Delay(500);
-                                await UserPosted(model, userNodes, webView);
+                                await UserPosted(model, userNodes);
                             }
                             isSuccess = true;
                         }
@@ -154,15 +179,151 @@ namespace XHS.Service.XHS
         /// <param name="userid"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public async Task<List<NoteModel>> GetAllUserNode(string userid, WebView2 webView)
+        public async Task<List<NoteModel>> GetAllUserNode(string userid)
         {
             List<NoteModel> nodes = new List<NoteModel>();
-            UserPostedInputModel model = new UserPostedInputModel { 
-                user_id= userid,
-                num=30,
+            UserPostedInputModel model = new UserPostedInputModel
+            {
+                user_id = userid,
+                num = 30,
             };
-            await UserPosted(model,nodes, webView);
+            await UserPosted(model, nodes);
             return nodes;
         }
+        #endregion
+
+
+
+        #region 关键字搜索
+        /// <summary>
+        /// 关键字搜索笔记
+        /// </summary>
+        /// <param name="inputModel"></param>
+        /// <param name="webView"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<XHSBaseApiModel<SearchNodesOutPutModel>> SearchNotes(SearchInputModel inputModel)
+        {
+            XHSBaseApiModel<SearchNodesOutPutModel> model = new XHSBaseApiModel<SearchNodesOutPutModel>();
+            try
+            {
+                //string url = $"/api/sns/web/v1/search/notes?keyword={inputModel.KeyWord}&note_type={inputModel.NoteType}&page={inputModel.Page}&page_size={inputModel.PageSize}&search_id={inputModel.SearchId}&sort={inputModel.Sort}";
+                string url = "/api/sns/web/v1/search/notes";
+                var postData = JsonConvert.SerializeObject(inputModel);
+                var header = await GetXsHeader(url, postData);
+                Logger.Info($"调用接口：{url}");
+                var result = HttpClientHelper.DoPost(url, header, postData);
+                if (!string.IsNullOrEmpty(result))
+                {
+                    model = JsonConvert.DeserializeObject<XHSBaseApiModel<SearchNodesOutPutModel>>(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("获取笔记详细信息失败", ex);
+            }
+            return model;
+        }
+        #endregion
+
+        #region 登录
+        /// <summary>
+        /// 创建二维码
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<QrCodeModel> CreateQrCode()
+        {
+            QrCodeModel model =null;
+            try
+            {
+                string url = "/api/sns/web/v1/login/qrcode/create";
+                var header = await GetXsHeader(url);
+                Logger.Info($"调用接口：{url}");
+                var result = HttpClientHelper.DoPost(url, header);
+                if (!string.IsNullOrEmpty(result))
+                {
+                    var qrcodeModel = JsonConvert.DeserializeObject<XHSBaseApiModel<QrCodeModel>>(result);
+                    if (qrcodeModel != null && qrcodeModel.Success)
+                    {
+                        model = qrcodeModel.Data;
+                    }
+                    else
+                    {
+                        Logger.Error("获取二维码信息失败:" + qrcodeModel.Msg);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("获取二维码信息失败", ex);
+            }
+
+            return model;
+        }
+        /// <summary>
+        /// 获取登录状态
+        /// </summary>
+        /// <param name="qrCode"></param>
+        /// <returns></returns>
+        public async Task<LoginInfoStatus> GetStatus(QrCodeModel qrCode)
+        {
+            LoginInfoStatus status = null;
+            try
+            {
+                string url = $"/api/sns/web/v1/login/qrcode/status?qr_id={qrCode.QrId}&code={qrCode.Code}";
+                var header = await GetXsHeader(url);
+                Logger.Info($"调用接口：{url}");
+                var result = HttpClientHelper.DoGet(url, header);
+                if (!string.IsNullOrEmpty(result))
+                {
+                    var loginStatus = JsonConvert.DeserializeObject<XHSBaseApiModel<LoginInfoStatus>>(result);
+                    if (loginStatus != null && loginStatus.Success && loginStatus.Data.CodeStatus==2)
+                    {
+                        status = loginStatus.Data;
+                        return status;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("获取二维码信息失败", ex);
+            }
+            return status;
+        }
+        /// <summary>
+        /// 获取当前登录用户
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<UserInfoModel> GetCurrentUser()
+        {
+            UserInfoModel user=null;
+            try
+            {
+                await Task.Delay(1000);
+                string url = "/api/sns/web/v2/user/me";
+                var header = await GetXsHeader(url);
+                Logger.Info($"调用接口：{url}");
+                var result = HttpClientHelper.DoGet(url, header);
+                if (!string.IsNullOrEmpty(result))
+                {
+                    var model = JsonConvert.DeserializeObject<XHSBaseApiModel<UserInfoModel>>(result);
+                    if (model != null && model.Success)
+                    {
+                        return model.Data;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("用户获取失败", ex);
+            }
+            return user;
+        }
+
+
+        #endregion
+
     }
 }

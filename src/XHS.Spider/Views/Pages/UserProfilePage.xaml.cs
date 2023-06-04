@@ -1,38 +1,21 @@
-﻿using Microsoft.Web.WebView2.Wpf;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Wpf.Ui.Common.Interfaces;
-using Wpf.Ui.Mvvm.Interfaces;
-using Wpf.Ui.TaskBar;
-using XHS.Spider.Helpers;
+using XHS.Spider.ViewModels;
 
 namespace XHS.Spider.Views.Pages
 {
     /// <summary>
     /// UserProfilePage.xaml 的交互逻辑
     /// </summary>
-    public partial class UserProfilePage : INavigableView<ViewModels.UserProfileViewModel>
+    public partial class UserProfilePage : INavigableView<UserProfileViewModel>
     {
-        //private ScriptHost scriptHost = null;
-     
-        public ViewModels.UserProfileViewModel ViewModel
+        public UserProfileViewModel ViewModel
         {
             get;
         }
 
-        public UserProfilePage(ViewModels.UserProfileViewModel viewModel)
+        public UserProfilePage(UserProfileViewModel viewModel)
         {
             viewModel.InitNullImage();
             ViewModel = viewModel;
@@ -63,9 +46,5 @@ namespace XHS.Spider.Views.Pages
             }
         }
 
-        private void UiPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            //scriptHost = ScriptHost.GetScriptHost(webView);
-        }
     }
 }

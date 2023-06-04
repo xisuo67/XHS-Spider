@@ -54,8 +54,8 @@ namespace XHS.Spider.ViewModels
         {
             switch (parameter)
             {
-                case "open_window_CookieEdit":
-                    _windowService.Show<CookieEdit>();
+                case "open_window_ScanLogin":
+                    _windowService.Show<ScanLogin>();
                     return;
             }
         }

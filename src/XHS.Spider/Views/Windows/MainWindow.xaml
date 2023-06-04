@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:pages="clr-namespace:XHS.Spider.Views.Pages"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" 
+    xmlns:Wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
     Title="{Binding ViewModel.ApplicationTitle, Mode=OneWay}"
     Width="1100"
     Height="650"
@@ -66,6 +67,22 @@
                         VerticalAlignment="Top"
                         FontSize="24"
                         Navigation="{Binding ElementName=RootNavigation}" />
+                    <StackPanel  HorizontalAlignment="Right" VerticalAlignment="Top">
+                        <StackPanel HorizontalAlignment="Center">
+                            <Border
+                    Width="40"
+                    Height="40"
+                        Grid.Row="0"
+                    CornerRadius="20" Margin="0,0,32,0" MouseDown="Border_MouseDown">
+                                <Border.Background>
+                                    <ImageBrush x:Name="headImage" ImageSource="{Binding ViewModel.CurrentUser.HeadImage}"/>
+                                </Border.Background>
+                            </Border>
+                            <!--<TextBlock HorizontalAlignment="Left" FontSize="14" TextWrapping = "Wrap" Foreground="#FF999999" Text="{Binding ViewModel.CurrentUser.NickName}"></TextBlock>-->
+                        </StackPanel>
+                   
+                    </StackPanel>
+
                     <ui:Snackbar
                         x:Name="RootSnackbar"
                         Title=""
@@ -76,22 +93,11 @@
                         Icon="PuzzlePiece24"
                         Message=""
                         Timeout="5000" />
-                    <!--<Border
-                    Width="40"
-                    Height="40"
-                        Grid.Row="0"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Top"
-                    CornerRadius="20" Margin="0,0,32,0">
-                        --><!--<Image Name="imgDynamic" Source="pack://application:,,,/Resources/wpfui_full.png"></Image>--><!--
-                        <Border.Background>
-                            <ImageBrush x:Name="imgDynamic" />
-                        </Border.Background>
-                    </Border>-->
                 </Grid>
             </Border>
         </Grid>
-
+        <Wpf:WebView2
+            x:Name="webView" Visibility="Hidden"/>
         <Grid
             x:Name="RootWelcomeGrid"
             Grid.Row="1"

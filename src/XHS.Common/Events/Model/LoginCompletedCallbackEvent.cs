@@ -7,7 +7,10 @@ using XHS.Models.Events;
 
 namespace XHS.Common.Events.Model
 {
-    public class CalcXsXtEvent : PubSubEvent<string>
+    /// <summary>
+    /// 登录成功回调事件
+    /// </summary>
+    public class LoginCompletedCallbackEvent : PubSubEvent<bool>
     {
     }
 }

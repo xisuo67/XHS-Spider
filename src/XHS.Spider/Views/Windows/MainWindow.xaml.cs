@@ -21,6 +21,9 @@ using XHS.Spider.Services;
 using System.IO;
 using Microsoft.Extensions.DependencyInjection;
 using XHS.Spider.ViewModels;
+using XHS.IService;
+using XHS.Service;
+using XHS.Common.Events.Model;
 
 namespace XHS.Spider.Views.Windows
 {
@@ -29,7 +32,7 @@ namespace XHS.Spider.Views.Windows
     /// </summary>
     public partial class MainWindow : INavigationWindow
     {
-
+        private IEventAggregator _aggregator { get; set; }
         private readonly TaskbarIcon _notifyIcon;
         private ContextMenu _contextMenu;
         private UpdateCheckerServer updateChecker;
@@ -37,14 +40,25 @@ namespace XHS.Spider.Views.Windows
         private readonly ITaskBarService _taskBarService;
         private readonly IPageServiceNew _pageServiceNew;
         private readonly IServiceProvider _serviceProvider;
-        public ViewModels.MainWindowViewModel ViewModel
+        private readonly INavigationService _navigationService;
+        private readonly IWindowService _windowService;
+        public MainWindowViewModel ViewModel
         {
             get;
         }
 
-        public MainWindow(ViewModels.MainWindowViewModel viewModel, IPageServiceNew pageService, ITaskBarService taskBarService, INavigationService navigationService, IServiceProvider serviceProvider, ISnackbarService snackbarService)
+        public MainWindow(MainWindowViewModel viewModel, 
+            IPageServiceNew pageService, 
+            ITaskBarService taskBarService, 
+            INavigationService navigationService, 
+            IServiceProvider serviceProvider, 
+            ISnackbarService snackbarService,
+            IWindowService windowService,
+            IEventAggregator aggregator)
         {
-           
+            _navigationService = navigationService;
+            _windowService = windowService;
+            _aggregator = aggregator;
             _taskBarService = taskBarService;
             _serviceProvider = serviceProvider;
             ViewModel = viewModel;
@@ -56,8 +70,11 @@ namespace XHS.Spider.Views.Windows
             updateChecker.NewVersionFound += updateChecker_NewVersionFound;
             updateChecker.NewVersionNotFound += updateChecker_NewVersionNotFound;
             #endregion
-            
             InitializeComponent();
+            #region webView
+            webView.Source = new Uri("https://www.xiaohongshu.com/explore");
+            InitializeAsync();
+            #endregion
             SetPageService(pageService);
             _pageServiceNew = pageService;
             navigationService.SetNavigationControl(RootNavigation);
@@ -115,7 +132,8 @@ namespace XHS.Spider.Views.Windows
             Task.Run(async () =>
             {
                 //TODO:这里预留程序启动初始化数据
-              
+  
+                ScriptHost.GetScriptHost(GlobalCaChe.webView, _aggregator);
                 //await Task.Delay(2000);
                 updateChecker.Check(true);
                 await Dispatcher.InvokeAsync(() =>
@@ -153,7 +171,12 @@ namespace XHS.Spider.Views.Windows
 
         #endregion INavigationWindow methods
 
-        
+        private async void InitializeAsync()
+        {
+            GlobalCaChe.webView = this.webView;
+            await webView.EnsureCoreWebView2Async(null);
+            await webView.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync("window.chrome.webview.postMessage(window.document.URL);");
+        }
         /// <summary>
         /// Raises the closed event.
         /// </summary>
@@ -179,6 +202,11 @@ namespace XHS.Spider.Views.Windows
                 top: sender?.Current?.PageTag == "dashboard" ? -69 : 0,
                 right: 0,
                 bottom: 0);
+        }
+
+        private async void Border_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            _windowService.Show<ScanLogin>();
         }
     }
 }

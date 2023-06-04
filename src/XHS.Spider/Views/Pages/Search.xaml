@@ -30,13 +30,12 @@
                 </Border.Background>
             </Border>
         </Grid>
-        <Wpf:WebView2
-            x:Name="webView" Visibility="Hidden"/>
+        
 
         <Grid Grid.Row="1" >
             <ui:TextBox 
             Icon="Search12" 
-            PlaceholderText="请输入小红书网址链接或博主首页地址"
+            PlaceholderText="请输入博主首页地址"
             Text="{Binding Path=ViewModel.InputText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
             IconPlacement="Right" Margin="110,0,110,0">
                 <TextBox.InputBindings>

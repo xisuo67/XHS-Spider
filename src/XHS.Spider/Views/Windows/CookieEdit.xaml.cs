@@ -83,7 +83,8 @@ namespace XHS.Spider.Views.Windows
                 _cookieModel = new CookieModel()
                 {
                     Id = Guid.NewGuid(),
-                    Cookie = cookie
+                    Cookie = cookie,
+                    IsGetAutomatically=false,
                 };
                 GlobalCaChe.Cookies.Add(_cookieModel);
             }

@@ -6,7 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Web;
 using System.Windows;
 using System.Windows.Threading;
 using UpdateChecker.Interfaces;
@@ -14,10 +16,12 @@ using Wpf.Ui.Controls.Interfaces;
 using Wpf.Ui.TaskBar;
 using XHS.Common.Events;
 using XHS.Common.Events.Model;
+using XHS.Common.Global;
 using XHS.Models.Events;
 using XHS.Service.Log;
 using XHS.Spider.Helpers;
 using XHS.Spider.ViewModels;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace XHS.Spider.Services
 {
@@ -30,9 +34,9 @@ namespace XHS.Spider.Services
         private static INavigation _navigation;
         private static IServiceProvider _serviceProvider;
         private static IPageServiceNew _pageServiceNew;
-        private static WebView2 _webView;
+        //private static WebView2 _webView;
         private SearchService(WebView2 webView, IEventAggregator aggregator, INavigation navigation, IServiceProvider serviceProvider, IPageServiceNew pageServiceNew) {
-            _webView = webView; 
+            //_webView = webView; 
             _aggregator = aggregator;
             _navigation = navigation;
             _serviceProvider = serviceProvider;
@@ -51,20 +55,33 @@ namespace XHS.Spider.Services
         /// <exception cref="NotImplementedException"></exception>
         public void SearchInput(string input)
         {
-           
+            bool isSubscribeEvent = false;
             if (input.Contains("user/profile"))
             {
                 try
                 {
-                    _webView.CoreWebView2.Navigate(input);
-                    //订阅事件
-                    _aggregator.GetEvent<NavigationCompletedEvent>().Subscribe(Navigation);
-
+                    isSubscribeEvent = true;
+                    //_webView.CoreWebView2.Navigate(input);
+                    GlobalCaChe.webView.CoreWebView2.Navigate(input);
                 }
                 catch (Exception ex)
                 {
                     Logger.Error("webView跳转失败：", ex);
                 }
+            }
+            ////非URL默认识别为关键字搜索
+            //else if (!IsUrl(input))
+            //{
+            //    //isSubscribeEvent = true;
+            //    RedirectService<HomeExploreViewModel>.SetJumpParam(input, _serviceProvider, _pageServiceNew);
+            //    _navigation.Navigate(typeof(Views.Pages.HomeExplorePage));
+            //    //var url = $"https://www.xiaohongshu.com/search_result/?keyword={input}&source=web_explore_feed";
+            //    //_webView.CoreWebView2.Navigate(url);
+            //}
+            if (isSubscribeEvent)
+            {
+                //订阅事件
+                _aggregator.GetEvent<NavigationCompletedEvent>().Subscribe(Navigation);
             }
         }
 
@@ -72,20 +89,18 @@ namespace XHS.Spider.Services
         {
             if (redirectInfo.Url.Contains("user/profile"))
             {
-                SetJumpParam(redirectInfo.Url, _serviceProvider, _pageServiceNew, _webView);
-                //消事件注册
-                _aggregator.GetEvent<NavigationCompletedEvent>().Unsubscribe(Navigation);
+                RedirectService<UserProfileViewModel>.SetJumpParam(redirectInfo.Url, _serviceProvider, _pageServiceNew);
                 _navigation.Navigate(typeof(Views.Pages.UserProfilePage));
             }
-        }
-        private static void SetJumpParam(string input, IServiceProvider serviceProvider, IPageServiceNew pageServiceNew, WebView2 webView)
-        {
-            pageServiceNew.Scope = serviceProvider.CreateScope();
-            var dc = pageServiceNew.Scope.ServiceProvider.GetRequiredService<UserProfileViewModel>();
-            dc.InputText = input;
-            dc.webView = webView;
-            //TODO:webView加载完成后再调用初始化数据
-            dc.ExecuteInitData();
+            //非URL默认识别为关键字搜索
+            else if (redirectInfo.Url.Contains("keyword"))
+            { 
+                var keyword = Regex.Match(redirectInfo.Url, "(?<=keyword=).*?(?=&source)").Value;
+                RedirectService<HomeExploreViewModel>.SetJumpParam(keyword, _serviceProvider, _pageServiceNew);
+                _navigation.Navigate(typeof(Views.Pages.HomeExplorePage));
+            }
+            //消事件注册
+            _aggregator.GetEvent<NavigationCompletedEvent>().Unsubscribe(Navigation);
         }
         /// <summary>
         /// 从url中获取id
