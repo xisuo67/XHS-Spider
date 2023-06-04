@@ -15,6 +15,9 @@ namespace XHS.Spider.ViewModels
     /// </summary>
     public abstract class BaseSearchViewModel : ObservableObject
     {
+        /// <summary>
+        /// 搜索栏输入框
+        /// </summary>
         private string inputText;
         public string InputText
         {
@@ -29,6 +32,9 @@ namespace XHS.Spider.ViewModels
             get => inputCommand ?? (inputCommand = new Wpf.Ui.Common.RelayCommand(ExecuteInitData));
             set => inputCommand = value;
         }
+        /// <summary>
+        /// 执行数据初始化
+        /// </summary>
         public abstract void ExecuteInitData();
     }
 }
