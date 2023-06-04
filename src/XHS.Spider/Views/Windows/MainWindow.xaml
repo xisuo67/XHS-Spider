@@ -68,17 +68,19 @@
                         FontSize="24"
                         Navigation="{Binding ElementName=RootNavigation}" />
                     <StackPanel  HorizontalAlignment="Right" VerticalAlignment="Top">
-                        <Border
+                        <StackPanel HorizontalAlignment="Center">
+                            <Border
                     Width="40"
                     Height="40"
                         Grid.Row="0"
                     CornerRadius="20" Margin="0,0,32,0" MouseDown="Border_MouseDown">
-                            <Border.Background>
-                                <ImageBrush x:Name="headImage" ImageSource="{Binding ViewModel.CurrentUser.HeadImage}"/>
-                            </Border.Background>
-
-                        </Border>
-                        <TextBlock HorizontalAlignment="Center" FontSize="12" DataContext="{Binding ViewModel.CurrentUser.NickName}"></TextBlock>
+                                <Border.Background>
+                                    <ImageBrush x:Name="headImage" ImageSource="{Binding ViewModel.CurrentUser.HeadImage}"/>
+                                </Border.Background>
+                            </Border>
+                            <!--<TextBlock HorizontalAlignment="Left" FontSize="14" TextWrapping = "Wrap" Foreground="#FF999999" Text="{Binding ViewModel.CurrentUser.NickName}"></TextBlock>-->
+                        </StackPanel>
+                   
                     </StackPanel>
 
                     <ui:Snackbar

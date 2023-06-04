@@ -5,6 +5,8 @@ using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
 using Wpf.Ui.Controls.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
+using XHS.Common.Events;
+using XHS.Common.Events.Model;
 using XHS.Common.Global;
 using XHS.Common.Helpers;
 using XHS.Models.XHS.ApiOutputModel.Me;
@@ -27,22 +29,37 @@ namespace XHS.Spider.ViewModels
         [ObservableProperty]
         private ObservableCollection<MenuItem> _trayMenuItems = new();
 
-        public MainWindowViewModel(INavigationService navigationService)
-        {
-            if (!_isInitialized)
-                InitializeViewModel();
-        }
-
+        private IEventAggregator _aggregator { get; set; }
         private UserInfoModel _currentUser = new UserInfoModel();
 
-        public UserInfoModel? CurrentUser {
+        public UserInfoModel? CurrentUser
+        {
             get => _currentUser;
             set => SetProperty(ref _currentUser, value);
         }
+        public MainWindowViewModel(INavigationService navigationService, IEventAggregator aggregator)
+        {
+            if (!_isInitialized)
+            {
+                _aggregator=aggregator;
+                _aggregator.GetEvent<LoginCompletedCallbackEvent>().Subscribe(SetCurrentUser);
+                InitializeViewModel();
+            }
+        }
+
+        private void SetCurrentUser(bool isLogin) {
+            if (isLogin)
+            {
+                this.InitCurrentUser();
+            }
+        }
+
         private void InitCurrentUser() {
             if (GlobalCaChe.CurrentUser!=null)
             {
-                GlobalCaChe.CurrentUser.HeadImage=FileHelper.UrlToBitmapImage(GlobalCaChe.CurrentUser.Images);
+                var imageUrl = GlobalCaChe.CurrentUser.Images;
+                var url = imageUrl.Split('?')[0];
+                GlobalCaChe.CurrentUser.HeadImage=FileHelper.UrlToBitmapImage(url);
                 CurrentUser =GlobalCaChe.CurrentUser;
             }
             else

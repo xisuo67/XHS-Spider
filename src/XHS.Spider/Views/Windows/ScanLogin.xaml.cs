@@ -21,7 +21,7 @@ namespace XHS.Spider.Views.Windows
     /// </summary>
     public partial class ScanLogin : Window
     {
-        private static readonly Service.Log.ILogger Logger = LoggerService.Get(typeof(ScanLogin));
+        private static readonly ILogger Logger = LoggerService.Get(typeof(ScanLogin));
         #region 属性
         private readonly TaskbarIcon _notifyIcon;
         private IEventAggregator _aggregator { get; set; }
@@ -114,6 +114,7 @@ namespace XHS.Spider.Views.Windows
             if (currentUser != null)
             {
                 GlobalCaChe.CurrentUser = currentUser;
+                _aggregator.GetEvent<LoginCompletedCallbackEvent>().Publish(true);
             }
             else
             {

@@ -23,6 +23,7 @@ using Microsoft.Extensions.DependencyInjection;
 using XHS.Spider.ViewModels;
 using XHS.IService;
 using XHS.Service;
+using XHS.Common.Events.Model;
 
 namespace XHS.Spider.Views.Windows
 {
