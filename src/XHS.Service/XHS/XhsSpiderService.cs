@@ -282,12 +282,12 @@ namespace XHS.Service.XHS
                         status = loginStatus.Data;
                         return status;
                     }
-                    else
-                    {
-                        await Task.Delay(1000);
-                        //递归
-                        GetStatus(qrCode).GetAwaiter();
-                    }
+                    //else
+                    //{
+                    //    await Task.Delay(1000);
+                    //    //递归
+                    //    GetStatus(qrCode).GetAwaiter();
+                    //}
                 }
             }
             catch (Exception ex)
