@@ -8,6 +8,7 @@ using XHS.IService.DI;
 using XHS.Models.XHS.ApiOutputModel;
 using XHS.Models.XHS.ApiOutputModel.CreateQrCode;
 using XHS.Models.XHS.ApiOutputModel.Login;
+using XHS.Models.XHS.ApiOutputModel.Me;
 using XHS.Models.XHS.ApiOutputModel.NodeDetail;
 using XHS.Models.XHS.ApiOutputModel.OtherInfo;
 using XHS.Models.XHS.ApiOutputModel.Search;
@@ -61,5 +62,11 @@ namespace XHS.IService.XHS
         /// <param name="qrCode"></param>
         /// <returns></returns>
         Task<LoginInfoStatus> GetStatus(QrCodeModel qrCode);
+
+        /// <summary>
+        /// 获取当前登录用户
+        /// </summary>
+        /// <returns></returns>
+        Task<UserInfoModel> GetCurrentUser();
     }
 }

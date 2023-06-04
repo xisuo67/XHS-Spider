@@ -22,6 +22,7 @@ using System.IO;
 using Microsoft.Extensions.DependencyInjection;
 using XHS.Spider.ViewModels;
 using XHS.IService;
+using XHS.Service;
 
 namespace XHS.Spider.Views.Windows
 {
@@ -38,6 +39,7 @@ namespace XHS.Spider.Views.Windows
         private readonly ITaskBarService _taskBarService;
         private readonly IPageServiceNew _pageServiceNew;
         private readonly IServiceProvider _serviceProvider;
+        private readonly INavigationService _navigationService;
         private readonly IWindowService _windowService;
         public MainWindowViewModel ViewModel
         {
@@ -53,6 +55,7 @@ namespace XHS.Spider.Views.Windows
             IWindowService windowService,
             IEventAggregator aggregator)
         {
+            _navigationService = navigationService;
             _windowService = windowService;
             _aggregator = aggregator;
             _taskBarService = taskBarService;
@@ -203,7 +206,6 @@ namespace XHS.Spider.Views.Windows
         private async void Border_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             _windowService.Show<ScanLogin>();
-
         }
     }
 }

@@ -19,8 +19,11 @@ using System.Windows.Shapes;
 using Wpf.Ui.Controls;
 using Wpf.Ui.Controls.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
+using XHS.Common.Events;
+using XHS.Common.Events.Model;
 using XHS.Common.Helpers;
 using XHS.IService.XHS;
+using XHS.Models.Events;
 using XHS.Models.XHS.ApiOutputModel.CreateQrCode;
 using XHS.Service.Log;
 using XHS.Service.XHS;
@@ -38,18 +41,33 @@ namespace XHS.Spider.Views.Windows
         private static readonly Service.Log.ILogger Logger = LoggerService.Get(typeof(ScanLogin));
         #region 属性
         private readonly TaskbarIcon _notifyIcon;
+        private IEventAggregator _aggregator { get; set; }
         private readonly IXhsSpiderService _xhsSpiderService;
         private ScriptHost _scriptHost;
-        private QrCodeModel _qrcodeInfo;
         #endregion
-        public ScanLogin(IXhsSpiderService xhsSpiderService)
+        public ScanLogin(IXhsSpiderService xhsSpiderService, IEventAggregator aggregator)
         {
             _notifyIcon = new TaskbarIcon();
+            _aggregator = aggregator;
             _xhsSpiderService = xhsSpiderService;
             WindowStartupLocation = WindowStartupLocation.CenterScreen;// 窗体居中
             _scriptHost=  ScriptHost.scriptHost;
             InitializeComponent();
+            _aggregator.GetEvent<GetQrCodeStatusCallbackEvent>().Subscribe(GetStatus);
+            this.Closed += ScanLogin_Closed;
         }
+        /// <summary>
+        /// 窗口关闭事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        private void ScanLogin_Closed(object? sender, EventArgs e)
+        {
+            //卸载订阅事件
+            _aggregator.GetEvent<GetQrCodeStatusCallbackEvent>().Unsubscribe(GetStatus);
+        }
+
         public async Task<QrCodeModel> InitQrCode()
         {
             QrCodeModel qrcodeInfo = null;
@@ -61,19 +79,7 @@ namespace XHS.Spider.Views.Windows
                     var qrcode = GetLoginQRCode(qrcodeInfo.Url);
                     if (qrcode != null)
                     {
-                        //App.PropertyChangeAsync(new Action(async () =>
-                        //{
-
-                        //}));
                         this.nameLoginQRCode.Source = qrcode;
-                       
-                        //TODO:二维码设置成功后，轮询状态
-                        //var isLogin= await GetStatus(qrcodeInfo);
-                        // if (isLogin) {
-                        //     //登录成功，提示登录成功，并关闭扫码扫码界面；
-                        //     _notifyIcon.ShowBalloonTip("扫码登录成功", "提示", BalloonIcon.None);
-                        //     this.Close();
-                        // }
                     }
                 }
                 else
@@ -83,32 +89,35 @@ namespace XHS.Spider.Views.Windows
             }
             catch (Exception ex)
             {
-                //Wpf.Ui.Controls.MessageBox.("二维码获取失败");
                 Logger.Error("二维码获取失败", ex);
             }
             return qrcodeInfo;
         }
-        public async Task<bool> GetStatus(QrCodeModel qrCode)
+        public async void GetStatus(QrCodeModel qrCode)
         {
-            var data = _xhsSpiderService.GetStatus(qrCode).Result;
+            await Task.Delay(1000);
+            var data = await _xhsSpiderService.GetStatus(qrCode);
             if (data != null)
             {
                 //登录成功刷新cookie
                 Dictionary<string, string> dic = new Dictionary<string, string>();
                 dic.TryAdd("web_session", data.LoginInfo.Session);
+                //TODO:判断状态，退出循环，设置cookie，web_session，并查询用户信息
                 if (_scriptHost != null)
                 {
                     _scriptHost.UpdateCookie(dic);
+                    //登录成功，提示登录成功，并关闭扫码扫码界面；
+                    _notifyIcon.ShowBalloonTip("扫码登录成功", "提示", BalloonIcon.None);
+                    //TODO:获取当前登录用户
+                    _xhsSpiderService.
+                    this.Close();
+                    return;
                 }
-                //TODO:判断状态，退出循环，设置cookie，web_session，并查询用户信息
-                return true;
             }
             else
             {
-                await Task.Delay(1000);
-                GetStatus(qrCode).GetAwaiter();
+                GetStatus(qrCode);
             }
-            return false;
         }
 
         /// <summary>
@@ -163,7 +172,9 @@ namespace XHS.Spider.Views.Windows
 
         private async void ScanFrm_Load(object sender, RoutedEventArgs e)
         {
-            _qrcodeInfo =await InitQrCode();
+            var qrcodeInfo =await InitQrCode();
+            //执行回调事件，监听扫码状态，这里不能直接调用获取状态接口，不然fromLoad事件由于递归原因，永远无法执行完，导致二维码没法显示
+            _aggregator.GetEvent<GetQrCodeStatusCallbackEvent>().Publish(qrcodeInfo);
         }
     }
 }
