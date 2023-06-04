@@ -1,43 +1,25 @@
 ﻿using Hardcodet.Wpf.TaskbarNotification;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Forms;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using Wpf.Ui.Controls;
-using Wpf.Ui.Controls.Interfaces;
-using Wpf.Ui.Mvvm.Contracts;
 using XHS.Common.Events;
 using XHS.Common.Events.Model;
 using XHS.Common.Global;
 using XHS.Common.Helpers;
 using XHS.IService.XHS;
-using XHS.Models.Events;
 using XHS.Models.XHS.ApiOutputModel.CreateQrCode;
 using XHS.Service.Log;
-using XHS.Service.XHS;
 using XHS.Spider.Helpers;
-using XHS.Spider.ViewModels;
-using static EdgeSharp.Interop;
 
 namespace XHS.Spider.Views.Windows
 {
     /// <summary>
     /// ScanLogin.xaml 的交互逻辑
     /// </summary>
-    public partial class ScanLogin : Window, INavigationWindow
+    public partial class ScanLogin : Window
     {
         private static readonly Service.Log.ILogger Logger = LoggerService.Get(typeof(ScanLogin));
         #region 属性
@@ -107,7 +89,6 @@ namespace XHS.Spider.Views.Windows
                 if (_scriptHost != null)
                 {
                     _scriptHost.UpdateCookie(dic);
-                    
                     //TODO:获取当前登录用户
                     int index = 1;
                     GetCurrentUser(index);
@@ -167,35 +148,6 @@ namespace XHS.Spider.Views.Windows
             image.StreamSource = new MemoryStream(bytes);
             image.EndInit();
             return image;
-        }
-        public void CloseWindow()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Frame GetFrame()
-        {
-            throw new NotImplementedException();
-        }
-
-        public INavigation GetNavigation()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Navigate(Type pageType)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetPageService(IPageService pageService)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ShowWindow()
-        {
-            throw new NotImplementedException();
         }
 
         private async void ScanFrm_Load(object sender, RoutedEventArgs e)
