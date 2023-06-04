@@ -95,19 +95,19 @@
                 Grid.Column="0"
                 Margin="0,0,4,0"
                 Command="{Binding ViewModel.OpenWindowCommand}"
-                CommandParameter="open_window_CookieEdit"
-                Icon="CollectionsAdd24"
+                CommandParameter="open_window_ScanLogin"
+                Icon="QrCode28"
                 IsChevronVisible="True">
                 <StackPanel>
                     <TextBlock
                         Margin="0"
                         FontSize="13"
                         FontWeight="Medium"
-                        Text="添加Cookie" />
+                        Text="ScanQrCode" />
                     <TextBlock
                         FontSize="12"
                         Foreground="{DynamicResource TextFillColorTertiaryBrush}"
-                        Text="新增Cookie设置" />
+                        Text="扫码登录" />
                 </StackPanel>
             </ui:CardAction>
             <ui:CardAction
@@ -129,7 +129,7 @@
                         Text="搜索小红书" />
                 </StackPanel>
             </ui:CardAction>
-            <ui:CardAction
+            <!--<ui:CardAction
                 Grid.Row="0"
                 Grid.Column="2"
                 Margin="4,0,4,0"
@@ -147,7 +147,7 @@
                         Foreground="{DynamicResource TextFillColorTertiaryBrush}"
                         Text="管理小红书Cookie" />
                 </StackPanel>
-            </ui:CardAction>
+            </ui:CardAction>-->
         </Grid>
 
         <Grid Grid.Row="2" Margin="12">
