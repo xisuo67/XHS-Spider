@@ -113,8 +113,7 @@ namespace XHS.Spider.Views.Windows
             //由于更新cookie需要后需要一定时间等待cookie刷新，会出现一定几率获取不到当前登录用户数据，需要增加重试机制
             if (currentUser != null)
             {
-                GlobalCaChe.CurrentUser = currentUser;
-                _aggregator.GetEvent<LoginCompletedCallbackEvent>().Publish(true);
+                _aggregator.GetEvent<LoginCompletedCallbackEvent>().Publish(currentUser);
             }
             else
             {

@@ -239,9 +239,6 @@ namespace XHS.Spider.ViewModels
         /// <summary>
         /// 解析下载资源
         /// </summary>
-        /// <param name="nodes"></param>
-        /// <param name="isDownLoadAll"></param>
-        /// <returns></returns>
         private async void ParseNodeProcess()
         {
             _snackbarService.Show("提示", "开始解析", SymbolRegular.ErrorCircle12, ControlAppearance.Success);

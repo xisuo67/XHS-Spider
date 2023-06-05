@@ -69,6 +69,18 @@ namespace XHS.Spider.Services
                     Logger.Error("webView跳转失败：", ex);
                 }
             }
+            else if (input.Contains("explore"))
+            {
+                //这种包含两种情况，1：直接输入首页网址，这种情况不判断，2：带id的取出id，这种满足跳转条件
+                string baseUrl = "https://www.xiaohongshu.com/explore";
+                var id = GetId(input,baseUrl);
+                if (string.IsNullOrEmpty(id)) { return; }
+                else
+                {
+                    isSubscribeEvent = true;
+                    GlobalCaChe.webView.CoreWebView2.Navigate(input);
+                }
+            }
             ////非URL默认识别为关键字搜索
             //else if (!IsUrl(input))
             //{
@@ -98,6 +110,11 @@ namespace XHS.Spider.Services
                 var keyword = Regex.Match(redirectInfo.Url, "(?<=keyword=).*?(?=&source)").Value;
                 RedirectService<HomeExploreViewModel>.SetJumpParam(keyword, _serviceProvider, _pageServiceNew);
                 _navigation.Navigate(typeof(Views.Pages.HomeExplorePage));
+            }
+            else if (redirectInfo.Url.Contains("explore"))
+            {
+                RedirectService<NodeDetailViewModel>.SetJumpParam(redirectInfo.Url, _serviceProvider, _pageServiceNew);
+                _navigation.Navigate(typeof(Views.Pages.NodeDetailPage));
             }
             //消事件注册
             _aggregator.GetEvent<NavigationCompletedEvent>().Unsubscribe(Navigation);
