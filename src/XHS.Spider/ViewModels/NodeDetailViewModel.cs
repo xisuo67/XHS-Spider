@@ -26,7 +26,7 @@ namespace XHS.Spider.ViewModels
     {
 
         #region 页面属性
-        private static readonly Service.Log.ILogger Logger = LoggerService.Get(typeof(NodeDetailViewModel));
+        private static readonly ILogger Logger = LoggerService.Get(typeof(NodeDetailViewModel));
         public static readonly string BaseUrl = "https://www.xiaohongshu.com/explore/";
         public static readonly string BaseVideoUrl = "http://sns-video-bd.xhscdn.com/{0}";
         public static readonly string BaseImageUrl = "https://sns-img-bd.xhscdn.com/{0}?imageView2/format/png";
