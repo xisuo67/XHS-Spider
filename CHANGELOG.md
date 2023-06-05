@@ -9,6 +9,8 @@
     - 删除添加cookie入口，以扫码登录取代
     - 删除cookie管理入口，以扫码登录取代
     - 部分代码重构，优化已知bug
+  - 功能预览
+    - [bilibili](https://www.bilibili.com/video/BV1UW4y1R7GE/?spm_id_from=333.999.0.0) 
 
 ## `2023/05/23` v1.0.0.8
 
