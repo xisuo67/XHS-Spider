@@ -27,7 +27,7 @@ namespace XHS.Spider.ViewModels
 
         #region 页面属性
         private static readonly Service.Log.ILogger Logger = LoggerService.Get(typeof(NodeDetailViewModel));
-        public static readonly string BaseUrl = "https://www.xiaohongshu.com/user/profile/";
+        public static readonly string BaseUrl = "https://www.xiaohongshu.com/explore/";
         public static readonly string BaseVideoUrl = "http://sns-video-bd.xhscdn.com/{0}";
         public static readonly string BaseImageUrl = "https://sns-img-bd.xhscdn.com/{0}?imageView2/format/png";
         private readonly ISnackbarService _snackbarService;
@@ -48,31 +48,6 @@ namespace XHS.Spider.ViewModels
         /// 用于操作数据
         /// </summary>
         public IEnumerable<NoteModel> Nodes { get => _nodes; set => SetProperty(ref _nodes, value); }
-        /// <summary>
-        /// 笔记数量
-        /// </summary>
-        private string _noteCount;
-        public string NoteCount
-        {
-            get => _noteCount;
-            set => SetProperty(ref _noteCount, value);
-        }
-        ///// <summary>
-        ///// 解析数量
-        ///// </summary>
-        //private string _parseNodeCount = "已解析(0)条";
-        //public string ParseNodeCount
-        //{
-        //    get => _parseNodeCount;
-        //    set => SetProperty(ref _parseNodeCount, value);
-        //}
-        //private ICommand parseNode;
-
-        //public ICommand ParseNode
-        //{
-        //    get => parseNode ?? (parseNode = new CommunityToolkit.Mvvm.Input.RelayCommand(ParseNodeProcess));
-        //    set => parseNode = value;
-        //}
 
         private ICommand downLoadCheckAll;
 
@@ -87,12 +62,6 @@ namespace XHS.Spider.ViewModels
         {
             get => downLoadAll ?? (downLoadAll = new CommunityToolkit.Mvvm.Input.RelayCommand(DownLoadAllNodes));
             set => downLoadAll = value;
-        }
-        private OtherInfoModel _userInfo = new OtherInfoModel();
-        public OtherInfoModel UserInfo
-        {
-            get => _userInfo;
-            set => SetProperty(ref _userInfo, value);
         }
         public NodeDetailViewModel(ISnackbarService snackbarService, IXhsSpiderService xhsSpiderService) {
             _notifyIcon = new TaskbarIcon();
@@ -159,29 +128,28 @@ namespace XHS.Spider.ViewModels
         /// <param name="noteId"></param>
         private async void ParseNodeProcess(string noteId)
         {
-            //_snackbarService.Show("提示", "开始解析", SymbolRegular.ErrorCircle12, ControlAppearance.Success);
-            ////TODO:有勾选项解析勾选项无勾选项解析所有笔记
-            //IEnumerable<NoteModel> nodes = null;
-            //var cheackNodes = this.Nodes.Where(e => e.IsDownLoad == true && e.IsParse == false);
-            //if (cheackNodes.Any())
-            //{
-            //    nodes = cheackNodes;
-            //}
-            //else
-            //{
-            //    nodes = this.Nodes.Where(e => e.IsParse == false);
-            //}
-
-            string dirName = Format.FormatFileName(UserInfo.BasicInfo.NickName);
-            string dirPath = $"{AppDomain.CurrentDomain.BaseDirectory}DownLoad\\{dirName}";
             //循环笔记数据
             List<DownloadItem> downloadItems = new List<DownloadItem>();
             var resultData = await _xhsSpiderService.GetNodeDetail(noteId);
             if (resultData != null && resultData.Success)
             {
+               
                 var nodeDetail = resultData.Data.Items;
+                NoteModel node = new NoteModel() { 
+                    NoteId=noteId,
+                    DisplayTitle = nodeDetail[0].NoteCard.Title,
+                    IsDownLoad=false,
+                    IsParse=false,
+                    LikedCount = nodeDetail[0].NoteCard.InteractInfo.LikedCount,
+                    Type = nodeDetail[0].NoteCard.Type,
+                };
+                List<NoteModel> list = new List<NoteModel>();
+                list.Add(node);
+                this.Nodes = list.ToArray();
                 foreach (var detailItem in nodeDetail)
                 {
+                    string dirName = Format.FormatFileName(detailItem.NoteCard.User.NickNames);
+                    string dirPath = $"{AppDomain.CurrentDomain.BaseDirectory}DownLoad\\{dirName}";
                     var nodeCard = detailItem.NoteCard;
                     var title = Format.FormatFileName(detailItem.NoteCard.Title);
                     switch (nodeCard.Type)
@@ -202,7 +170,6 @@ namespace XHS.Spider.ViewModels
                                 };
                                 downloadItems.Add(downloadImageItem);
                             }
-
                             break;
                         case "video":
                             var videoUrl = string.Format(BaseVideoUrl, nodeCard.Video.Consumer.OriginVideoKey);
@@ -292,7 +259,7 @@ namespace XHS.Spider.ViewModels
         {
             if (!string.IsNullOrEmpty(InputText))
             {
-                if (InputText.Contains("user/profile/"))
+                if (InputText.Contains("explore"))
                 {
                     var id = SearchService.GetId(InputText, BaseUrl);
                     if (string.IsNullOrEmpty(id))
@@ -302,24 +269,7 @@ namespace XHS.Spider.ViewModels
                     }
                     else
                     {
-                        var apiResult = await _xhsSpiderService.GetOtherInfo(id);
-                        if (apiResult != null && apiResult.Success)
-                        {
-                            UserInfo = apiResult.Data;
-                           
-                            var nodes = await _xhsSpiderService.GetAllUserNode(id);
-                            foreach (var node in nodes)
-                            {
-                                node.LikedCount = node.interact_info?.LikedCount;
-                            }
-                            Nodes = nodes.ToArray();
-                            NoteCount = $"({nodes.Count()})条";
-                            DataGridItemCollection = Nodes;
-                        }
-                        else
-                        {
-                            _snackbarService.Show("异常", apiResult?.Msg, SymbolRegular.ErrorCircle12, ControlAppearance.Danger);
-                        }
+                        ParseNodeProcess(id);
                     }
                 }
                 else
