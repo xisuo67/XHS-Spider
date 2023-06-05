@@ -44,6 +44,9 @@ XHS.Spider是一款颜值超高的小红书数据采集工具
 - XHS-Spider依托于.Net 6.0开发完成，这意味着你需要安装.Net 6.0运行时才能运行它，如果你的环境没有安装该运行时,启动XHS-Spider会提示异常信息。
   - 如何安装运行时，请查看[运行说明](https://github.com/xisuo67/XHS-Spider/wiki/XHS-Spider)相关文档。
   - 如果依然无法独立完成环境的安装，请通过QQ群咨询相关热心群友
+- 功能预览
+  - [bilibili](https://www.bilibili.com/video/BV1UW4y1R7GE/?vd_source=e2562a684d381def8f9af230a7396690)
+
 
 ## 说明
 - XHS-Spider，在经过9个版本迭代后，功能趋于稳定。在版本发布至1.0.0.9后，短时间内没有更新计划，主要原因有以下几点：
