@@ -47,9 +47,10 @@ namespace XHS.Spider.ViewModels
             }
         }
 
-        private void SetCurrentUser(bool isLogin) {
-            if (isLogin)
+        private void SetCurrentUser(UserInfoModel currentUser) {
+            if (currentUser!=null)
             {
+                GlobalCaChe.CurrentUser = currentUser;
                 this.InitCurrentUser();
             }
         }
@@ -58,9 +59,12 @@ namespace XHS.Spider.ViewModels
             if (GlobalCaChe.CurrentUser!=null)
             {
                 var imageUrl = GlobalCaChe.CurrentUser.Images;
-                var url = imageUrl.Split('?')[0];
-                GlobalCaChe.CurrentUser.HeadImage=FileHelper.UrlToBitmapImage(url);
-                CurrentUser =GlobalCaChe.CurrentUser;
+                if (imageUrl!=null)
+                {
+                    var url = imageUrl.Split('?')[0];
+                    GlobalCaChe.CurrentUser.HeadImage = FileHelper.UrlToBitmapImage(url);
+                    CurrentUser = GlobalCaChe.CurrentUser;
+                }
             }
             else
             {
