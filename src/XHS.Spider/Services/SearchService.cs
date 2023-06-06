@@ -56,13 +56,12 @@ namespace XHS.Spider.Services
         public void SearchInput(string input)
         {
             bool isSubscribeEvent = false;
+            string url = input;
             if (input.Contains("user/profile"))
             {
                 try
                 {
                     isSubscribeEvent = true;
-                    //_webView.CoreWebView2.Navigate(input);
-                    GlobalCaChe.webView.CoreWebView2.Navigate(input);
                 }
                 catch (Exception ex)
                 {
@@ -78,20 +77,19 @@ namespace XHS.Spider.Services
                 else
                 {
                     isSubscribeEvent = true;
-                    GlobalCaChe.webView.CoreWebView2.Navigate(input);
                 }
             }
             ////非URL默认识别为关键字搜索
             else if (!IsUrl(input))
             {
-                //isSubscribeEvent = true;
-                RedirectService<HomeExploreViewModel>.SetJumpParam(input, _serviceProvider, _pageServiceNew);
-                _navigation.Navigate(typeof(Views.Pages.HomeExplorePage));
-                //var url = $"https://www.xiaohongshu.com/search_result/?keyword={input}&source=web_explore_feed";
-                //_webView.CoreWebView2.Navigate(url);
+                //RedirectService<HomeExploreViewModel>.SetJumpParam(input, _serviceProvider, _pageServiceNew);
+                //_navigation.Navigate(typeof(Views.Pages.HomeExplorePage));
+                isSubscribeEvent = true;
+                url = $"https://www.xiaohongshu.com/search_result/?keyword={input}&source=web_explore_feed";
             }
             if (isSubscribeEvent)
             {
+                GlobalCaChe.webView.CoreWebView2.Navigate(url);
                 //订阅事件
                 _aggregator.GetEvent<NavigationCompletedEvent>().Subscribe(Navigation);
             }
