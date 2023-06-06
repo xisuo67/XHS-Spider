@@ -61,7 +61,7 @@ namespace XHS.Spider.ViewModels
                     keyword = keyword,
                     search_id = AlgorithmHelper.GetSearchId()
                 };
-                //var apiResult= await _xhsSpiderService.SearchNotes(model);
+                var apiResult = await _xhsSpiderService.SearchNotes(model);
                 List<SearchNode> nodes = new List<SearchNode>();
                 for (int i = 0; i < 20; i++)
                 {

@@ -60,5 +60,10 @@ namespace XHS.Models.XHS.ApiOutputModel.Search.BusinessModel
         /// </summary>
         public string display_title { get; set; }
 
+        public SearchNode Clone()
+        {
+            return  (SearchNode)this.MemberwiseClone();
+        }
+
     }
 }
