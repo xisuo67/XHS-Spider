@@ -1,4 +1,5 @@
-﻿using Microsoft.Web.WebView2.Wpf;
+﻿using Microsoft.Web.WebView2.WinForms;
+using Microsoft.Web.WebView2.Wpf;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -40,7 +41,8 @@ namespace XHS.Service.XHS
             }
             else
             {
-                param = "var url='" + url + "';\r\n var jsonStr='" + jsonData + "';var data = JSON.parse(jsonStr);";
+                param = "var url='" + url + "';\r\n var jsonStr='" + jsonData + "';\r\n var data = JSON.parse(jsonStr);\r\n";
+                var test = GlobalCaChe.webView.CoreWebView2.Source;
             }
 
             string jscode = param + @"try {
@@ -207,7 +209,6 @@ namespace XHS.Service.XHS
             XHSBaseApiModel<SearchNodesOutPutModel> model = new XHSBaseApiModel<SearchNodesOutPutModel>();
             try
             {
-                //string url = $"/api/sns/web/v1/search/notes?keyword={inputModel.KeyWord}&note_type={inputModel.NoteType}&page={inputModel.Page}&page_size={inputModel.PageSize}&search_id={inputModel.SearchId}&sort={inputModel.Sort}";
                 string url = "/api/sns/web/v1/search/notes";
                 var postData = JsonConvert.SerializeObject(inputModel);
                 var header = await GetXsHeader(url, postData);
