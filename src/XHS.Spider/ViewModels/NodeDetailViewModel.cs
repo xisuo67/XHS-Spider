@@ -152,13 +152,14 @@ namespace XHS.Spider.ViewModels
                     string dirPath = $"{AppDomain.CurrentDomain.BaseDirectory}DownLoad\\{dirName}";
                     var nodeCard = detailItem.NoteCard;
                     var title = Format.FormatFileName(detailItem.NoteCard.Title);
+                    var time = FileHelper.TransTime(detailItem.NoteCard.LastUpdateTime);
                     switch (nodeCard.Type)
                     {
                         case "normal":
                             for (int i = 0; i < nodeCard.ImageList.Count; i++)
                             {
                                 var imageUrl = string.Format(BaseImageUrl, nodeCard.ImageList[i].TraceId);
-                                var fpath = $"{dirPath}\\{title}\\{title}-{Guid.NewGuid().ToString()}.png";
+                                var fpath = $"{dirPath}\\{time}_{title}\\{title}-{Guid.NewGuid().ToString()}.png";
                                 DownloadItem downloadImageItem = new DownloadItem()
                                 {
                                     Url = imageUrl,
@@ -173,7 +174,7 @@ namespace XHS.Spider.ViewModels
                             break;
                         case "video":
                             var videoUrl = string.Format(BaseVideoUrl, nodeCard.Video.Consumer.OriginVideoKey);
-                            var filePath = $"{dirPath}\\{title}\\{title}-{Guid.NewGuid().ToString()}.mov";
+                            var filePath = $"{dirPath}\\{time}_{title}\\{title}-{Guid.NewGuid().ToString()}.mov";
                             DownloadItem downloadItem = new DownloadItem()
                             {
                                 Url = videoUrl,

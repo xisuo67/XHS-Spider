@@ -81,5 +81,19 @@ namespace XHS.Common.Helpers
                 return null;
             }
         }
+
+        public static string TransTime(long str)
+        {
+            DateTime nowTime;
+            if (str.ToString().Length == 13)
+            {
+                nowTime = new DateTime(1970, 1, 1, 8, 0, 0).AddMilliseconds(str);
+            }
+            else
+            {
+                nowTime = new DateTime(1970, 1, 1, 8, 0, 0).AddSeconds(str);
+            }
+            return nowTime.ToString("yyyy-MM-dd HH-mm-ss");
+        }
     }
 }
