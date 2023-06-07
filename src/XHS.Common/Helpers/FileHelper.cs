@@ -95,5 +95,18 @@ namespace XHS.Common.Helpers
             }
             return nowTime.ToString("yyyy-MM-dd HH-mm-ss");
         }
+        public void CreatTxtFile(string filePath, string str)
+        {
+            ///* 生成文件名 */
+            //if (!Directory.Exists(dirPath))
+            //{
+            //    /* 如果待保存的文件夹目录不存在就创建文件夹目录 */
+            //    Directory.CreateDirectory(dirPath);
+            //}
+            //FileStream stream = new FileStream(filePath, FileMode.Append, FileAccess.Write);
+            //var sw = new StreamWriter(stream);
+            //sw.WriteLine("你好");
+        }
+
     }
 }

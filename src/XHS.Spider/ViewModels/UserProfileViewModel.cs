@@ -280,7 +280,7 @@ namespace XHS.Spider.ViewModels
                                         Url = imageUrl,
                                         FileName = fpath,
                                         Title = title,
-                                        FolderPath = $"{dirPath}\\{title}",
+                                        FolderPath = $"{dirPath}\\{time}_{title}",
                                         Status = DownloadStatus.None,
                                         FileCount = nodeCard.ImageList.Count,
                                     };
@@ -296,7 +296,7 @@ namespace XHS.Spider.ViewModels
                                     Url = videoUrl,
                                     FileName = filePath,
                                     Title = title,
-                                    FolderPath = $"{dirPath}\\{title}",
+                                    FolderPath = $"{dirPath}\\{time}_{title}",
                                     Status = DownloadStatus.None,
                                     FileCount = 1,
                                 };
