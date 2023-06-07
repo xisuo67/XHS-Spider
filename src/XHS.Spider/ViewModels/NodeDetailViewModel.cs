@@ -153,6 +153,10 @@ namespace XHS.Spider.ViewModels
                     var nodeCard = detailItem.NoteCard;
                     var title = Format.FormatFileName(detailItem.NoteCard.Title);
                     var time = FileHelper.TransTime(detailItem.NoteCard.LastUpdateTime);
+                    var folderPath = $"{dirPath}\\{time}_{title}";
+                    var nodeTxt = $"{folderPath}\\{title}.txt";
+                    FileHelper.CreatTxtFile(nodeTxt, nodeCard.Desc);
+                    //TODO:如果下载文案，则文件+1；
                     switch (nodeCard.Type)
                     {
                         case "normal":
@@ -165,9 +169,9 @@ namespace XHS.Spider.ViewModels
                                     Url = imageUrl,
                                     FileName = fpath,
                                     Title = title,
-                                    FolderPath = $"{dirPath}\\{time}_{title}",
+                                    FolderPath = folderPath,
                                     Status = DownloadStatus.None,
-                                    FileCount = nodeCard.ImageList.Count,
+                                    FileCount = nodeCard.ImageList.Count+1,
                                 };
                                 downloadItems.Add(downloadImageItem);
                             }
@@ -180,9 +184,9 @@ namespace XHS.Spider.ViewModels
                                 Url = videoUrl,
                                 FileName = filePath,
                                 Title = title,
-                                FolderPath = $"{dirPath}\\{time}_{title}",
+                                FolderPath = folderPath,
                                 Status = DownloadStatus.None,
-                                FileCount = 1,
+                                FileCount = 1+1,
                             };
                             downloadItems.Add(downloadItem);
                             break;
