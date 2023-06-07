@@ -81,7 +81,11 @@ namespace XHS.Common.Helpers
                 return null;
             }
         }
-
+        /// <summary>
+        /// 时间戳转换
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
         public static string TransTime(long str)
         {
             DateTime nowTime;
@@ -95,6 +99,11 @@ namespace XHS.Common.Helpers
             }
             return nowTime.ToString("yyyy-MM-dd HH-mm-ss");
         }
+        /// <summary>
+        /// 创建txt格式文件
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <param name="str"></param>
         public static void CreatTxtFile(string filePath, string str)
         {
             /* 生成文件名 */
