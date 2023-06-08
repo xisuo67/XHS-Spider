@@ -171,7 +171,7 @@ namespace XHS.Spider.ViewModels
                                     Title = title,
                                     FolderPath = folderPath,
                                     Status = DownloadStatus.None,
-                                    FileCount = nodeCard.ImageList.Count+1,
+                                    FileCount = nodeCard.ImageList.Count,
                                 };
                                 downloadItems.Add(downloadImageItem);
                             }
@@ -186,7 +186,7 @@ namespace XHS.Spider.ViewModels
                                 Title = title,
                                 FolderPath = folderPath,
                                 Status = DownloadStatus.None,
-                                FileCount = 1+1,
+                                FileCount = 1,
                             };
                             downloadItems.Add(downloadItem);
                             break;

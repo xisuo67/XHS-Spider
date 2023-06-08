@@ -146,7 +146,8 @@ namespace XHS.Spider.Services
                         //TODO:搜索文件夹路径文件，判断是否与文件数量一致;
                         System.IO.DirectoryInfo dirInfo = new System.IO.DirectoryInfo(entity.FolderPath);
                         int fileCount = Utils.GetFilesCount(dirInfo);
-                        if (fileCount == entity.FileCount)
+                        //文件数量比对
+                        if (fileCount == entity.FileCount+1)
                         {
                             CurrentFolderPath=entity.FolderPath;
                             _notifyIcon.ShowBalloonTip("下载完成", $"【{entity.Title}】\n点击查看下载文件\n剩余【{_downloadList.Count()-1}】文件待下载", BalloonIcon.Info);
