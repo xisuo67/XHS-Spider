@@ -81,5 +81,39 @@ namespace XHS.Common.Helpers
                 return null;
             }
         }
+        /// <summary>
+        /// 时间戳转换
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string TransTime(long str)
+        {
+            DateTime nowTime;
+            if (str.ToString().Length == 13)
+            {
+                nowTime = new DateTime(1970, 1, 1, 8, 0, 0).AddMilliseconds(str);
+            }
+            else
+            {
+                nowTime = new DateTime(1970, 1, 1, 8, 0, 0).AddSeconds(str);
+            }
+            return nowTime.ToString("yyyy-MM-dd HH-mm-ss");
+        }
+        /// <summary>
+        /// 创建txt格式文件
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <param name="str"></param>
+        public static void CreatTxtFile(string filePath, string str)
+        {
+            /* 生成文件名 */
+            string path = Path.GetDirectoryName(filePath);
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            File.AppendAllText(filePath, str);
+        }
+
     }
 }

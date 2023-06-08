@@ -67,6 +67,13 @@ namespace XHS.Spider.Services
                         Logger.Error("下载服务异常",ex);
                     }
                 }
+                else { 
+                    var downLoaded= _downloadList.Where(e => e.Status == DownloadStatus.Completed).ToList();
+                    foreach (var item in downLoaded)
+                    {
+                        _downloadList.Remove(item);
+                    }
+                }
                 // 降低CPU占用
                 await Task.Delay(500);
             }
@@ -135,16 +142,16 @@ namespace XHS.Spider.Services
                     var entity = _downloadList.FirstOrDefault(x => x.FileName == downLoadInfo.FileName);
                     if (entity != null)
                     {
+                        entity.Status = DownloadStatus.Completed;
                         //TODO:搜索文件夹路径文件，判断是否与文件数量一致;
                         System.IO.DirectoryInfo dirInfo = new System.IO.DirectoryInfo(entity.FolderPath);
                         int fileCount = Utils.GetFilesCount(dirInfo);
-                        if (fileCount == entity.FileCount)
+                        //文件数量比对
+                        if (fileCount == entity.FileCount+1)
                         {
                             CurrentFolderPath=entity.FolderPath;
                             _notifyIcon.ShowBalloonTip("下载完成", $"【{entity.Title}】\n点击查看下载文件\n剩余【{_downloadList.Count()-1}】文件待下载", BalloonIcon.Info);
                         }
-                         
-                        entity.Status = DownloadStatus.Completed;
                         //加入到下载完成list中，并从下载中list去除
                         _downloadList.Remove(entity);
                     }
