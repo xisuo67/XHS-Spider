@@ -178,9 +178,9 @@
         </Grid>
         <!--导航栏、笔记-->
         <Grid Grid.Row="2" Margin="0,0,0,-23">
-            <TabControl>
+            <TabControl SelectionChanged="SelectionChanged">
                 <!--笔记-->
-                <TabItem IsSelected="True">
+                <TabItem IsSelected="True" Tag="UserPosted">
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal">
                             <ui:SymbolIcon Margin="0,0,6,0" Symbol="NotepadEdit16" />
@@ -253,7 +253,7 @@
                     </Grid>
                 </TabItem>
                 <!--收藏-->
-                <TabItem>
+                <TabItem Tag="Collect">
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal">
                             <ui:SymbolIcon Margin="0,0,6,0" Symbol="Star12" />
@@ -324,7 +324,7 @@
                     </Grid>
                 </TabItem>
                 <!--点赞-->
-                <TabItem>
+                <TabItem Tag="Like">
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal">
                             <ui:SymbolIcon Margin="0,0,6,0" Symbol="Heart28" />

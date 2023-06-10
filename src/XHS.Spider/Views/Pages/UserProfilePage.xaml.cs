@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using Wpf.Ui.Common.Interfaces;
 using XHS.Spider.ViewModels;
@@ -46,5 +47,18 @@ namespace XHS.Spider.Views.Pages
             }
         }
 
+        private void SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.Source is TabControl)
+            { 
+                var tabControl= sender as TabControl;
+                var data = tabControl.SelectedItem as TabItem;
+                var tag = data.Tag;
+                if (tag != null)
+                {
+                    //TODO:切换tab时触发
+                }
+            }
+        }
     }
 }

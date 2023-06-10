@@ -193,7 +193,7 @@ namespace XHS.Spider.ViewModels
         /// <param name="parameter"></param>
         private void OnNavigate(string parameter)
         { 
-        
+            
         }
         #region 下载
         /// <summary>
