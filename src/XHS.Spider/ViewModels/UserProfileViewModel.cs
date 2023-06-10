@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Downloader;
 using Hardcodet.Wpf.TaskbarNotification;
 using Microsoft.Web.WebView2.Wpf;
@@ -49,7 +50,8 @@ namespace XHS.Spider.ViewModels
         }
         private readonly ISnackbarService _snackbarService;
         private readonly IXhsSpiderService _xhsSpiderService;
-
+        private ICommand _navigateCommand;
+        public ICommand NavigateCommand => _navigateCommand ??= new RelayCommand<string>(OnNavigate);
         private IEnumerable<NoteModel> _dataGridItemCollection = new NoteModel[] { };
         /// <summary>
         /// 列表显示数据
@@ -185,6 +187,14 @@ namespace XHS.Spider.ViewModels
             set => downLoadAll = value;
         }
         #endregion
+        /// <summary>
+        /// Tab页签切换
+        /// </summary>
+        /// <param name="parameter"></param>
+        private void OnNavigate(string parameter)
+        { 
+        
+        }
         #region 下载
         /// <summary>
         /// 下载选中笔记
