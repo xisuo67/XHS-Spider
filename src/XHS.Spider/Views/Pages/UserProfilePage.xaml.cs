@@ -47,7 +47,7 @@ namespace XHS.Spider.Views.Pages
             }
         }
 
-        private void SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.Source is TabControl)
             { 
@@ -57,7 +57,7 @@ namespace XHS.Spider.Views.Pages
                 if (tag != null)
                 {
                     //TODO:切换tab时触发
-
+                    ViewModel.OnNavigateTab(tag?.ToString());
                 }
             }
         }

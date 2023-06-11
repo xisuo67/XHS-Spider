@@ -189,7 +189,7 @@ namespace XHS.Spider.ViewModels
         /// Tab页签切换
         /// </summary>
         /// <param name="parameter"></param>
-        public void OnNavigateTab(string parameter)
+        public async void OnNavigateTab(string parameter)
         { 
             
         }
