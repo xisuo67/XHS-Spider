@@ -191,17 +191,32 @@ namespace XHS.Spider.ViewModels
             nodes = this.Nodes.Where(e => e.NoteTypeEnum == noteTypeEnum).ToList();
             if (nodes.Count==0)
             {
-                switch (noteTypeEnum)
+                //switch (noteTypeEnum)
+                //{
+                //    case NoteTypeEnum.UserPosted:
+                //        break;
+                //    case NoteTypeEnum.Collect:
+
+                //        break;
+                //    case NoteTypeEnum.Like:
+                //        break;
+                //    default:
+                //        break;
+                //}
+                var id = SearchService.GetId(InputText, BaseUrl);
+                if (string.IsNullOrEmpty(id))
                 {
-                    case NoteTypeEnum.UserPosted:
-                        break;
-                    case NoteTypeEnum.Collect:
-                        break;
-                    case NoteTypeEnum.Like:
-                        break;
-                    default:
-                        break;
+                    Logger.Error($"URL有误：{InputText}");
+                    return;
                 }
+                nodes = await _xhsSpiderService.GetAllUserNode(id,noteTypeEnum);
+                foreach (var node in nodes)
+                {
+                    node.LikedCount = node.interact_info?.LikedCount;
+                }
+                Nodes = nodes.ToArray();
+                NoteCount = $"({nodes.Count()})条";
+                DataGridItemCollection = Nodes;
             }
         }
         #region 下载

@@ -11,6 +11,7 @@ using System.Windows.Markup;
 using XHS.Common.Global;
 using XHS.Common.Http;
 using XHS.IService.XHS;
+using XHS.Models.Enum;
 using XHS.Models.XHS.ApiOutputModel;
 using XHS.Models.XHS.ApiOutputModel.CreateQrCode;
 using XHS.Models.XHS.ApiOutputModel.Login;
@@ -141,7 +142,23 @@ namespace XHS.Service.XHS
             {
                 try
                 {
-                    string url = $"/api/sns/web/v1/user_posted?num={model.num}&cursor={model.cursor}&user_id={model.user_id}";
+                    string url = string.Empty;
+                    switch (model.NoteTypeEnum)
+                    {
+                        case NoteTypeEnum.UserPosted:
+                            url = $"/api/sns/web/v1/user_posted?num={model.num}&cursor={model.cursor}&user_id={model.user_id}";
+                            break;
+                        case NoteTypeEnum.Collect:
+                            url = $"/api/sns/web/v2/note/collect/page?num={model.num}&cursor={model.cursor}&user_id={model.user_id}";
+                            break;
+                        case NoteTypeEnum.Like:
+                            url = $"/api/sns/web/v1/note/like/page?num={model.num}&cursor={model.cursor}&user_id={model.user_id}";
+                            break;
+                        default:
+                            break;
+                    }
+                    
+
                     var header = await GetXsHeader(url);
                     Logger.Info($"调用接口：{url}");
                     var result = HttpClientHelper.DoGet(url, header);
@@ -181,13 +198,14 @@ namespace XHS.Service.XHS
         /// <param name="userid"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public async Task<List<NoteModel>> GetAllUserNode(string userid)
+        public async Task<List<NoteModel>> GetAllUserNode(string userid, NoteTypeEnum noteTypeEnum = NoteTypeEnum.UserPosted)
         {
             List<NoteModel> nodes = new List<NoteModel>();
             UserPostedInputModel model = new UserPostedInputModel
             {
                 user_id = userid,
                 num = 30,
+                NoteTypeEnum = noteTypeEnum,
             };
             await UserPosted(model, nodes);
             return nodes;
