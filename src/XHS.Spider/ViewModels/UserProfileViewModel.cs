@@ -19,6 +19,7 @@ using XHS.Common.Helpers;
 using XHS.Common.Utils;
 using XHS.IService.XHS;
 using XHS.Models.DownLoad;
+using XHS.Models.Enum;
 using XHS.Models.XHS.ApiOutputModel.OtherInfo;
 using XHS.Models.XHS.ApiOutputModel.UserPosted;
 using XHS.Service.Log;
@@ -35,12 +36,6 @@ namespace XHS.Spider.ViewModels
         public static readonly string BaseUrl = "https://www.xiaohongshu.com/user/profile/";
         public static readonly string BaseVideoUrl = "http://sns-video-bd.xhscdn.com/{0}";
         public static readonly string BaseImageUrl = "https://sns-img-bd.xhscdn.com/{0}?imageView2/format/png";
-        //private string inputText;
-        //public string InputText
-        //{
-        //    get => inputText;
-        //    set => SetProperty(ref inputText, value);
-        //}
         private readonly TaskbarIcon _notifyIcon;
         private string inputSearchText;
         public string InputSearchText
@@ -188,10 +183,20 @@ namespace XHS.Spider.ViewModels
         /// <summary>
         /// Tab页签切换
         /// </summary>
-        /// <param name="parameter"></param>
-        public async void OnNavigateTab(string parameter)
-        { 
-            
+        /// <param name="noteTypeEnum"></param>
+        public async void OnNavigateTab(NoteTypeEnum noteTypeEnum)
+        {
+            switch (noteTypeEnum)
+            {
+                case NoteTypeEnum.UserPosted:
+                    break;
+                case NoteTypeEnum.Collect:
+                    break;
+                case NoteTypeEnum.Like:
+                    break;
+                default:
+                    break;
+            }
         }
         #region 下载
         /// <summary>

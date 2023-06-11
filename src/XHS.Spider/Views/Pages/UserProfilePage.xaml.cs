@@ -2,6 +2,8 @@
 using System.Windows;
 using System.Windows.Controls;
 using Wpf.Ui.Common.Interfaces;
+using XHS.Common.Helpers;
+using XHS.Models.Enum;
 using XHS.Spider.ViewModels;
 
 namespace XHS.Spider.Views.Pages
@@ -61,7 +63,9 @@ namespace XHS.Spider.Views.Pages
                 if (tag != null)
                 {
                     //TODO:切换tab时触发
-                    ViewModel.OnNavigateTab(tag?.ToString());
+                    var tagName= tag?.ToString();
+                    var noteTypeEnum = MemberInfoExtensions.StringToEnum<NoteTypeEnum>(tagName);
+                    ViewModel.OnNavigateTab(noteTypeEnum);
                 }
             }
         }
