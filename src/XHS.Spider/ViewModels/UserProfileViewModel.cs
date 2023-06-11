@@ -70,6 +70,24 @@ namespace XHS.Spider.ViewModels
             set => SetProperty(ref _noteCount, value);
         }
         /// <summary>
+        /// 收藏笔记数量
+        /// </summary>
+        private string _collectNoteCount;
+        public string CollectNoteCount
+        {
+            get => _collectNoteCount;
+            set => SetProperty(ref _collectNoteCount, value);
+        }
+        /// <summary>
+        /// 点赞笔记数量
+        /// </summary>
+        private string _likeNoteCount;
+        public string LikeNoteCount
+        {
+            get => _likeNoteCount;
+            set => SetProperty(ref _likeNoteCount, value);
+        }
+        /// <summary>
         /// 解析数量
         /// </summary>
         private string _parseNodeCount = "已解析(0)条";
