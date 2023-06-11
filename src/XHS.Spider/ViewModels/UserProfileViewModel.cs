@@ -50,8 +50,6 @@ namespace XHS.Spider.ViewModels
         }
         private readonly ISnackbarService _snackbarService;
         private readonly IXhsSpiderService _xhsSpiderService;
-        private ICommand _navigateCommand;
-        public ICommand NavigateCommand => _navigateCommand ??= new RelayCommand<string>(OnNavigate);
         private IEnumerable<NoteModel> _dataGridItemCollection = new NoteModel[] { };
         /// <summary>
         /// 列表显示数据
@@ -191,7 +189,7 @@ namespace XHS.Spider.ViewModels
         /// Tab页签切换
         /// </summary>
         /// <param name="parameter"></param>
-        private void OnNavigate(string parameter)
+        public void OnNavigate(string parameter)
         { 
             
         }
