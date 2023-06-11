@@ -46,7 +46,11 @@ namespace XHS.Spider.Views.Pages
                 }
             }
         }
-
+        /// <summary>
+        /// Tab切换事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.Source is TabControl)
