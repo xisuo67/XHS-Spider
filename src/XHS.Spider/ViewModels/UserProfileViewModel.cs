@@ -15,6 +15,7 @@ using UpdateChecker.Interfaces;
 using Wpf.Ui.Common;
 using Wpf.Ui.Common.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
+using XHS.Common.Global;
 using XHS.Common.Helpers;
 using XHS.Common.Utils;
 using XHS.IService.XHS;
@@ -36,6 +37,15 @@ namespace XHS.Spider.ViewModels
         public static readonly string BaseUrl = "https://www.xiaohongshu.com/user/profile/";
         public static readonly string BaseVideoUrl = "http://sns-video-bd.xhscdn.com/{0}";
         public static readonly string BaseImageUrl = "https://sns-img-bd.xhscdn.com/{0}?imageView2/format/png";
+        private bool _isVisibility=false;
+        /// <summary>
+        /// 是否隐藏like
+        /// </summary>
+        public bool Visibility
+        {
+            get => _isVisibility;
+            set => SetProperty(ref _isVisibility, value);
+        }
         private readonly TaskbarIcon _notifyIcon;
         private string inputSearchText;
         public string InputSearchText
@@ -97,7 +107,7 @@ namespace XHS.Spider.ViewModels
             set => SetProperty(ref _parseNodeCount, value);
         }
         private BitmapImage _headImage = new BitmapImage();
-
+        
         public BitmapImage HeadImage
         {
             get => _headImage;
@@ -209,18 +219,6 @@ namespace XHS.Spider.ViewModels
             nodes = this.Nodes.Where(e => e.NoteTypeEnum == noteTypeEnum).ToList();
             if (nodes.Count==0)
             {
-                //switch (noteTypeEnum)
-                //{
-                //    case NoteTypeEnum.UserPosted:
-                //        break;
-                //    case NoteTypeEnum.Collect:
-
-                //        break;
-                //    case NoteTypeEnum.Like:
-                //        break;
-                //    default:
-                //        break;
-                //}
                 var id = SearchService.GetId(InputText, BaseUrl);
                 if (string.IsNullOrEmpty(id))
                 {
@@ -458,6 +456,13 @@ namespace XHS.Spider.ViewModels
                     }
                     else
                     {
+                        if (GlobalCaChe.CurrentUser!=null)
+                        {
+                            if (id==GlobalCaChe.CurrentUser.UserId)
+                            {
+                                this.Visibility = true;
+                            }
+                        }
                         this.ParseNodeCount = "已解析(0)条";
                         var apiResult = await _xhsSpiderService.GetOtherInfo(id);
                         if (apiResult != null && apiResult.Success)

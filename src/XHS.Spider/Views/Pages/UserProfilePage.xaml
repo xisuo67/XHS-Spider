@@ -5,7 +5,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:XHS.Spider.Views.Pages"
+      xmlns:local="clr-namespace:XHS.Spider.Views.Pages" 
       d:DataContext="{d:DesignInstance local:UserProfilePage,
                                      IsDesignTimeCreatable=False}"
       mc:Ignorable="d" 
@@ -13,7 +13,6 @@
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       Title="UserProfilePage">
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
@@ -324,7 +323,7 @@
                     </Grid>
                 </TabItem>
                 <!--点赞-->
-                <TabItem Tag="Like">
+                <TabItem Tag="Like" Visibility="{Binding ViewModel.Visibility,Converter={StaticResource boolToVisibility}}">
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal">
                             <ui:SymbolIcon Margin="0,0,6,0" Symbol="Heart28" />
