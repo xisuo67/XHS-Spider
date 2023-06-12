@@ -123,6 +123,7 @@ XHS.Spider是一款颜值超高的小红书数据采集工具
 
 - QQ群：521302423
 - 说明：平时比较忙QQ会很少上，有什么问题通过 [Issue](https://github.com/xisuo67/XHS-Spider/issues) 报告
+- 开源不易，如果觉得这个项目不错，请帮作者多宣传一下，或者点个star支持一下作者
 
 ## 赞助
 
