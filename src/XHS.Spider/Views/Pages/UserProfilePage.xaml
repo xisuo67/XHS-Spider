@@ -285,7 +285,7 @@
                                 <ui:Button  Content="解析笔记" Margin="4,0,4,0" Appearance="Info" Icon="Clock24" HorizontalAlignment="left" Command="{Binding ViewModel.ParseNode}"/>
                                 <ui:Button  Content="全部下载" Margin="0,0,4,0" Appearance="Info" Icon="ArrowDownload16" Command="{Binding ViewModel.DownLoadAll}" HorizontalAlignment="left"/>
                                 <ui:Button  Content="下载已选项" Margin="0,0,4,0" Appearance="Info" Icon="ArrowDownload16" HorizontalAlignment="left" Command="{Binding ViewModel.DownLoadCheackAll}" />
-                                <ui:Button  Content="{Binding ViewModel.ParseNodeCount}" Appearance="Success" HorizontalAlignment="left" />
+                                <ui:Button  Content="{Binding ViewModel.ParseNodeCount,Converter={StaticResource parseNodeCountConvert}}" Appearance="Success" HorizontalAlignment="left" />
                             </StackPanel>
 
                         </Grid>
@@ -356,7 +356,7 @@
                                 <ui:Button  Content="解析笔记" Margin="4,0,4,0" Appearance="Info" Icon="Clock24" HorizontalAlignment="left" Command="{Binding ViewModel.ParseNode}"/>
                                 <ui:Button  Content="全部下载" Margin="0,0,4,0" Appearance="Info" Icon="ArrowDownload16" Command="{Binding ViewModel.DownLoadAll}" HorizontalAlignment="left"/>
                                 <ui:Button  Content="下载已选项" Margin="0,0,4,0" Appearance="Info" Icon="ArrowDownload16" HorizontalAlignment="left" Command="{Binding ViewModel.DownLoadCheackAll}" />
-                                <ui:Button  Content="{Binding ViewModel.ParseNodeCount}" Appearance="Success" HorizontalAlignment="left" />
+                                <ui:Button  Content="{Binding ViewModel.ParseNodeCount,Converter={StaticResource parseNodeCountConvert}}" Appearance="Success" HorizontalAlignment="left" />
                             </StackPanel>
 
                         </Grid>

@@ -254,10 +254,29 @@ namespace XHS.Spider.ViewModels
                 {
                     node.LikedCount = node.interact_info?.LikedCount;
                 }
-                Nodes = nodes.ToArray();
-                NoteCount = nodes.Count();
-                DataGridItemCollection = Nodes;
+                Nodes.ToList().AddRange(nodes);
             }
+            //TODO:计算解析数量
+
+            var nodesTemp= nodes.ToArray();
+            var nodesCount= nodes.Count(); 
+            switch (noteTypeEnum)
+            {
+                case NoteTypeEnum.UserPosted:
+                    NoteCount= nodesCount;
+                    break;
+                case NoteTypeEnum.Collect:
+                    CollectNoteCount = nodesCount;
+                    break;
+                case NoteTypeEnum.Like:
+                    LikeNoteCount = nodesCount;
+                    break;
+                default:
+                    break;
+            }
+
+            DataGridItemCollection = nodesTemp;
+
         }
         #region 下载
         /// <summary>
