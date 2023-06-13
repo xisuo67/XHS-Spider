@@ -1,17 +1,11 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using Downloader;
+﻿using Downloader;
 using Hardcodet.Wpf.TaskbarNotification;
-using Microsoft.Web.WebView2.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using System.Xml.Linq;
-using UpdateChecker.Interfaces;
 using Wpf.Ui.Common;
 using Wpf.Ui.Common.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
@@ -26,7 +20,6 @@ using XHS.Models.XHS.ApiOutputModel.UserPosted;
 using XHS.Service.Log;
 using XHS.Spider.Helpers;
 using XHS.Spider.Services;
-using XHS.Spider.Views.Windows;
 
 namespace XHS.Spider.ViewModels
 {
@@ -259,7 +252,10 @@ namespace XHS.Spider.ViewModels
                 {
                     node.LikedCount = node.interact_info?.LikedCount;
                 }
-                Nodes.ToList().AddRange(nodes);
+                foreach (var item in nodes)
+                {
+                    //Nodes.
+                }
             }
             this.CurrentNoteTypeEnum = noteTypeEnum;
             //TODO:计算解析数量
@@ -290,7 +286,7 @@ namespace XHS.Spider.ViewModels
         /// </summary>
         public void DownLoadCheckAll()
         {
-            var cheackNodes = this.Nodes.Where(e => e.IsDownLoad == true);
+            var cheackNodes = this.Nodes.Where(e => e.NoteTypeEnum == CurrentNoteTypeEnum && e.IsDownLoad == true);
             if (cheackNodes.Count() > 0)
             {
                 var hasNoParseNode = CheckDownLoadNodesData(cheackNodes);
@@ -309,7 +305,7 @@ namespace XHS.Spider.ViewModels
         /// </summary>
         public void DownLoadAllNodes()
         {
-            var nodes = this.Nodes;
+            var nodes = this.Nodes.Where(e=>e.NoteTypeEnum==CurrentNoteTypeEnum);
             var hasNoParseNode = CheckDownLoadNodesData(nodes);
             if (!hasNoParseNode)
             {
@@ -343,7 +339,7 @@ namespace XHS.Spider.ViewModels
             _snackbarService.Show("提示", "开始解析", SymbolRegular.ErrorCircle12, ControlAppearance.Success);
             //TODO:有勾选项解析勾选项无勾选项解析所有笔记
             IEnumerable<NoteModel> nodes = null;
-            var cheackNodes = this.Nodes.Where(e =>e.NoteTypeEnum==CurrentNoteTypeEnum&& e.IsDownLoad == true && e.IsParse == false);
+            var cheackNodes = this.Nodes.Where(e => e.NoteTypeEnum == CurrentNoteTypeEnum && e.IsDownLoad == true && e.IsParse == false);
             if (cheackNodes.Any())
             {
                 nodes = cheackNodes;
