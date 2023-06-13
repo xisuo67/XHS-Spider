@@ -18,30 +18,24 @@
     <ui:UiPage.Resources>
         <helpers:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
     </ui:UiPage.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="60"></RowDefinition>
-        </Grid.RowDefinitions>
-
-        <StackPanel Margin="26,0" Grid.Row="0">
+    <StackPanel Margin="26,0" Grid.Row="0">
         <TextBlock
             FontSize="20"
             FontWeight="Medium"
             Text="个性化设置" />
         <TextBlock Margin="0,12,0,0" Text="主题" />
-            <Grid Grid.Row="1" Margin="0,0,0,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <RadioButton
+        <Grid Grid.Row="1" Margin="0,0,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <RadioButton
             Grid.Row="0"
             Grid.Column="0"
             Margin="0,12,0,0"
@@ -50,7 +44,7 @@
             Content="浅色"
             GroupName="themeSelect"
             IsChecked="{Binding ViewModel.CurrentTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Light, Mode=OneWay}" />
-                <RadioButton
+            <RadioButton
             Grid.Row="0"
             Grid.Column="1"
             Margin="0,8,0,0"
@@ -59,16 +53,28 @@
             Content="深色"
             GroupName="themeSelect"
             IsChecked="{Binding ViewModel.CurrentTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Dark, Mode=OneWay}" />
-            </Grid>
-        </StackPanel>
+        </Grid>
+        <TextBlock Margin="0,12,0,0" Text="各类软件定制化开发（备明来意，闲聊勿扰）" />
+        <Grid Grid.Row="1">
+            <Border HorizontalAlignment="Center" Width="230" Height="260" 
+           >
+                <Border.Background>
+                    <ImageBrush
+                    ImageSource="../../Resources/contact_me_qr.jpg"
+                    RenderOptions.BitmapScalingMode="HighQuality"
+                    Stretch="Fill" />
+                </Border.Background>
+            </Border>
+        </Grid>
 
         <TextBlock
-            Margin="16,0"
-            Grid.Row="1"
+           
             FontSize="20"
             FontWeight="Medium"
             Text="About XHS.Spider" />
         <TextBlock  Grid.Row="1" Margin="16,32,0,0" Text="{Binding ViewModel.AppVersion, Mode=OneWay}" />
-    </Grid>
-  
+    </StackPanel>
+
+
+
 </ui:UiPage>

@@ -42,6 +42,8 @@
     <None Remove="Assets\test.jpg" />
     <None Remove="Assets\XHS-biaoji.png" />
     <None Remove="Assets\xiaohongshu.png" />
+    <None Remove="Resources\contact_me_qr.jpg" />
+    <None Remove="Resources\contact_me_qr.png" />
     <None Remove="Resources\desktop.jpg" />
     <None Remove="Resources\gender-female-v1.png" />
     <None Remove="Resources\gender-male-v1.png" />
@@ -50,6 +52,12 @@
     <None Remove="Resources\test3.png" />
     <None Remove="Resources\test4.png" />
     <None Remove="Resources\test5.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\contact_me_qr.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
