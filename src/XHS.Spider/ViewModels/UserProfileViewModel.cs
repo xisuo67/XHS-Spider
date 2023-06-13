@@ -37,7 +37,7 @@ namespace XHS.Spider.ViewModels
         public static readonly string BaseUrl = "https://www.xiaohongshu.com/user/profile/";
         public static readonly string BaseVideoUrl = "http://sns-video-bd.xhscdn.com/{0}";
         public static readonly string BaseImageUrl = "https://sns-img-bd.xhscdn.com/{0}?imageView2/format/png";
-        private bool _isVisibility=false;
+        private bool _isVisibility = false;
         /// <summary>
         /// 是否隐藏like
         /// </summary>
@@ -136,7 +136,7 @@ namespace XHS.Spider.ViewModels
         #endregion
 
         private BitmapImage _headImage = new BitmapImage();
-        
+
         public BitmapImage HeadImage
         {
             get => _headImage;
@@ -246,7 +246,7 @@ namespace XHS.Spider.ViewModels
         {
             List<NoteModel> nodes = new List<NoteModel>();
             nodes = this.Nodes.Where(e => e.NoteTypeEnum == noteTypeEnum).ToList();
-            if (nodes.Count==0)
+            if (nodes.Count == 0)
             {
                 var id = SearchService.GetId(InputText, BaseUrl);
                 if (string.IsNullOrEmpty(id))
@@ -254,22 +254,22 @@ namespace XHS.Spider.ViewModels
                     Logger.Error($"URL有误：{InputText}");
                     return;
                 }
-                nodes = await _xhsSpiderService.GetAllUserNode(id,noteTypeEnum);
+                nodes = await _xhsSpiderService.GetAllUserNode(id, noteTypeEnum);
                 foreach (var node in nodes)
                 {
                     node.LikedCount = node.interact_info?.LikedCount;
                 }
                 Nodes.ToList().AddRange(nodes);
             }
-            this.CurrentNoteTypeEnum= noteTypeEnum; 
+            this.CurrentNoteTypeEnum = noteTypeEnum;
             //TODO:计算解析数量
-            this.ParseNodeCount= this.Nodes.Where(e => e.NoteTypeEnum == noteTypeEnum&& e.IsParse == true).Count();
-            var nodesTemp= nodes.ToArray();
-            var nodesCount= nodes.Count(); 
+            this.ParseNodeCount = this.Nodes.Where(e => e.NoteTypeEnum == noteTypeEnum && e.IsParse == true).Count();
+            var nodesTemp = nodes.ToArray();
+            var nodesCount = nodes.Count();
             switch (noteTypeEnum)
             {
                 case NoteTypeEnum.UserPosted:
-                    NoteCount= nodesCount;
+                    NoteCount = nodesCount;
                     break;
                 case NoteTypeEnum.Collect:
                     CollectNoteCount = nodesCount;
@@ -324,7 +324,7 @@ namespace XHS.Spider.ViewModels
         private bool CheckDownLoadNodesData(IEnumerable<NoteModel> downLoadNodes)
         {
             bool hasNoParseNode = true;
-            var noParseCount = downLoadNodes.Where(e => e.IsParse == false).Count();
+            var noParseCount = downLoadNodes.Where(e => e.NoteTypeEnum == CurrentNoteTypeEnum && e.IsParse == false).Count();
             if (noParseCount > 0)
             {
                 _snackbarService.Show("提示", "当前待下载任务中存在未解析笔记数据，无法下载", SymbolRegular.ErrorCircle12, ControlAppearance.Danger);
@@ -343,14 +343,14 @@ namespace XHS.Spider.ViewModels
             _snackbarService.Show("提示", "开始解析", SymbolRegular.ErrorCircle12, ControlAppearance.Success);
             //TODO:有勾选项解析勾选项无勾选项解析所有笔记
             IEnumerable<NoteModel> nodes = null;
-            var cheackNodes = this.Nodes.Where(e => e.IsDownLoad == true && e.IsParse == false);
+            var cheackNodes = this.Nodes.Where(e =>e.NoteTypeEnum==CurrentNoteTypeEnum&& e.IsDownLoad == true && e.IsParse == false);
             if (cheackNodes.Any())
             {
                 nodes = cheackNodes;
             }
             else
             {
-                nodes = this.Nodes.Where(e => e.IsParse == false);
+                nodes = this.Nodes.Where(e => e.NoteTypeEnum == CurrentNoteTypeEnum && e.IsParse == false);
             }
 
             string dirName = Format.FormatFileName(UserInfo.BasicInfo.NickName);
@@ -418,7 +418,7 @@ namespace XHS.Spider.ViewModels
                         nodeEntity.DownloadItems = downloadItems;
                         nodeEntity.IsNormal = true;
                     }
-                    this.ParseNodeCount = this.Nodes.Where(e =>e.NoteTypeEnum==CurrentNoteTypeEnum&& e.IsParse == true).Count();
+                    this.ParseNodeCount = this.Nodes.Where(e => e.NoteTypeEnum == CurrentNoteTypeEnum && e.IsParse == true).Count();
                 }
                 else
                 {
@@ -452,7 +452,7 @@ namespace XHS.Spider.ViewModels
                 await Task.Delay(awaitTime);
                 this.DataGridItemCollection = this.Nodes.ToArray();
             }
-            var parseNodes = nodes.Where(e => e.IsParse == false);
+            var parseNodes = nodes.Where(e => e.NoteTypeEnum == CurrentNoteTypeEnum && e.IsParse == false);
             if (parseNodes.Count() == 0)
             {
                 _notifyIcon.ShowBalloonTip($"解析完成", "提示", BalloonIcon.Info);
@@ -505,9 +505,9 @@ namespace XHS.Spider.ViewModels
                     }
                     else
                     {
-                        if (GlobalCaChe.CurrentUser!=null)
+                        if (GlobalCaChe.CurrentUser != null)
                         {
-                            if (id==GlobalCaChe.CurrentUser.UserId)
+                            if (id == GlobalCaChe.CurrentUser.UserId)
                             {
                                 this.Visibility = true;
                             }
