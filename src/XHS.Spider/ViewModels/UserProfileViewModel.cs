@@ -46,6 +46,11 @@ namespace XHS.Spider.ViewModels
             get => _isVisibility;
             set => SetProperty(ref _isVisibility, value);
         }
+
+        /// <summary>
+        /// 当前选中tab类型
+        /// </summary>
+        public NoteTypeEnum CurrentNoteTypeEnum { get; set; } = NoteTypeEnum.UserPosted;
         private readonly TaskbarIcon _notifyIcon;
         private string inputSearchText;
         public string InputSearchText
@@ -256,8 +261,9 @@ namespace XHS.Spider.ViewModels
                 }
                 Nodes.ToList().AddRange(nodes);
             }
+            this.CurrentNoteTypeEnum= noteTypeEnum; 
             //TODO:计算解析数量
-
+            this.ParseNodeCount= this.Nodes.Where(e => e.NoteTypeEnum == noteTypeEnum&& e.IsParse == true).Count();
             var nodesTemp= nodes.ToArray();
             var nodesCount= nodes.Count(); 
             switch (noteTypeEnum)
@@ -412,14 +418,14 @@ namespace XHS.Spider.ViewModels
                         nodeEntity.DownloadItems = downloadItems;
                         nodeEntity.IsNormal = true;
                     }
-                    this.ParseNodeCount = this.Nodes.Where(e => e.IsParse == true).Count();
+                    this.ParseNodeCount = this.Nodes.Where(e =>e.NoteTypeEnum==CurrentNoteTypeEnum&& e.IsParse == true).Count();
                 }
                 else
                 {
                     //网络连接异常，请检查网络设置或重启试试
                     if (resultData.Code == 300012)
                     {
-                        _notifyIcon.ShowBalloonTip($"解析失败，接口异常。已完成解析【{this.Nodes.Where(e => e.IsParse == true).Count()}】条笔记", "提示", BalloonIcon.Error);
+                        _notifyIcon.ShowBalloonTip($"解析失败，接口异常。已完成解析【{this.Nodes.Where(e => e.NoteTypeEnum == CurrentNoteTypeEnum && e.IsParse == true).Count()}】条笔记", "提示", BalloonIcon.Error);
                         break;
                     }
                     else
@@ -428,7 +434,7 @@ namespace XHS.Spider.ViewModels
                         if (resultData.Code == -510001)
                         {
                             //TODO:其他异常，将笔记状态改为异常
-                            var nodeEntity = this.Nodes.FirstOrDefault(e => e.NoteId == item.NoteId);
+                            var nodeEntity = this.Nodes.FirstOrDefault(e => e.NoteTypeEnum == CurrentNoteTypeEnum && e.NoteId == item.NoteId);
                             if (nodeEntity != null)
                             {
                                 nodeEntity.IsParse = true;
@@ -436,7 +442,7 @@ namespace XHS.Spider.ViewModels
                                 nodeEntity.DownloadItems = downloadItems;
                                 nodeEntity.IsNormal = false;
                             }
-                            this.ParseNodeCount = this.Nodes.Where(e => e.IsParse == true).Count();
+                            this.ParseNodeCount = this.Nodes.Where(e => e.NoteTypeEnum == CurrentNoteTypeEnum && e.IsParse == true).Count();
                         }
                     }
 
