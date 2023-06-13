@@ -257,7 +257,7 @@
                         <StackPanel Orientation="Horizontal">
                             <ui:SymbolIcon Margin="0,0,6,0" Symbol="Star12" />
                             <TextBlock Text="收藏" />
-                            <TextBlock Text="{Binding ViewModel.CollectNoteCount}" />
+                            <TextBlock Text="{Binding ViewModel.CollectNoteCount,Converter={StaticResource nodeCount}}" />
                         </StackPanel>
                     </TabItem.Header>
                     <Grid>
@@ -328,7 +328,7 @@
                         <StackPanel Orientation="Horizontal">
                             <ui:SymbolIcon Margin="0,0,6,0" Symbol="Heart28" />
                             <TextBlock Text="点赞" />
-                            <TextBlock Text="{Binding ViewModel.LikeNoteCount}" />
+                            <TextBlock Text="{Binding ViewModel.LikeNoteCount,Converter={StaticResource nodeCount}}" />
                         </StackPanel>
                     </TabItem.Header>
                     <Grid>

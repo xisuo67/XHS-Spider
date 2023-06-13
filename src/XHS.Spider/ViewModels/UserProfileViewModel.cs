@@ -82,8 +82,8 @@ namespace XHS.Spider.ViewModels
         /// <summary>
         /// 收藏笔记数量
         /// </summary>
-        private string _collectNoteCount;
-        public string CollectNoteCount
+        private int _collectNoteCount;
+        public int CollectNoteCount
         {
             get => _collectNoteCount;
             set => SetProperty(ref _collectNoteCount, value);
@@ -91,14 +91,15 @@ namespace XHS.Spider.ViewModels
         /// <summary>
         /// 点赞笔记数量
         /// </summary>
-        private string _likeNoteCount;
-        public string LikeNoteCount
+        private int _likeNoteCount;
+        public int LikeNoteCount
         {
             get => _likeNoteCount;
             set => SetProperty(ref _likeNoteCount, value);
         }
+        #region 解析常量
         /// <summary>
-        /// 解析数量
+        /// 解析数量(笔记解析)
         /// </summary>
         private int _parseNodeCount;
         public int ParseNodeCount
@@ -106,6 +107,29 @@ namespace XHS.Spider.ViewModels
             get => _parseNodeCount;
             set => SetProperty(ref _parseNodeCount, value);
         }
+
+        /// <summary>
+        /// 解析数量(收藏解析)
+        /// </summary>
+        private int _parseCollectNodeCount;
+        public int ParseCollectNodeCount
+        {
+            get => _parseCollectNodeCount;
+            set => SetProperty(ref _parseCollectNodeCount, value);
+        }
+
+        /// <summary>
+        /// 解析数量(点赞解析)
+        /// </summary>
+        private int _parseLikeNodeCount;
+        public int ParseLikeNodeCount
+        {
+            get => _parseLikeNodeCount;
+            set => SetProperty(ref _parseLikeNodeCount, value);
+        }
+
+        #endregion
+
         private BitmapImage _headImage = new BitmapImage();
         
         public BitmapImage HeadImage
