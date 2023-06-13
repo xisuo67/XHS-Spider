@@ -100,8 +100,8 @@ namespace XHS.Spider.ViewModels
         /// <summary>
         /// 解析数量
         /// </summary>
-        private string _parseNodeCount = "已解析(0)条";
-        public string ParseNodeCount
+        private int _parseNodeCount;
+        public int ParseNodeCount
         {
             get => _parseNodeCount;
             set => SetProperty(ref _parseNodeCount, value);
@@ -369,7 +369,7 @@ namespace XHS.Spider.ViewModels
                         nodeEntity.DownloadItems = downloadItems;
                         nodeEntity.IsNormal = true;
                     }
-                    this.ParseNodeCount = $"已解析({this.Nodes.Where(e => e.IsParse == true).Count()})条";
+                    this.ParseNodeCount = this.Nodes.Where(e => e.IsParse == true).Count();
                 }
                 else
                 {
@@ -393,7 +393,7 @@ namespace XHS.Spider.ViewModels
                                 nodeEntity.DownloadItems = downloadItems;
                                 nodeEntity.IsNormal = false;
                             }
-                            this.ParseNodeCount = $"已解析({this.Nodes.Where(e => e.IsParse == true).Count()})条";
+                            this.ParseNodeCount = this.Nodes.Where(e => e.IsParse == true).Count();
                         }
                     }
 
@@ -463,7 +463,6 @@ namespace XHS.Spider.ViewModels
                                 this.Visibility = true;
                             }
                         }
-                        this.ParseNodeCount = "已解析(0)条";
                         var apiResult = await _xhsSpiderService.GetOtherInfo(id);
                         if (apiResult != null && apiResult.Success)
                         {
