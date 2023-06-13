@@ -73,8 +73,8 @@ namespace XHS.Spider.ViewModels
         /// <summary>
         /// 笔记数量
         /// </summary>
-        private string _noteCount;
-        public string NoteCount
+        private int _noteCount;
+        public int NoteCount
         {
             get => _noteCount;
             set => SetProperty(ref _noteCount, value);
@@ -231,7 +231,7 @@ namespace XHS.Spider.ViewModels
                     node.LikedCount = node.interact_info?.LikedCount;
                 }
                 Nodes = nodes.ToArray();
-                NoteCount = $"({nodes.Count()})条";
+                NoteCount = nodes.Count();
                 DataGridItemCollection = Nodes;
             }
         }
@@ -528,7 +528,7 @@ namespace XHS.Spider.ViewModels
                                 node.LikedCount = node.interact_info?.LikedCount;
                             }
                             Nodes = nodes.ToArray();
-                            NoteCount = $"({nodes.Count()})条";
+                            NoteCount = nodes.Count();
                             DataGridItemCollection = Nodes;
                         }
                         else
