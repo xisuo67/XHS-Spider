@@ -252,11 +252,12 @@ namespace XHS.Spider.ViewModels
                 {
                     node.LikedCount = node.interact_info?.LikedCount;
                 }
-                foreach (var item in nodes)
-                {
-                    //Nodes.
-                }
+                var allNodes= new List<NoteModel>();
+                allNodes.AddRange(nodes);
+                allNodes.AddRange(this.Nodes);
+                this.Nodes = allNodes.ToArray();
             }
+
             this.CurrentNoteTypeEnum = noteTypeEnum;
             //TODO:计算解析数量
             this.ParseNodeCount = this.Nodes.Where(e => e.NoteTypeEnum == noteTypeEnum && e.IsParse == true).Count();
@@ -406,7 +407,7 @@ namespace XHS.Spider.ViewModels
                                 break;
                         }
                     }
-                    var nodeEntity = this.Nodes.FirstOrDefault(e => e.NoteId == item.NoteId);
+                    var nodeEntity = this.Nodes.FirstOrDefault(e => e.NoteTypeEnum == CurrentNoteTypeEnum && e.NoteId == item.NoteId);
                     if (nodeEntity != null)
                     {
                         nodeEntity.IsParse = true;
@@ -446,7 +447,7 @@ namespace XHS.Spider.ViewModels
                 Random ran = new Random();
                 int awaitTime = ran.Next(2800, 3500);
                 await Task.Delay(awaitTime);
-                this.DataGridItemCollection = this.Nodes.ToArray();
+                this.DataGridItemCollection = this.Nodes.Where(e => e.NoteTypeEnum == CurrentNoteTypeEnum).ToArray();
             }
             var parseNodes = nodes.Where(e => e.NoteTypeEnum == CurrentNoteTypeEnum && e.IsParse == false);
             if (parseNodes.Count() == 0)
