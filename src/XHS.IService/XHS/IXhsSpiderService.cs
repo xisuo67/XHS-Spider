@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using XHS.IService.DI;
+using XHS.Models.Enum;
 using XHS.Models.XHS.ApiOutputModel;
 using XHS.Models.XHS.ApiOutputModel.CreateQrCode;
 using XHS.Models.XHS.ApiOutputModel.Login;
@@ -39,11 +40,12 @@ namespace XHS.IService.XHS
 
 
         /// <summary>
-        /// 获取用户所有笔记 
+        /// 获取用户所有笔记
         /// </summary>
         /// <param name="userid"></param>
+        /// <param name="noteTypeEnum"></param>
         /// <returns></returns>
-        Task<List<NoteModel>> GetAllUserNode(string userid);
+        Task<List<NoteModel>> GetAllUserNode(string userid, NoteTypeEnum noteTypeEnum= NoteTypeEnum.UserPosted);
 
         /// <summary>
         /// 关键字搜索笔记

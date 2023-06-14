@@ -206,7 +206,17 @@ namespace XHS.Spider.Views.Windows
 
         private async void Border_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            _windowService.Show<ScanLogin>();
+            var currentUser = GlobalCaChe.CurrentUser;
+            if (currentUser != null)
+            {
+                var navigation = _navigationService.GetNavigationControl();
+                var userId= currentUser.UserId;
+                var searchService = SearchService.GetSearchService(webView, _aggregator, navigation, _serviceProvider, _pageServiceNew);
+                string url = $"https://www.xiaohongshu.com/user/profile/{userId}";
+                searchService.SearchInput(url);
+            }
+            else
+                _windowService.Show<ScanLogin>();
         }
     }
 }

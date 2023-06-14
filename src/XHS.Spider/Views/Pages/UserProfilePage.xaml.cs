@@ -1,6 +1,9 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using Wpf.Ui.Common.Interfaces;
+using XHS.Common.Helpers;
+using XHS.Models.Enum;
 using XHS.Spider.ViewModels;
 
 namespace XHS.Spider.Views.Pages
@@ -45,6 +48,26 @@ namespace XHS.Spider.Views.Pages
                 }
             }
         }
-
+        /// <summary>
+        /// Tab切换事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.Source is TabControl)
+            { 
+                var tabControl= sender as TabControl;
+                var data = tabControl.SelectedItem as TabItem;
+                var tag = data.Tag;
+                if (tag != null)
+                {
+                    //TODO:切换tab时触发
+                    var tagName= tag?.ToString();
+                    var noteTypeEnum = MemberInfoExtensions.StringToEnum<NoteTypeEnum>(tagName);
+                    ViewModel.OnNavigateTab(noteTypeEnum);
+                }
+            }
+        }
     }
 }

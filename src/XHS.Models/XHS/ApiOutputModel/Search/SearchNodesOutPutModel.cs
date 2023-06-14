@@ -14,7 +14,8 @@ namespace XHS.Models.XHS.ApiOutputModel.Search
     /// </summary>
     public class SearchNodesOutPutModel
     {
-        public bool has_more { get; set; }
+        [JsonProperty("has_more")]
+        public bool HasMore { get; set; }
 
         [JsonProperty("items")]
         public List<SearchNodeItem> Items { get; set; }

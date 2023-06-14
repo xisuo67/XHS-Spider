@@ -18,7 +18,8 @@ namespace XHS.Models.XHS.ApiOutputModel.Common
     }
     public class Capa
     {
-        public double duration { get; set; }
+        [JsonProperty("duration")]
+        public double Duration { get; set; }
     }
     public class Consumer
     {

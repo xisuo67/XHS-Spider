@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using XHS.Models.DownLoad;
+using XHS.Models.Enum;
 
 namespace XHS.Models.XHS.ApiOutputModel.UserPosted
 {
@@ -13,6 +14,10 @@ namespace XHS.Models.XHS.ApiOutputModel.UserPosted
     /// </summary>
     public class NoteModel
     {
+        /// <summary>
+        /// 用于区分返回实体笔记类型
+        /// </summary>
+        public NoteTypeEnum NoteTypeEnum { get; set; }
         private string type = string.Empty;
         [JsonProperty("type")]
 
