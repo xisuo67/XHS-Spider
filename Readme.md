@@ -47,8 +47,16 @@ XHS.Spider是一款颜值超高的小红书数据采集工具
 - 功能预览
   - [bilibili](https://www.bilibili.com/video/BV1UW4y1R7GE/?vd_source=e2562a684d381def8f9af230a7396690)
 
+## 郑重说明
+- 作者本人欢迎大家帮忙推广XHS-Spider，但未经本人允许不得擅自将XHS-Spider作为资源形式售卖或提供付费下载。
+- 作者已在多个网站发现有人未经作者本人允许，将XHS-Spider作为独立下载资源单独分享下载。
+   - 以下为其它途径地址，看到的请自行移除下载资源，否者作者将追究相应责任。欢迎大家随时补充，开源不易，且行且珍惜……
+      - [白手创业网](https://www.heishou.org/d/299422) 
+      - [奇它论坛](https://www.qitabbs.com/circle/30336.html)
+      - [柒月吧](https://www.qiyueba.com/37361.html)
 
 ## 说明
+
 - 仅用于学习使用，学习webview2、wpf-ui
 - 很多朋友在使用XHS-Spider，总会多少询问到关于停更问题，这里也做出解释：
   - 在能力范围内尽量保持XHS-Spider快速迭代，并保持活跃，短时间内应该是不会停更的
