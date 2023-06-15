@@ -85,7 +85,7 @@
                             <EventTrigger RoutedEvent="Loaded">
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <DoubleAnimation From="800" To="-200" Duration="0:0:10" 
+                                        <DoubleAnimation From="800" To="-400" Duration="0:0:10" 
                                         RepeatBehavior="Forever"
                                         Storyboard.TargetName="StatueWithFireMachine"
                                         Storyboard.TargetProperty="RenderTransform.X"/>
