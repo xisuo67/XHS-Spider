@@ -20,7 +20,6 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-
         <Border
             Grid.Row="0"
             Height="500"
@@ -75,6 +74,26 @@
                         FontSize="10"
                         Foreground="#57FFFFFF"
                         Text="Created by xisuo67" />
+                    <Canvas VerticalAlignment="Top" Height="46" ClipToBounds="True" Margin="0,23,0,0">
+                        <StackPanel Name="StatueWithFireMachine" Margin="7,5,0,0" Height="34" VerticalAlignment="Center" HorizontalAlignment="Left">
+                            <StackPanel.RenderTransform>
+                                <TranslateTransform Y="0" />
+                            </StackPanel.RenderTransform>
+                            <TextBlock FontSize="26" Foreground="Red" Text="最近已有部分网站将作者开源工具用于商业盈利，若非Github下载，请联系作者！"/>
+                        </StackPanel>
+                        <Canvas.Triggers>
+                            <EventTrigger RoutedEvent="Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation From="800" To="-200" Duration="0:0:10" 
+                                        RepeatBehavior="Forever"
+                                        Storyboard.TargetName="StatueWithFireMachine"
+                                        Storyboard.TargetProperty="RenderTransform.X"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Canvas.Triggers>
+                    </Canvas>
                 </Grid>
             </Border>
         </Border>
