@@ -25,10 +25,6 @@
             Text="个性化设置" />
         <TextBlock Margin="0,12,0,0" Text="主题" />
         <Grid Grid.Row="1" Margin="0,0,0,0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -54,17 +50,44 @@
             GroupName="themeSelect"
             IsChecked="{Binding ViewModel.CurrentTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Dark, Mode=OneWay}" />
         </Grid>
-        <TextBlock Margin="0,12,0,0" Text="各类软件定制化开发（备明来意，闲聊勿扰）" />
-        <Grid Grid.Row="1">
-            <Border HorizontalAlignment="Center" Width="230" Height="260" 
-           >
-                <Border.Background>
-                    <ImageBrush
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <TextBlock Text="各类软件定制化开发（备明来意，闲聊勿扰）" />
+                <Border  HorizontalAlignment="Left" Width="230" Height="260" Margin="0,27,0,0" Grid.RowSpan="2" >
+                    <Border.Background>
+                        <ImageBrush
                     ImageSource="../../Resources/contact_me_qr.jpg"
                     RenderOptions.BitmapScalingMode="HighQuality"
                     Stretch="Fill" />
-                </Border.Background>
-            </Border>
+                    </Border.Background>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Column="1" Grid.ColumnSpan="2">
+                <TextBlock TextWrapping = "Wrap" Text="如果这个项目对您有很大帮助，并且您希望支持该项目的持续开发，扫描一下二维码进行捐赠" />
+                <Border  HorizontalAlignment="Left" Width="230" Height="260" Margin="10,27,0,0" >
+                    <Border.Background>
+                        <ImageBrush
+                    ImageSource="../../Resources/alipay.png"
+                    RenderOptions.BitmapScalingMode="HighQuality"
+                    Stretch="Fill" />
+                    </Border.Background>
+                </Border>
+
+                <Border  Width="230" Height="260" Margin="259,27,10,0" >
+                    <Border.Background>
+                        <ImageBrush
+                    ImageSource="../../Resources/wechatpay.png"
+                    RenderOptions.BitmapScalingMode="HighQuality"
+                    Stretch="Fill" />
+                    </Border.Background>
+                </Border>
+            </Grid>
         </Grid>
 
         <TextBlock
