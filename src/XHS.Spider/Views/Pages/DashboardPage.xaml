@@ -56,7 +56,7 @@
                             FontSize="18"
                             Foreground="#B7FFFFFF"
                             Text="专业、省心、方便、快捷" />
-                        <ui:Button
+                        <!--<ui:Button
                             Height="36"
                             Margin="0,6,0,0"
                             Padding="30,6"
@@ -65,7 +65,7 @@
                             Command="{Binding ViewModel.NavigateCommand}"
                             CommandParameter="navigate_to_QQ"
                             Content="QQ群：521302423"
-                            Foreground="{DynamicResource TextFillColorLightPrimaryBrush}" />
+                            Foreground="{DynamicResource TextFillColorLightPrimaryBrush}" />-->
                     </StackPanel>
                     <TextBlock
                         Margin="12"
@@ -79,7 +79,7 @@
                             <StackPanel.RenderTransform>
                                 <TranslateTransform Y="0" />
                             </StackPanel.RenderTransform>
-                            <TextBlock FontSize="26" Foreground="Red" Text="最近已有部分网站将作者开源工具用于商业盈利，若非Github下载，请联系作者！"/>
+                            <!--<TextBlock FontSize="26" Foreground="Red" Text="最近已有部分网站将作者开源工具用于商业盈利，若非Github下载，请联系作者！"/>-->
                         </StackPanel>
                         <Canvas.Triggers>
                             <EventTrigger RoutedEvent="Loaded">

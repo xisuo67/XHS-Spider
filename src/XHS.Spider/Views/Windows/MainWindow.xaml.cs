@@ -134,7 +134,7 @@ namespace XHS.Spider.Views.Windows
                 //TODO:这里预留程序启动初始化数据
   
                 ScriptHost.GetScriptHost(GlobalCaChe.webView, _aggregator);
-                //await Task.Delay(2000);
+                await Task.Delay(4000);
                 updateChecker.Check(true);
                 await Dispatcher.InvokeAsync(() =>
                 {

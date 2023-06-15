@@ -75,7 +75,7 @@ namespace XHS.Spider.ViewModels
         }
         private void InitializeViewModel()
         {
-            ApplicationTitle = "小红书数据采集工具";
+            ApplicationTitle = "XHS.Spider-小红书数据采集工具";
             InitCurrentUser();
             NavigationItems = new ObservableCollection<INavigationControl>
             {
