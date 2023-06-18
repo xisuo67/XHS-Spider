@@ -29,6 +29,7 @@
         <Grid
             x:Name="RootMainGrid"
             Grid.Row="1"
+                        Visibility="Hidden"
             Margin="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -101,17 +102,17 @@
         <Grid
             x:Name="RootWelcomeGrid"
             Grid.Row="1"
-            Visibility="Hidden"
             >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
-                <Image
+                <!--<Image
                     MaxWidth="180"
                     RenderOptions.BitmapScalingMode="HighQuality"
-                    Source="pack://application:,,,/Assets/xiaohongshu.png" />
+                    Source="pack://application:,,,/Assets/xiaohongshu.png" />-->
+                <TextBlock FontSize="32"  TextAlignment="Center" Foreground="Red" FontWeight="Bold" Text="XHS.Spider" Margin="0,292,0,-292"/>
                 <TextBlock
                     FontSize="16"
                     FontWeight="Medium"
@@ -136,7 +137,6 @@
         <ui:TitleBar
             Title="{Binding ViewModel.ApplicationTitle, Mode=OneWay}"
             Grid.Row="0"
-            Icon="pack://application:,,,/Assets/xiaohongshu.png"
             UseSnapLayout="True">
             <ui:TitleBar.Tray>
                 <ui:NotifyIcon

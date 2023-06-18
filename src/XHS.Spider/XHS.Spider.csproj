@@ -40,8 +40,6 @@
     <None Remove="Assets\applicationIcon-1024.png" />
     <None Remove="Assets\applicationIcon-256.png" />
     <None Remove="Assets\test.jpg" />
-    <None Remove="Assets\XHS-biaoji.png" />
-    <None Remove="Assets\xiaohongshu.png" />
     <None Remove="Resources\alipay.png" />
     <None Remove="Resources\contact_me_qr.jpg" />
     <None Remove="Resources\contact_me_qr.png" />
@@ -75,8 +73,6 @@
   <ItemGroup>
     <Resource Include="Assets\applicationIcon-1024.png" />
     <Resource Include="Assets\applicationIcon-256.png" />
-    <Resource Include="Assets\XHS-biaoji.png" />
-    <Resource Include="Assets\xiaohongshu.png" />
     <Resource Include="Resources\desktop.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>

@@ -22,12 +22,13 @@
         <Grid Grid.Row="0">
             <Border HorizontalAlignment="Center" Width="131" Margin="0,130,0,18" 
            >
-                <Border.Background>
+                <!--<Border.Background>
                     <ImageBrush
                     ImageSource="../../assets/xiaohongshu.png"
                     RenderOptions.BitmapScalingMode="HighQuality"
                     Stretch="Fill" />
-                </Border.Background>
+                </Border.Background>-->
+                <TextBlock FontSize="32" Foreground="Red" FontWeight="Bold" Text="XHS.Spider" Margin="0,0,-148,0"/>
             </Border>
         </Grid>
         
