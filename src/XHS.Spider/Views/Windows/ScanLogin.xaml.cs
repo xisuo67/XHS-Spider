@@ -67,7 +67,7 @@ namespace XHS.Spider.Views.Windows
                 }
                 else
                 {
-                    _notifyIcon.ShowBalloonTip("二维码获取失败", "提示", BalloonIcon.Error);
+                    _notifyIcon.ShowBalloonTip("提示", "二维码获取失败", BalloonIcon.Error);
                 }
             }
             catch (Exception ex)
@@ -93,7 +93,7 @@ namespace XHS.Spider.Views.Windows
                     int index = 1;
                     GetCurrentUser(index);
                     //登录成功，提示登录成功，并关闭扫码扫码界面；
-                    _notifyIcon.ShowBalloonTip("扫码登录成功", "提示", BalloonIcon.None);
+                    _notifyIcon.ShowBalloonTip("扫码提示", "扫码登录成功", BalloonIcon.None);
                     this.Close();
                     return;
                 }
