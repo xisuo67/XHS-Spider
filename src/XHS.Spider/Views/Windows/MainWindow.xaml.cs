@@ -74,10 +74,18 @@ namespace XHS.Spider.Views.Windows
             updateChecker.NewVersionNotFound += updateChecker_NewVersionNotFound;
             #endregion
             InitializeComponent();
-            #region webView
-            webView.Source = new Uri("https://www.xiaohongshu.com/explore");
-            InitializeAsync();
-            #endregion
+            try
+            {
+                #region webView
+                webView.Source = new Uri("https://www.xiaohongshu.com/explore");
+                InitializeAsync();
+                #endregion
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("webview初始化失败",ex);
+            }
+            
             SetPageService(pageService);
             _pageServiceNew = pageService;
             navigationService.SetNavigationControl(RootNavigation);
