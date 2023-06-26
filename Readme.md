@@ -71,9 +71,10 @@ XHS.Spider是一款颜值超高的小红书数据采集工具
 - 因使用本软件产生的版权问题，软件作者概不负责。
 - 任何涉及商业盈利目的均不得使用，否则产生的一切后果将由您自己承担。
 
-## Star
+## Star History
 
-[![Stargazers over time](https://starchart.cc/xisuo67/XHS-Spider.svg)](https://starchart.cc/xisuo67/XHS-Spider)
+[![Star History Chart](https://api.star-history.com/svg?repos=xisuo67/XHS-Spider&type=Date)](https://star-history.com/#xisuo67/XHS-Spider&Date)
+
 
 **半年内Star超1000+，开源抖音（2023-4-25--2023-10-25）**
 
