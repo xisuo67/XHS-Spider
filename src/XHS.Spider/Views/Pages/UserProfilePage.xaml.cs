@@ -26,23 +26,45 @@ namespace XHS.Spider.Views.Pages
         }
         private void CheckAll_Click(object sender, RoutedEventArgs e)
         {
-            for (int i = 0; i < this.dgrdView.Items.Count; i++)
+            if (sender is not System.Windows.Controls.CheckBox checkbox)
+                return;
+            var tag = checkbox.Tag as string;
+            if (tag == null) return;
+            DataGrid dataGrid = null;
+            switch (tag)
             {
-                var cntr = dgrdView.ItemContainerGenerator.ContainerFromIndex(i);
-                DataGridRow ObjROw = (DataGridRow)cntr;
-                if (ObjROw != null)
+                case "UserPosted":
+                    dataGrid = this.dgrdView;
+                    break;
+                case "Collect":
+                    dataGrid = this.dgrdViewCollect;
+                    break;
+                case "Like":
+                    dataGrid = this.dgrdViewLike;
+                    break;
+                default:
+                    break;
+            }
+            if (dataGrid != null)
+            {
+                for (int i = 0; i < dataGrid.Items.Count; i++)
                 {
-                    FrameworkElement objElement = dgrdView.Columns[0].GetCellContent(ObjROw);
-                    if (objElement != null)
+                    var cntr = dataGrid.ItemContainerGenerator.ContainerFromIndex(i);
+                    DataGridRow ObjROw = (DataGridRow)cntr;
+                    if (ObjROw != null)
                     {
-                        System.Windows.Controls.CheckBox objChk = (System.Windows.Controls.CheckBox)objElement;
-                        if (objChk.IsChecked == false)
+                        FrameworkElement objElement = dataGrid.Columns[0].GetCellContent(ObjROw);
+                        if (objElement != null)
                         {
-                            objChk.IsChecked = true;
-                        }
-                        else
-                        {
-                            objChk.IsChecked = false;
+                            System.Windows.Controls.CheckBox objChk = (System.Windows.Controls.CheckBox)objElement;
+                            if (objChk.IsChecked == false)
+                            {
+                                objChk.IsChecked = true;
+                            }
+                            else
+                            {
+                                objChk.IsChecked = false;
+                            }
                         }
                     }
                 }
