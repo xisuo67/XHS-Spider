@@ -148,6 +148,26 @@
                         Text="搜索小红书" />
                 </StackPanel>
             </ui:CardAction>
+            <ui:CardAction
+                Grid.Row="0"
+                Grid.Column="2"
+                Margin="4,0,4,0"
+                Command="{Binding ViewModel.NavigateCommand}"
+                CommandParameter="navigate_to_HomePage"
+                Icon="Fluent24">
+                <StackPanel>
+                    <TextBlock
+                        Margin="0"
+                        FontSize="13"
+                        FontWeight="Medium"
+                        Text="官网" />
+                    <TextBlock
+                        FontSize="12"
+                        Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                        Text="官方网站" />
+                </StackPanel>
+            </ui:CardAction>
+
             <!--<ui:CardAction
                 Grid.Row="0"
                 Grid.Column="2"
