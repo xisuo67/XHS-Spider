@@ -296,17 +296,20 @@ namespace XHS.Service.XHS
             LoginInfoStatus status = null;
             try
             {
-                string url = $"/api/sns/web/v1/login/qrcode/status?qr_id={qrCode.QrId}&code={qrCode.Code}";
-                var header = await GetXsHeader(url);
-                Logger.Info($"调用接口：{url}");
-                var result = HttpClientHelper.DoGet(url, header);
-                if (!string.IsNullOrEmpty(result))
+                if (qrCode!=null)
                 {
-                    var loginStatus = JsonConvert.DeserializeObject<XHSBaseApiModel<LoginInfoStatus>>(result);
-                    if (loginStatus != null && loginStatus.Success && loginStatus.Data.CodeStatus==2)
+                    string url = $"/api/sns/web/v1/login/qrcode/status?qr_id={qrCode.QrId}&code={qrCode.Code}";
+                    var header = await GetXsHeader(url);
+                    Logger.Info($"调用接口：{url}");
+                    var result = HttpClientHelper.DoGet(url, header);
+                    if (!string.IsNullOrEmpty(result))
                     {
-                        status = loginStatus.Data;
-                        return status;
+                        var loginStatus = JsonConvert.DeserializeObject<XHSBaseApiModel<LoginInfoStatus>>(result);
+                        if (loginStatus != null && loginStatus.Success && loginStatus.Data.CodeStatus == 2)
+                        {
+                            status = loginStatus.Data;
+                            return status;
+                        }
                     }
                 }
             }
