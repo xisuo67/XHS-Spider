@@ -1,10 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using Microsoft.Web.WebView2.Wpf;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
 using System;
-using System.Security.Policy;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -12,14 +8,10 @@ using Wpf.Ui.Common;
 using Wpf.Ui.Common.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
 using XHS.Common.Global;
-using XHS.Common.Helpers;
 using XHS.Common.Utils;
-using XHS.IService.XHS;
 using XHS.Models.Enum;
 using XHS.Service.Log;
-using XHS.Service.XHS;
 using XHS.Spider.Services;
-using System.IO;
 using XHS.Common.Events;
 
 namespace XHS.Spider.ViewModels
