@@ -24,6 +24,8 @@ using XHS.Spider.ViewModels;
 using XHS.IService;
 using XHS.Service;
 using XHS.Common.Events.Model;
+using EdgeSharp.Core.Infrastructure;
+using XHS.Service.Log;
 
 namespace XHS.Spider.Views.Windows
 {
@@ -32,6 +34,7 @@ namespace XHS.Spider.Views.Windows
     /// </summary>
     public partial class MainWindow : INavigationWindow
     {
+        private static readonly ILogger Logger = LoggerService.Get(typeof(MainWindow));
         private IEventAggregator _aggregator { get; set; }
         private readonly TaskbarIcon _notifyIcon;
         private ContextMenu _contextMenu;
@@ -71,10 +74,18 @@ namespace XHS.Spider.Views.Windows
             updateChecker.NewVersionNotFound += updateChecker_NewVersionNotFound;
             #endregion
             InitializeComponent();
-            #region webView
-            webView.Source = new Uri("https://www.xiaohongshu.com/explore");
-            InitializeAsync();
-            #endregion
+            try
+            {
+                #region webView
+                webView.Source = new Uri("https://www.xiaohongshu.com/explore");
+                InitializeAsync();
+                #endregion
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("webview初始化失败",ex);
+            }
+            
             SetPageService(pageService);
             _pageServiceNew = pageService;
             navigationService.SetNavigationControl(RootNavigation);
@@ -119,35 +130,42 @@ namespace XHS.Spider.Views.Windows
 
         private void InvokeSplashScreen()
         {
-            //scriptHost = ScriptHost.GetScriptHost(webView);
-            if (_initialized)
-                return;
-
-            _initialized = true;
-
-            RootMainGrid.Visibility = Visibility.Collapsed;
-            RootWelcomeGrid.Visibility = Visibility.Visible;
-
-            _taskBarService.SetState(this, TaskBarProgressState.Indeterminate);
-            Task.Run(async () =>
+            try
             {
-                //TODO:这里预留程序启动初始化数据
-  
-                ScriptHost.GetScriptHost(GlobalCaChe.webView, _aggregator);
-                await Task.Delay(4000);
-                updateChecker.Check(true);
-                await Dispatcher.InvokeAsync(() =>
+                if (_initialized)
+                    return;
+
+                _initialized = true;
+
+                RootMainGrid.Visibility = Visibility.Collapsed;
+                RootWelcomeGrid.Visibility = Visibility.Visible;
+
+                _taskBarService.SetState(this, TaskBarProgressState.Indeterminate);
+                Task.Run(async () =>
                 {
-                    RootWelcomeGrid.Visibility = Visibility.Hidden;
-                    RootMainGrid.Visibility = Visibility.Visible;
+                    //TODO:这里预留程序启动初始化数据
 
-                    Navigate(typeof(Pages.DashboardPage));
+                    ScriptHost.GetScriptHost(GlobalCaChe.webView, _aggregator);
+                    //await Task.Delay(2000);
+                    updateChecker.Check(true);
+                    await Dispatcher.InvokeAsync(() =>
+                    {
+                        RootWelcomeGrid.Visibility = Visibility.Hidden;
+                        RootMainGrid.Visibility = Visibility.Visible;
 
-                    _taskBarService.SetState(this, TaskBarProgressState.None);
+                        Navigate(typeof(Pages.DashboardPage));
+
+                        _taskBarService.SetState(this, TaskBarProgressState.None);
+                    });
+
+                    return true;
                 });
-
-                return true;
-            });
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("初始化失败",ex);
+            }
+            
         }
         #region INavigationWindow methods
 

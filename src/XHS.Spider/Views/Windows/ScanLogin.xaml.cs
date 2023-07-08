@@ -67,7 +67,7 @@ namespace XHS.Spider.Views.Windows
                 }
                 else
                 {
-                    _notifyIcon.ShowBalloonTip("二维码获取失败", "提示", BalloonIcon.Error);
+                    _notifyIcon.ShowBalloonTip("提示", "二维码获取失败", BalloonIcon.Error);
                 }
             }
             catch (Exception ex)
@@ -79,28 +79,31 @@ namespace XHS.Spider.Views.Windows
         public async void GetStatus(QrCodeModel qrCode)
         {
             await Task.Delay(1000);
-            var data = await _xhsSpiderService.GetStatus(qrCode);
-            if (data != null)
+            if (qrCode!=null)
             {
-                //登录成功刷新cookie
-                Dictionary<string, string> dic = new Dictionary<string, string>();
-                dic.TryAdd("web_session", data.LoginInfo.Session);
-                //TODO:判断状态，退出循环，设置cookie，web_session，并查询用户信息
-                if (_scriptHost != null)
+                var data = await _xhsSpiderService.GetStatus(qrCode);
+                if (data != null)
                 {
-                    _scriptHost.UpdateCookie(dic);
-                    //TODO:获取当前登录用户
-                    int index = 1;
-                    GetCurrentUser(index);
-                    //登录成功，提示登录成功，并关闭扫码扫码界面；
-                    _notifyIcon.ShowBalloonTip("扫码登录成功", "提示", BalloonIcon.None);
-                    this.Close();
-                    return;
+                    //登录成功刷新cookie
+                    Dictionary<string, string> dic = new Dictionary<string, string>();
+                    dic.TryAdd("web_session", data.LoginInfo.Session);
+                    //TODO:判断状态，退出循环，设置cookie，web_session，并查询用户信息
+                    if (_scriptHost != null)
+                    {
+                        _scriptHost.UpdateCookie(dic);
+                        //TODO:获取当前登录用户
+                        int index = 1;
+                        GetCurrentUser(index);
+                        //登录成功，提示登录成功，并关闭扫码扫码界面；
+                        _notifyIcon.ShowBalloonTip("扫码提示", "扫码登录成功", BalloonIcon.None);
+                        this.Close();
+                        return;
+                    }
                 }
-            }
-            else
-            {
-                GetStatus(qrCode);
+                else
+                {
+                    GetStatus(qrCode);
+                }
             }
         }
         /// <summary>

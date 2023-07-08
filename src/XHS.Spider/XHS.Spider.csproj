@@ -8,6 +8,9 @@
     <UseWPF>true</UseWPF>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>applicationIcon.ico</ApplicationIcon>
+    <Copyright>Copyright (C) xisuo67. All Rights Reserved</Copyright>
+    <Authors>xisuo67</Authors>
+    <Product>$(AssemblyName)-颜值超高的数据采集工具</Product>
   </PropertyGroup>
 
   <ItemGroup>

@@ -39,8 +39,6 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <StackPanel  Grid.Column="0" HorizontalAlignment="Right">
-                <!--<Wpf:WebView2
-            x:Name="webView"/>-->
                 <Border
                     Width="120"
                     Height="120"
@@ -223,7 +221,8 @@
                             ScrollViewer.VerticalScrollBarVisibility="Visible"
                             MinHeight="270"
                             MaxHeight="600"
-                            Grid.Row="1" Name="dgrdView" 
+                            Grid.Row="1" 
+                            Name="dgrdView"
                             Margin="0,8,0,0" 
                             ItemsSource="{Binding ViewModel.DataGridItemCollection,Mode=TwoWay}"  
                             AutoGenerateColumns="False">
@@ -237,7 +236,7 @@
                                 <DataGridCheckBoxColumn  Binding="{Binding IsDownLoad,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="选择">
                                     <DataGridCheckBoxColumn.HeaderTemplate>
                                         <DataTemplate>
-                                            <CheckBox x:Name="ckbSelectedAll" Click="CheckAll_Click" HorizontalAlignment="Center"></CheckBox>
+                                            <CheckBox x:Name="ckbSelectedAll" Tag="UserPosted" Click="CheckAll_Click" HorizontalAlignment="Center"></CheckBox>
                                         </DataTemplate>
                                     </DataGridCheckBoxColumn.HeaderTemplate>
                                 </DataGridCheckBoxColumn>
@@ -295,6 +294,7 @@
                             MinHeight="270"
                             MaxHeight="600"
                             Grid.Row="1" 
+                            Name="dgrdViewCollect"
                             Margin="0,8,0,0" 
                             ItemsSource="{Binding ViewModel.DataGridItemCollection,Mode=TwoWay}"  
                             AutoGenerateColumns="False">
@@ -308,7 +308,7 @@
                                 <DataGridCheckBoxColumn  Binding="{Binding IsDownLoad,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="选择">
                                     <DataGridCheckBoxColumn.HeaderTemplate>
                                         <DataTemplate>
-                                            <CheckBox x:Name="ckbSelectedAll" Click="CheckAll_Click" HorizontalAlignment="Center"></CheckBox>
+                                            <CheckBox x:Name="ckbSelectedAll" Tag="Collect" Click="CheckAll_Click" HorizontalAlignment="Center"></CheckBox>
                                         </DataTemplate>
                                     </DataGridCheckBoxColumn.HeaderTemplate>
                                 </DataGridCheckBoxColumn>
@@ -365,6 +365,7 @@
                             ScrollViewer.VerticalScrollBarVisibility="Visible"
                             MinHeight="270"
                             MaxHeight="600"
+                            Name="dgrdViewLike" 
                             Grid.Row="1" 
                             Margin="0,8,0,0" 
                             ItemsSource="{Binding ViewModel.DataGridItemCollection,Mode=TwoWay}"  
@@ -379,7 +380,7 @@
                                 <DataGridCheckBoxColumn  Binding="{Binding IsDownLoad,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="选择">
                                     <DataGridCheckBoxColumn.HeaderTemplate>
                                         <DataTemplate>
-                                            <CheckBox x:Name="ckbSelectedAll" Click="CheckAll_Click" HorizontalAlignment="Center"></CheckBox>
+                                            <CheckBox x:Name="ckbSelectedAll" Tag="Like" Click="CheckAll_Click" HorizontalAlignment="Center"></CheckBox>
                                         </DataTemplate>
                                     </DataGridCheckBoxColumn.HeaderTemplate>
                                 </DataGridCheckBoxColumn>
