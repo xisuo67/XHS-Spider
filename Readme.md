@@ -78,11 +78,6 @@ XHS.Spider是一款颜值超高的小红书数据采集工具
 **半年内Star超1000+，开源抖音（2023-4-25--2023-10-25）**
 
 
-
-# Activity
-
-[![Ashutosh's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=xisuo67&theme=github-compact)](https://github.com/xisuo67/XHS-Spider)
-
 ## 下载
 
 <p align="left">
