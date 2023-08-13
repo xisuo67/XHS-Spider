@@ -1,7 +1,0 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-                    xmlns:conver="clr-namespace:XHS.Spider.Helpers.Conver">
-    <conver:BoolConvertVisibility x:Key="boolToVisibility"/>
-    <conver:NodeCountConvert x:Key="nodeCount"/>
-    <conver:ParseNodeCountConvert x:Key="parseNodeCountConvert"/>
-</ResourceDictionary>
