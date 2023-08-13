@@ -44,11 +44,10 @@ XHS.Spider是一款颜值超高的小红书数据采集工具
 - **XHS-Spider目前仅支持windows操作系统，其他操作系统不支持**
 - XHS-Spider依托于.Net 6.0开发完成，这意味着你需要安装.Net 6.0运行时才能运行它，如果你的环境没有安装该运行时,启动XHS-Spider会提示异常信息。
   - 如何安装运行时，请查看[运行说明](https://github.com/xisuo67/XHS-Spider/wiki/XHS-Spider)相关文档。
-- 功能预览
-  - [使用教程](https://www.bilibili.com/video/BV1Wu411a7F7/?share_source=copy_web&vd_source=1a333f5d2534a06b72faea21fa2f10d4) 
-  - [bilibili](https://www.bilibili.com/video/BV1UW4y1R7GE/?vd_source=e2562a684d381def8f9af230a7396690)
 
 ## 郑重说明
+- **由于XHS.Spider近期一直被各种平台用于付费资源下载，更有甚者甚至连作者名字都改掉了。考虑种种原因，自v1.0.1.4版本后，程序将提供授权文件才可使用，并且不再开源，仅提供下载程序！**
+- **XHS.Spider自v1.0.1.5版本后做出重大调整，新增授权文件，并增加持久化，最小化到托盘等功能。以前版本不在维护，并且自该版本后，不再开源。大家可以根据自己需求下载对应版本。最后感谢各位支持，谢谢大家**
 - 作者本人欢迎大家帮忙推广XHS-Spider，但未经本人允许不得擅自将XHS-Spider作为资源形式售卖或提供付费下载。
 - 作者已在多个网站发现有人未经作者本人允许，将XHS-Spider作为独立下载资源单独分享下载。
    - 以下为其它途径地址，看到的请自行移除下载资源，否者作者将追究相应责任。欢迎大家随时补充，开源不易，且行且珍惜……
@@ -126,9 +125,7 @@ XHS.Spider是一款颜值超高的小红书数据采集工具
 
 ## 赞助
 
-如果这个项目对您有很大帮助，并且您希望支持该项目的开发和维护，请随时扫描一下二维码进行捐赠。非常感谢您的捐款，谢谢！
-
-<img src="http://yfloves.cn/source/alipay435x450.png" alt="Alipay.png" style="zoom:40%;" /><img src="http://yfloves.cn/source/wechatpay435x450.png" alt="WeChat.png" style="zoom:40%;" />
+**自v1.0.1.5版本后，永不开源，所以拿掉赞助二维码，感谢各位长久以来的支持，也感谢曾经捐赠人无私奉献**
 
 
 
