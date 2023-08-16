@@ -93,14 +93,6 @@ XHS.Spider是一款颜值超高的小红书数据采集工具
 
 [更新日志](CHANGELOG.md)
 
-## 发布
-
-`dotnet build --configuration Release -p:Version=x.x.x.x`
-
-```
-其中x为版本号
-```
-
 ## 开发路线
 
 查看[开发路线](https://github.com/users/xisuo67/projects/5)来了解我的开发计划。
