@@ -4,7 +4,8 @@
   </a>
 </p>
 <h1 align="center">XHS.Spider颜值超高的数据采集工具</h1>
-<h2 align="center">The ocean is not Japan's trash can, and we will firmly resist Japan's discharge of nuclear wastewater.  Protecting the oceans is everyone's responsibility</h2>
+<h2 align="center">摆烂两天，2.0晚点发，最近身体不太好</h2>
+<h3 align="center">The ocean is not Japan's trash can, and we will firmly resist Japan's discharge of nuclear wastewater.  Protecting the oceans is everyone's responsibility</h3>
 <div align="center">
     <p align="center">
     <a href="https://github.com/xisuo67/XHS-Spider/stargazers" style="text-decoration:none" >
