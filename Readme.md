@@ -72,10 +72,12 @@ XHS.Spider是一款颜值超高的小红书数据采集工具
 
 ## 说明
 
-- 仅用于学习使用，学习webview2、wpf-ui
-- 很多朋友在使用XHS-Spider，总会多少询问到关于停更问题，这里也做出解释：
-  - 在能力范围内尽量保持XHS-Spider快速迭代，并保持活跃，短时间内应该是不会停更的
+- 仅用于学习使用，学习webview2、wpf-ui。
+- **XHS.Spider为学习项目，为有效控制XHS.Spider爬取数据对小红书服务器造成压力，XHS.Spider增加授权机制，授权时长仅为一天，且不支持延期，唯一延期途径为通过小程序免费申请延期。后面会根据实际用户注册情况合理缩减延期时长，避免因用户增多对小红书服务器造成压力。**
 - **最后特别说明：不要用于商业用途，该项目仅用于学习。任何涉及商业盈利目的均不得使用，作者保留一切法律途径维护本人合法利益。**
+
+  <img  height="500px" width="500px" src="https://yfloves.cn/source/miniporgram.jpg"/>
+- 关注小程序了解更多
 
 ## 免责声明
 
@@ -89,7 +91,7 @@ XHS.Spider是一款颜值超高的小红书数据采集工具
 [![Star History Chart](https://api.star-history.com/svg?repos=xisuo67/XHS-Spider&type=Date)](https://star-history.com/#xisuo67/XHS-Spider&Date)
 
 
-**半年内Star超1000+，开源抖音（2023-4-25--2023-10-25）**
+
 
 
 ## 下载
