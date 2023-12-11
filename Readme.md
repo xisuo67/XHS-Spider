@@ -6,7 +6,6 @@
 <h1 align="center">XHS.Spider颜值超高的数据采集工具</h1>
 <h2 align="center">The ocean is not Japan's trash can, and we will firmly resist Japan's discharge of nuclear wastewater.  Protecting the oceans is everyone's responsibility</h2>
 <div align="center">
-XHS.Spider是一款颜值超高的小红书数据采集工具
     <p align="center">
     <a href="https://github.com/xisuo67/XHS-Spider/stargazers" style="text-decoration:none" >
         <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/xisuo67/XHS-Spider">
@@ -21,9 +20,7 @@ XHS.Spider是一款颜值超高的小红书数据采集工具
         <img alt="GitHub" src="https://img.shields.io/github/license/xisuo67/XHS-Spider">
     </a>
 </p>
-
-
-<iframe src="//player.bilibili.com/player.html?aid=748412761&bvid=BV1eC4y1E7Vb&cid=1333327629&p=1" height="500px" width="800px"  scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+XHS.Spider是一款颜值超高的小红书数据采集工具
 </div>
 
 <table>
