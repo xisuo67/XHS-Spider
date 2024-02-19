@@ -16,7 +16,7 @@
     <a href="https://github.com/xisuo67/XHS-Spider/issues" style="text-decoration:none">
         <img alt="GitHub issues" src="https://img.shields.io/github/issues/xisuo67/XHS-Spider">
     </a>
-    <a href="https://github.com/xisuo67/XHS-Spider/blob/main/LICENSE" style="text-decoration:none" >
+    <a href="https://github.com/xisuo67/XHS-Spider/LICENSE" style="text-decoration:none" >
         <img alt="GitHub" src="https://img.shields.io/github/license/xisuo67/XHS-Spider">
     </a>
 </p>
