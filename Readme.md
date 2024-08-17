@@ -48,6 +48,23 @@ XHS.Spider是一款颜值超高的小红书数据采集工具
 
 
 
+### 功能预览
+| 功能       | 状态 | 文档地址 |
+|----------|----|----|
+| 扫码登录      | ✔  | [扫码登录](https://xisuo67.website/XHS-Spider-Doc/backend/system/home.html) |
+|自动登录|✔ | |
+|博主合集信息|✔ |[搜索](https://xisuo67.website/XHS-Spider-Doc/backend/system/search.html) |
+|单条笔记解析|✔ |同上 |
+|关键字搜索|✔ |同上 |
+|用户搜索|✔ | |
+|数据导出|✔ | |
+|评论导出|✔ | |
+|本地关注|✔ | |
+|短链接解析|✔ | |
+|批量导入单条笔记解析|✔ |[批量导入](https://xisuo67.website/XHS-Spider-Doc/backend/system/import.html) |
+|评论采集|✔ |[采集评论](https://xisuo67.website/XHS-Spider-Doc/backend/system/comment.html) |
+|评论词云导出|✔ |[采集评论](https://xisuo67.website/XHS-Spider-Doc/backend/system/comment.html) |
+
 ## 环境说明
 
 - **XHS-Spider目前仅支持windows操作系统，其他操作系统不支持**
