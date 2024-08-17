@@ -64,6 +64,7 @@ XHS.Spider是一款颜值超高的小红书数据采集工具
 |批量导入单条笔记解析|✔ |[批量导入](https://xisuo67.website/XHS-Spider-Doc/backend/system/import.html) |
 |评论采集|✔ |[采集评论](https://xisuo67.website/XHS-Spider-Doc/backend/system/comment.html) |
 |评论词云导出|✔ |[采集评论](https://xisuo67.website/XHS-Spider-Doc/backend/system/comment.html) |
+|Live图下载|✔ | |
 
 ## 环境说明
 
