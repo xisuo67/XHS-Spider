@@ -103,7 +103,7 @@ XHS.Spider是一款颜值超高的小红书数据采集工具
 - 仅用于学习使用，学习webview2、wpf-ui。
 - **最后特别说明：不要用于商业用途，该项目仅用于学习。任何涉及商业盈利目的均不得使用，作者保留一切法律途径维护本人合法利益。**
 
-  <img  height="500px" width="500px" src="https://yfloves.cn/source/miniporgram.jpg"/>
+  <img  height="500px" width="500px" src="http://yfloves.cn/source/miniporgram.jpg"/>
 - 关注小程序了解更多
 
 ## 免责声明
